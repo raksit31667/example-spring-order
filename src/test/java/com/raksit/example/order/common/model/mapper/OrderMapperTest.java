@@ -12,15 +12,17 @@ import org.mockito.junit.MockitoJUnitRunner;
 @RunWith(MockitoJUnitRunner.class)
 public class OrderMapperTest {
 
+  private static final int NUMBER_OF_ITEMS = 3;
+
   @Test
   public void orderToOrderDto() {
-    Order order = MockOrderFactory.createSampleOrder();
+    Order order = MockOrderFactory.createSampleOrder(NUMBER_OF_ITEMS);
 
     OrderDto orderDto = OrderMapper.INSTANCE.orderToOrderDto(order);
 
     assertEquals(order.getSource(), orderDto.getSource());
     assertEquals(order.getDestination(), orderDto.getDestination());
-    assertEquals(3, orderDto.getNumberOfItems());
+    assertEquals(NUMBER_OF_ITEMS, orderDto.getNumberOfItems());
     assertEquals(order.getTotalPrice(), orderDto.getTotalPrice(), 0);
   }
 }

@@ -18,6 +18,8 @@ import org.mockito.junit.MockitoJUnitRunner;
 @RunWith(MockitoJUnitRunner.class)
 public class DefaultCreateOrderServiceTest {
 
+  private static final int NUMBER_OF_ITEMS = 3;
+
   @InjectMocks
   private CreateOrderService createOrderService = new DefaultCreateOrderService();
 
@@ -26,14 +28,14 @@ public class DefaultCreateOrderServiceTest {
 
   @Test
   public void createOrder() throws Exception {
-    Order order = MockOrderFactory.createSampleOrder();
+    Order order = MockOrderFactory.createSampleOrder(NUMBER_OF_ITEMS);
     when(orderRepository.save(any(Order.class))).thenReturn(order);
 
     OrderDto orderDto = createOrderService.createOrder(order);
 
     assertEquals(order.getSource(), orderDto.getSource());
     assertEquals(order.getDestination(), orderDto.getDestination());
-    assertEquals(3, orderDto.getNumberOfItems());
+    assertEquals(NUMBER_OF_ITEMS, orderDto.getNumberOfItems());
     assertEquals(order.getTotalPrice(), orderDto.getTotalPrice(), 0);
   }
 }

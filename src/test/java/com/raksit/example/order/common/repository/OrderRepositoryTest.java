@@ -17,6 +17,8 @@ import org.springframework.test.context.junit4.SpringRunner;
 @DataJpaTest
 public class OrderRepositoryTest {
 
+  private static final int NUMBER_OF_ITEMS = 3;
+
   @Autowired private OrderRepository orderRepository;
 
   @After
@@ -26,7 +28,7 @@ public class OrderRepositoryTest {
 
   @Test
   public void createOrder_ShouldSaveOrderIntoDatabase() throws Exception {
-    Order order = MockOrderFactory.createSampleOrder();
+    Order order = MockOrderFactory.createSampleOrder(NUMBER_OF_ITEMS);
 
     orderRepository.save(order);
 

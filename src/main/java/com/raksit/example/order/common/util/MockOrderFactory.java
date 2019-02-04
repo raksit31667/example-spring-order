@@ -16,11 +16,11 @@ public class MockOrderFactory {
         .build();
   }
 
-  public static Order createSampleOrder() {
+  public static Order createSampleOrder(int numberOfItems) {
     return Order.builder()
         .source(FAKER.company().name())
         .destination(FAKER.company().name())
-        .items(Collections.nCopies(3, createSampleOrderLineItems()))
+        .items(Collections.nCopies(numberOfItems, createSampleOrderLineItems()))
         .build();
   }
 }
