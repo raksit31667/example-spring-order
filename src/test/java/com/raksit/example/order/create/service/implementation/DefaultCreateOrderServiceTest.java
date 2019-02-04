@@ -7,7 +7,7 @@ import static org.mockito.Mockito.when;
 import com.raksit.example.order.common.model.dto.OrderDto;
 import com.raksit.example.order.common.model.entity.Order;
 import com.raksit.example.order.common.repository.OrderRepository;
-import com.raksit.example.order.common.util.MockOrderFactory;
+import com.raksit.example.order.util.MockOrderFactory;
 import com.raksit.example.order.create.service.CreateOrderService;
 import org.junit.Test;
 import org.junit.runner.RunWith;

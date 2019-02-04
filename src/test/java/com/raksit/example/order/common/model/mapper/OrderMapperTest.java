@@ -4,7 +4,7 @@ import static org.junit.Assert.assertEquals;
 
 import com.raksit.example.order.common.model.dto.OrderDto;
 import com.raksit.example.order.common.model.entity.Order;
-import com.raksit.example.order.common.util.MockOrderFactory;
+import com.raksit.example.order.util.MockOrderFactory;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.junit.MockitoJUnitRunner;

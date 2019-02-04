@@ -1,4 +1,4 @@
-package com.raksit.example.order.common.util;
+package com.raksit.example.order.util;
 
 import com.github.javafaker.Faker;
 import com.raksit.example.order.common.model.entity.Order;
