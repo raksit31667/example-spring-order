@@ -25,4 +25,8 @@ public class Order {
 
   @OneToMany(mappedBy = "order")
   private List<OrderLineItem> items;
+
+  public double getTotalPrice() {
+    return items.stream().mapToDouble(OrderLineItem::getPrice).sum();
+  }
 }
