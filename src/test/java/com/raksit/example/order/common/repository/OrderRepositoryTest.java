@@ -17,8 +17,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 @DataJpaTest
 public class OrderRepositoryTest {
 
-  @Autowired
-  private OrderRepository orderRepository;
+  @Autowired private OrderRepository orderRepository;
 
   @After
   public void tearDown() {
