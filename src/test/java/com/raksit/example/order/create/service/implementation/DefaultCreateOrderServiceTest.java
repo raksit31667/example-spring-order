@@ -8,7 +8,7 @@ import com.raksit.example.order.common.model.dto.OrderDto;
 import com.raksit.example.order.common.model.entity.Order;
 import com.raksit.example.order.common.repository.OrderRepository;
 import com.raksit.example.order.common.util.MockOrderFactory;
-import com.raksit.example.order.create.CreateOrderService;
+import com.raksit.example.order.create.service.CreateOrderService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
@@ -19,7 +19,7 @@ import org.mockito.junit.MockitoJUnitRunner;
 public class DefaultCreateOrderServiceTest {
 
   @InjectMocks
-  private CreateOrderService createOrderService;
+  private CreateOrderService createOrderService = new DefaultCreateOrderService();
 
   @Mock
   private OrderRepository orderRepository;
@@ -34,6 +34,6 @@ public class DefaultCreateOrderServiceTest {
     assertEquals(order.getSource(), orderDto.getSource());
     assertEquals(order.getDestination(), orderDto.getDestination());
     assertEquals(3, orderDto.getNumberOfItems());
-    assertEquals(6000.0, orderDto.getTotalPrice(), 0);
+    assertEquals(6000, orderDto.getTotalPrice(), 0);
   }
 }

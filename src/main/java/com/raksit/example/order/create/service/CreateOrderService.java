@@ -1,4 +1,4 @@
-package com.raksit.example.order.create;
+package com.raksit.example.order.create.service;
 
 import com.raksit.example.order.common.model.dto.OrderDto;
 import com.raksit.example.order.common.model.entity.Order;
