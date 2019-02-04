@@ -11,7 +11,7 @@ import lombok.Builder;
 import lombok.Data;
 
 @Entity
-@Table(name = "order")
+@Table(name = "sales_order")
 @Data
 @Builder
 public class Order {
