@@ -1,10 +1,20 @@
 package com.raksit.example.order.common.util;
 
 import com.raksit.example.order.common.entity.Order;
+import com.raksit.example.order.common.entity.OrderLineItem;
+import java.util.Collections;
 
 public class MockOrderFactory {
 
-  public static Order createOrder() {
-    return null;
+  private static OrderLineItem createSampleOrderLineItems() {
+    return OrderLineItem.builder().name("Lube").price(2000.0).build();
+  }
+
+  public static Order createSampleOrder() {
+    return Order.builder()
+        .source("Radiant")
+        .destination("Dire")
+        .items(Collections.nCopies(3, createSampleOrderLineItems()))
+        .build();
   }
 }

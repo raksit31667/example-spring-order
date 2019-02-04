@@ -27,7 +27,7 @@ public class OrderRepositoryTest {
 
   @Test
   public void createOrder_ShouldSaveOrderIntoDatabase() throws Exception {
-    Order order = MockOrderFactory.createOrder();
+    Order order = MockOrderFactory.createSampleOrder();
 
     orderRepository.save(order);
 

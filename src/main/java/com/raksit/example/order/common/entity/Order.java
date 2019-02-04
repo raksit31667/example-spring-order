@@ -6,8 +6,14 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.persistence.Table;
+import lombok.Builder;
+import lombok.Data;
 
 @Entity
+@Table(name = "order")
+@Data
+@Builder
 public class Order {
 
   @Id
