@@ -7,8 +7,9 @@ import static org.mockito.Mockito.when;
 import com.raksit.example.order.common.model.dto.OrderDto;
 import com.raksit.example.order.common.model.entity.Order;
 import com.raksit.example.order.common.repository.OrderRepository;
-import com.raksit.example.order.util.MockOrderFactory;
 import com.raksit.example.order.create.service.CreateOrderService;
+import com.raksit.example.order.util.MockOrderFactory;
+import com.raksit.example.order.util.PriceCalculator;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
@@ -20,11 +21,9 @@ public class DefaultCreateOrderServiceTest {
 
   private static final int NUMBER_OF_ITEMS = 3;
 
-  @InjectMocks
-  private CreateOrderService createOrderService = new DefaultCreateOrderService();
+  @InjectMocks private CreateOrderService createOrderService = new DefaultCreateOrderService();
 
-  @Mock
-  private OrderRepository orderRepository;
+  @Mock private OrderRepository orderRepository;
 
   @Test
   public void createOrder() throws Exception {
@@ -36,6 +35,6 @@ public class DefaultCreateOrderServiceTest {
     assertEquals(order.getSource(), orderDto.getSource());
     assertEquals(order.getDestination(), orderDto.getDestination());
     assertEquals(NUMBER_OF_ITEMS, orderDto.getNumberOfItems());
-    assertEquals(order.getTotalPrice(), orderDto.getTotalPrice(), 0);
+    assertEquals(PriceCalculator.calculateTotalPrice(order), orderDto.getTotalPrice(), 0);
   }
 }

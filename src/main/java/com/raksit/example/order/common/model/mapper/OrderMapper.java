@@ -2,6 +2,7 @@ package com.raksit.example.order.common.model.mapper;
 
 import com.raksit.example.order.common.model.dto.OrderDto;
 import com.raksit.example.order.common.model.entity.Order;
+import com.raksit.example.order.util.PriceCalculator;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
 
@@ -15,7 +16,7 @@ public abstract class OrderMapper {
         .source(order.getSource())
         .destination(order.getDestination())
         .numberOfItems(order.getItems().size())
-        .totalPrice(order.getTotalPrice())
+        .totalPrice(PriceCalculator.calculateTotalPrice(order))
         .build();
   }
 }
