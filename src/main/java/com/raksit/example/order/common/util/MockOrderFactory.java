@@ -1,7 +1,7 @@
 package com.raksit.example.order.common.util;
 
-import com.raksit.example.order.common.entity.Order;
-import com.raksit.example.order.common.entity.OrderLineItem;
+import com.raksit.example.order.common.model.entity.Order;
+import com.raksit.example.order.common.model.entity.OrderLineItem;
 import java.util.Collections;
 
 public class MockOrderFactory {

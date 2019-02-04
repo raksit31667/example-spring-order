@@ -1,4 +1,4 @@
-package com.raksit.example.order.common.entity;
+package com.raksit.example.order.common.model.entity;
 
 import java.util.List;
 import javax.persistence.Entity;
@@ -18,10 +18,9 @@ public class Order {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
-  private Long id;
+  private long id;
 
   private String source;
-
   private String destination;
 
   @OneToMany(mappedBy = "order")
