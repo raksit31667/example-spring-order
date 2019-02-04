@@ -31,7 +31,7 @@ public class OrderRepositoryTest {
 
     orderRepository.save(order);
 
-    Optional<Order> savedOrder = orderRepository.findById(1);
+    Optional<Order> savedOrder = orderRepository.findById(1L);
 
     assertTrue(savedOrder.isPresent());
     assertEquals(order, savedOrder.get());
