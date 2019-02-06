@@ -1,6 +1,7 @@
 package com.raksit.example.order.create.controller;
 
 import static org.hamcrest.core.Is.is;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
@@ -43,7 +44,7 @@ public class CreateOrderControllerTest {
         .totalPrice(PriceCalculator.calculateTotalPrice(order))
         .build();
 
-    when(createOrderService.createOrder(order)).thenReturn(orderDto);
+    when(createOrderService.createOrder(any(Order.class))).thenReturn(orderDto);
 
     mvc.perform(post("/")
         .content(JsonConverter.convertObjectToJsonString(order))
