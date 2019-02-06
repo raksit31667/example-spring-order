@@ -6,10 +6,16 @@ import com.raksit.example.order.common.model.mapper.OrderMapper;
 import com.raksit.example.order.common.repository.OrderRepository;
 import com.raksit.example.order.create.service.CreateOrderService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
+@Service
 public class DefaultCreateOrderService implements CreateOrderService {
 
   @Autowired private OrderRepository orderRepository;
+
+  public DefaultCreateOrderService(OrderRepository orderRepository) {
+    this.orderRepository = orderRepository;
+  }
 
   @Override
   public OrderDto createOrder(Order order) {
