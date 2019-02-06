@@ -1,11 +1,15 @@
 package com.raksit.example.order.create.controller;
 
+import static org.hamcrest.core.Is.is;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import com.raksit.example.order.common.model.dto.OrderDto;
 import com.raksit.example.order.common.model.entity.Order;
 import com.raksit.example.order.create.service.CreateOrderService;
+import com.raksit.example.order.util.JsonConverter;
 import com.raksit.example.order.util.MockOrderFactory;
 import com.raksit.example.order.util.PriceCalculator;
 import org.junit.Test;
@@ -41,6 +45,13 @@ public class CreateOrderControllerTest {
 
     when(createOrderService.createOrder(order)).thenReturn(orderDto);
 
-
+    mvc.perform(post("/")
+        .content(JsonConverter.convertObjectToJsonString(order))
+        .contentType(MediaType.APPLICATION_JSON))
+        .andExpect(status().isOk())
+        .andExpect(jsonPath("$.source", is(order.getSource())))
+        .andExpect(jsonPath("$.destination", is(order.getDestination())))
+        .andExpect(jsonPath("$.numberOfItems", is(NUMBER_OF_ITEMS)))
+        .andExpect(jsonPath("$.totalPrice", is(PriceCalculator.calculateTotalPrice(order))));
   }
 }
