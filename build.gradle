@@ -1,43 +1,28 @@
 buildscript {
-    ext {
-        springBootVersion = '2.2.0.BUILD-SNAPSHOT'
-    }
     repositories {
         mavenCentral()
         maven { url 'https://repo.spring.io/snapshot' }
         maven { url 'https://repo.spring.io/milestone' }
     }
     dependencies {
-        classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+
     }
 }
 
+apply plugin: 'idea'
 apply plugin: 'java'
-apply plugin: 'org.springframework.boot'
-apply plugin: 'io.spring.dependency-management'
 
-group = 'com.raksit.example'
-version = '0.0.1-SNAPSHOT'
-sourceCompatibility = '1.8'
+allprojects {
+    apply plugin: 'idea'
+    apply plugin: 'java'
 
-repositories {
-    mavenCentral()
-    maven { url 'https://repo.spring.io/snapshot' }
-    maven { url 'https://repo.spring.io/milestone' }
-}
+    group = 'com.raksit.example'
+    version = '0.0.1-SNAPSHOT'
+    sourceCompatibility = '1.8'
 
-dependencies {
-    implementation 'org.springframework.boot:spring-boot-starter-actuator'
-    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
-    implementation 'org.springframework.boot:spring-boot-starter-security'
-    implementation 'org.springframework.boot:spring-boot-starter-web'
-    compile 'org.mapstruct:mapstruct-jdk8:1.2.0.Final'
-    runtime 'com.h2database:h2'
-    runtime 'org.postgresql:postgresql'
-    testImplementation 'org.springframework.boot:spring-boot-starter-test'
-    testImplementation 'org.springframework.security:spring-security-test'
-    testCompile 'com.github.javafaker:javafaker:0.16'
-    compileOnly 'org.projectlombok:lombok:1.18.4'
-    annotationProcessor 'org.projectlombok:lombok:1.18.4'
-    annotationProcessor 'org.mapstruct:mapstruct-processor:1.2.0.Final'
+    repositories {
+        mavenCentral()
+        maven { url 'https://repo.spring.io/snapshot' }
+        maven { url 'https://repo.spring.io/milestone' }
+    }
 }
