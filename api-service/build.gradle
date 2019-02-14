@@ -49,6 +49,7 @@ dependencies {
 }
 
 test {
+    systemProperty 'spring.profiles.active', 'local-test'
     testLogging.showStandardStreams = false
     useJUnitPlatform()
 
