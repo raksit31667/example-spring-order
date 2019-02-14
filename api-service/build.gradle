@@ -15,6 +15,7 @@ buildscript {
 apply plugin: 'java'
 apply plugin: 'org.springframework.boot'
 apply plugin: 'io.spring.dependency-management'
+apply plugin: 'jacoco'
 
 group = 'com.raksit.example'
 version = '0.0.1-SNAPSHOT'
@@ -47,10 +48,40 @@ dependencies {
     annotationProcessor 'org.mapstruct:mapstruct-processor:1.2.0.Final'
 }
 
+test {
+    testLogging.showStandardStreams = false
+    useJUnitPlatform()
+
+    testLogging {
+        events 'passed', 'skipped', 'failed'
+    }
+    reports {
+        html.enabled = true
+    }
+    jacoco {
+        append = false
+        destinationFile = file("$buildDir/jacoco/jacocoTest.exec")
+        classDumpDir = file("$buildDir/jacoco/classpathdumps")
+    }
+}
+
 bootRun {
     if (System.properties.containsKey('spring.profiles.active')) {
         systemProperty 'spring.profiles.active', System.properties['spring.profiles.active']
     } else {
         systemProperty 'spring.profiles.active', 'local'
+    }
+}
+
+jacoco {
+    toolVersion = '0.8.2'
+    reportsDir = file("$buildDir/reports/jacoco")
+}
+
+jacocoTestReport {
+    reports {
+        xml.enabled = false
+        csv.enabled = false
+        html.destination = file("$buildDir/reports/jacoco")
     }
 }
