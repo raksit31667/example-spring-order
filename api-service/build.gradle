@@ -31,6 +31,7 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
     implementation 'org.springframework.boot:spring-boot-starter-security'
     implementation 'org.springframework.boot:spring-boot-starter-web'
+    compile 'org.springframework.cloud:spring-cloud-starter-kubernetes-config:0.3.0.RELEASE'
     compile 'org.mapstruct:mapstruct-jdk8:1.2.0.Final'
     runtime 'com.h2database:h2'
     runtime 'org.postgresql:postgresql'
@@ -44,4 +45,12 @@ dependencies {
     compileOnly 'org.projectlombok:lombok:1.18.4'
     annotationProcessor 'org.projectlombok:lombok:1.18.4'
     annotationProcessor 'org.mapstruct:mapstruct-processor:1.2.0.Final'
+}
+
+bootRun {
+    if (System.properties.containsKey('spring.profiles.active')) {
+        systemProperty 'spring.profiles.active', System.properties['spring.profiles.active']
+    } else {
+        systemProperty 'spring.profiles.active', 'local'
+    }
 }

@@ -1,0 +1,25 @@
+spring:
+application:
+  name: order
+cloud:
+  kubernetes:
+    reload:
+      enabled: true
+---
+spring:
+  profiles: local
+  cloud:
+    kubernetes:
+      enabled: false
+  datasource:
+    url: jdbc:postgresql://localhost:5432/order?useUnicode=true&characterEncoding=utf8
+    username: raksit
+    password:
+  jpa:
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQL9Dialect
+  hibernate:
+    ddl-auto: update
+  main:
+    allow-bean-definition-overriding: true
