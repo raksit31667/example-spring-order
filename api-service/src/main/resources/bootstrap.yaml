@@ -23,3 +23,21 @@ spring:
     ddl-auto: update
   main:
     allow-bean-definition-overriding: true
+---
+spring:
+  profiles: local-test
+  cloud:
+    kubernetes:
+      enabled: false
+  datasource:
+    url: jdbc:h2:mem:test;DB_CLOSE_DELAY=-1
+    username: sa
+    password:
+  jpa:
+    database: H2
+    database-platform: org.hibernate.dialect.H2Dialect
+    generate-ddl: true
+  hibernate:
+    ddl-auto: create-drop
+  main:
+    allow-bean-definition-overriding: true
