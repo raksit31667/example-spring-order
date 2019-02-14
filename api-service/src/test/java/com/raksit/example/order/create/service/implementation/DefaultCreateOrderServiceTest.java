@@ -10,14 +10,14 @@ import com.raksit.example.order.common.repository.OrderRepository;
 import com.raksit.example.order.create.service.CreateOrderService;
 import com.raksit.example.order.util.MockOrderFactory;
 import com.raksit.example.order.util.PriceCalculator;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
-import org.mockito.junit.MockitoJUnitRunner;
+import org.mockito.junit.jupiter.MockitoExtension;
 
-@RunWith(MockitoJUnitRunner.class)
+@ExtendWith(MockitoExtension.class)
 public class DefaultCreateOrderServiceTest {
 
   private static final int NUMBER_OF_ITEMS = 3;
@@ -26,7 +26,7 @@ public class DefaultCreateOrderServiceTest {
 
   @Mock private OrderRepository orderRepository;
 
-  @Before
+  @BeforeEach
   public void setUp() {
     MockitoAnnotations.initMocks(this);
     createOrderService = new DefaultCreateOrderService(orderRepository);

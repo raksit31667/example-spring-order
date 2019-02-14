@@ -6,11 +6,11 @@ import com.raksit.example.order.common.model.dto.OrderDto;
 import com.raksit.example.order.common.model.entity.Order;
 import com.raksit.example.order.util.MockOrderFactory;
 import com.raksit.example.order.util.PriceCalculator;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.mockito.junit.MockitoJUnitRunner;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.junit.jupiter.MockitoExtension;
 
-@RunWith(MockitoJUnitRunner.class)
+@ExtendWith(MockitoExtension.class)
 public class OrderMapperTest {
 
   private static final int NUMBER_OF_ITEMS = 3;

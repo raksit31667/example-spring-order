@@ -8,14 +8,14 @@ import com.raksit.example.order.common.repository.OrderRepository;
 import com.raksit.example.order.create.service.CreateOrderService;
 import com.raksit.example.order.util.MockOrderFactory;
 import com.raksit.example.order.util.PriceCalculator;
-import org.junit.After;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 
-@RunWith(SpringRunner.class)
+@ExtendWith(SpringExtension.class)
 @SpringBootTest
 public class DefaultCreateOrderServiceIntegrationTest {
 
@@ -27,7 +27,7 @@ public class DefaultCreateOrderServiceIntegrationTest {
   @Autowired
   private OrderRepository orderRepository;
 
-  @After
+  @AfterEach
   public void tearDown() {
     orderRepository.deleteAll();
   }
