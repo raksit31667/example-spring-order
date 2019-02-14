@@ -50,6 +50,12 @@ dependencies {
     annotationProcessor 'org.mapstruct:mapstruct-processor:1.2.0.Final'
 }
 
+testSets {
+    isolationTest {
+        dirName = 'isolation-test'
+    }
+}
+
 test {
     systemProperty 'spring.profiles.active', 'local-test'
     testLogging.showStandardStreams = false
@@ -68,9 +74,15 @@ test {
     }
 }
 
-testSets {
-    isolationTest {
-        dirName = 'isolation-test'
+isolationTest {
+    testLogging.showStandardStreams = false
+    useJUnitPlatform()
+
+    testLogging {
+        events 'passed', 'skipped', 'failed'
+    }
+    reports {
+        html.enabled = true
     }
 }
 
