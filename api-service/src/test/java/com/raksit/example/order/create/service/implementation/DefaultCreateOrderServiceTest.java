@@ -4,6 +4,7 @@ import static org.junit.Assert.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
+import com.raksit.example.order.common.model.dto.OrderRequest;
 import com.raksit.example.order.common.model.dto.OrderResponse;
 import com.raksit.example.order.common.model.entity.Order;
 import com.raksit.example.order.common.repository.OrderRepository;
@@ -34,14 +35,20 @@ public class DefaultCreateOrderServiceTest {
 
   @Test
   public void createOrder_ShouldReturnOrderDtoWithNumberOfItemsAndTotalPrice() throws Exception {
-    Order order = MockOrderFactory.createSampleOrder(NUMBER_OF_ITEMS);
+    OrderRequest orderRequest = MockOrderFactory.createSampleOrderRequest(NUMBER_OF_ITEMS);
+    Order order = Order.builder()
+        .source(orderRequest.getSoldTo())
+        .destination(orderRequest.getShipTo())
+        .items(orderRequest.getItems())
+        .build();
+
       when(orderRepository.save(any(Order.class))).thenReturn(order);
 
-    OrderResponse orderResponse = createOrderService.createOrder(order);
+    OrderResponse orderResponse = createOrderService.createOrder(orderRequest);
 
-    assertEquals(order.getSource(), orderResponse.getSource());
-    assertEquals(order.getDestination(), orderResponse.getDestination());
+    assertEquals(orderRequest.getSoldTo(), orderResponse.getSource());
+    assertEquals(orderRequest.getShipTo(), orderResponse.getDestination());
     assertEquals(NUMBER_OF_ITEMS, orderResponse.getNumberOfItems());
-    assertEquals(PriceCalculator.calculateTotalPrice(order), orderResponse.getTotalPrice(), 0);
+    assertEquals(PriceCalculator.calculateTotalPrice(orderRequest), orderResponse.getTotalPrice(), 0);
   }
 }

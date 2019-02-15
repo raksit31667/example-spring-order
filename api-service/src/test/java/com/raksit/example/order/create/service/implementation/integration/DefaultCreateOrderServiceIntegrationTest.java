@@ -2,6 +2,7 @@ package com.raksit.example.order.create.service.implementation.integration;
 
 import static org.junit.Assert.assertEquals;
 
+import com.raksit.example.order.common.model.dto.OrderRequest;
 import com.raksit.example.order.common.model.dto.OrderResponse;
 import com.raksit.example.order.common.model.entity.Order;
 import com.raksit.example.order.common.repository.OrderRepository;
@@ -34,13 +35,13 @@ public class DefaultCreateOrderServiceIntegrationTest {
 
   @Test
   public void createOrder_ShouldReturnOrderDtoWithNumberOfItemsAndTotalPrice() throws Exception {
-    Order order = MockOrderFactory.createSampleOrder(NUMBER_OF_ITEMS);
+    OrderRequest orderRequest = MockOrderFactory.createSampleOrderRequest(NUMBER_OF_ITEMS);
 
-    OrderResponse orderResponse = createOrderService.createOrder(order);
+    OrderResponse orderResponse = createOrderService.createOrder(orderRequest);
 
-    assertEquals(order.getSource(), orderResponse.getSource());
-    assertEquals(order.getDestination(), orderResponse.getDestination());
+    assertEquals(orderRequest.getSoldTo(), orderResponse.getSource());
+    assertEquals(orderRequest.getShipTo(), orderResponse.getDestination());
     assertEquals(NUMBER_OF_ITEMS, orderResponse.getNumberOfItems());
-    assertEquals(PriceCalculator.calculateTotalPrice(order), orderResponse.getTotalPrice(), 0);
+    assertEquals(PriceCalculator.calculateTotalPrice(orderRequest), orderResponse.getTotalPrice(), 0);
   }
 }
