@@ -4,7 +4,7 @@ import static org.junit.Assert.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
-import com.raksit.example.order.common.model.dto.OrderDto;
+import com.raksit.example.order.common.model.dto.OrderResponse;
 import com.raksit.example.order.common.model.entity.Order;
 import com.raksit.example.order.common.repository.OrderRepository;
 import com.raksit.example.order.create.service.CreateOrderService;
@@ -37,11 +37,11 @@ public class DefaultCreateOrderServiceTest {
     Order order = MockOrderFactory.createSampleOrder(NUMBER_OF_ITEMS);
       when(orderRepository.save(any(Order.class))).thenReturn(order);
 
-    OrderDto orderDto = createOrderService.createOrder(order);
+    OrderResponse orderResponse = createOrderService.createOrder(order);
 
-    assertEquals(order.getSource(), orderDto.getSource());
-    assertEquals(order.getDestination(), orderDto.getDestination());
-    assertEquals(NUMBER_OF_ITEMS, orderDto.getNumberOfItems());
-    assertEquals(PriceCalculator.calculateTotalPrice(order), orderDto.getTotalPrice(), 0);
+    assertEquals(order.getSource(), orderResponse.getSource());
+    assertEquals(order.getDestination(), orderResponse.getDestination());
+    assertEquals(NUMBER_OF_ITEMS, orderResponse.getNumberOfItems());
+    assertEquals(PriceCalculator.calculateTotalPrice(order), orderResponse.getTotalPrice(), 0);
   }
 }

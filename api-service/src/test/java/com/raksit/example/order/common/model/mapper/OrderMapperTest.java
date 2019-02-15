@@ -2,7 +2,7 @@ package com.raksit.example.order.common.model.mapper;
 
 import static org.junit.Assert.assertEquals;
 
-import com.raksit.example.order.common.model.dto.OrderDto;
+import com.raksit.example.order.common.model.dto.OrderResponse;
 import com.raksit.example.order.common.model.entity.Order;
 import com.raksit.example.order.util.MockOrderFactory;
 import com.raksit.example.order.util.PriceCalculator;
@@ -19,11 +19,11 @@ public class OrderMapperTest {
   public void orderToOrderDto() {
     Order order = MockOrderFactory.createSampleOrder(NUMBER_OF_ITEMS);
 
-    OrderDto orderDto = OrderMapper.INSTANCE.orderToOrderDto(order);
+    OrderResponse orderResponse = OrderMapper.INSTANCE.orderToOrderDto(order);
 
-    assertEquals(order.getSource(), orderDto.getSource());
-    assertEquals(order.getDestination(), orderDto.getDestination());
-    assertEquals(NUMBER_OF_ITEMS, orderDto.getNumberOfItems());
-    assertEquals(PriceCalculator.calculateTotalPrice(order), orderDto.getTotalPrice(), 0);
+    assertEquals(order.getSource(), orderResponse.getSource());
+    assertEquals(order.getDestination(), orderResponse.getDestination());
+    assertEquals(NUMBER_OF_ITEMS, orderResponse.getNumberOfItems());
+    assertEquals(PriceCalculator.calculateTotalPrice(order), orderResponse.getTotalPrice(), 0);
   }
 }

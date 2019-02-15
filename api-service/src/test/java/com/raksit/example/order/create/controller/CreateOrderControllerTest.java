@@ -7,7 +7,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-import com.raksit.example.order.common.model.dto.OrderDto;
+import com.raksit.example.order.common.model.dto.OrderResponse;
 import com.raksit.example.order.common.model.entity.Order;
 import com.raksit.example.order.create.service.CreateOrderService;
 import com.raksit.example.order.util.JsonConverter;
@@ -37,14 +37,14 @@ public class CreateOrderControllerTest {
   @Test
   public void createOrder_ShouldReturnOrderDtoWithNumberOfItemsAndTotalPrice() throws Exception {
     Order order = MockOrderFactory.createSampleOrder(NUMBER_OF_ITEMS);
-    OrderDto orderDto = OrderDto.builder()
+    OrderResponse orderResponse = OrderResponse.builder()
         .source(order.getSource())
         .destination(order.getDestination())
         .numberOfItems(NUMBER_OF_ITEMS)
         .totalPrice(PriceCalculator.calculateTotalPrice(order))
         .build();
 
-    when(createOrderService.createOrder(any(Order.class))).thenReturn(orderDto);
+    when(createOrderService.createOrder(any(Order.class))).thenReturn(orderResponse);
 
     mvc.perform(post("/")
         .content(JsonConverter.convertObjectToJsonString(order))

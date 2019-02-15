@@ -1,6 +1,6 @@
 package com.raksit.example.order.create.service.implementation;
 
-import com.raksit.example.order.common.model.dto.OrderDto;
+import com.raksit.example.order.common.model.dto.OrderResponse;
 import com.raksit.example.order.common.model.entity.Order;
 import com.raksit.example.order.common.model.mapper.OrderMapper;
 import com.raksit.example.order.common.repository.OrderRepository;
@@ -18,7 +18,7 @@ public class DefaultCreateOrderService implements CreateOrderService {
   }
 
   @Override
-  public OrderDto createOrder(Order order) {
+  public OrderResponse createOrder(Order order) {
     return OrderMapper.INSTANCE.orderToOrderDto(orderRepository.save(order));
   }
 }
