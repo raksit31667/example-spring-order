@@ -5,6 +5,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import com.raksit.example.order.common.model.dto.OrderRequest;
 import com.raksit.example.order.common.model.entity.OrderLineItem;
 import java.util.Collections;
+import java.util.List;
 import org.junit.jupiter.api.Test;
 
 public class PriceCalculatorTest {
@@ -18,14 +19,10 @@ public class PriceCalculatorTest {
         .price(2000.0)
         .build();
 
-    OrderRequest orderRequest = OrderRequest.builder()
-        .soldTo("Bangkok")
-        .shipTo("Houston")
-        .items(Collections.nCopies(NUMBER_OF_ITEMS, orderLineItem))
-        .build();
+    List<OrderLineItem> orderLineItems = Collections.nCopies(NUMBER_OF_ITEMS, orderLineItem);
 
     double expectedTotalPrice = NUMBER_OF_ITEMS * orderLineItem.getPrice();
-    double actualTotalPrice = PriceCalculator.calculateTotalPrice(orderRequest);
+    double actualTotalPrice = PriceCalculator.calculateTotalPrice(orderLineItems);
 
     assertEquals(expectedTotalPrice, actualTotalPrice);
   }
