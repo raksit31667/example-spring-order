@@ -3,8 +3,8 @@ package com.raksit.example.order.create.controller.integration;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
+import com.raksit.example.order.common.model.dto.OrderRequest;
 import com.raksit.example.order.common.model.dto.OrderResponse;
-import com.raksit.example.order.common.model.entity.Order;
 import com.raksit.example.order.common.repository.OrderRepository;
 import com.raksit.example.order.util.MockOrderFactory;
 import com.raksit.example.order.util.PriceCalculator;
@@ -50,17 +50,17 @@ public class CreateOrderControllerIntegrationTest {
 
   @Test
   public void createOrder_ShouldReturnOrderDtoWithNumberOfItemsAndTotalPrice() throws Exception {
-    Order order = MockOrderFactory.createSampleOrder(NUMBER_OF_ITEMS);
+    OrderRequest orderRequest = MockOrderFactory.createSampleOrderRequest(NUMBER_OF_ITEMS);
 
-    HttpEntity<Order> httpEntity = new HttpEntity<>(order, httpHeaders);
+    HttpEntity<OrderRequest> httpEntity = new HttpEntity<>(orderRequest, httpHeaders);
     ResponseEntity<OrderResponse> responseEntity = restTemplate.postForEntity("/", httpEntity, OrderResponse.class);
     OrderResponse orderResponse = responseEntity.getBody();
 
     assertNotNull(orderResponse);
     assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
-    assertEquals(order.getSource(), orderResponse.getSource());
-    assertEquals(order.getDestination(), orderResponse.getDestination());
+    assertEquals(orderRequest.getSoldTo(), orderResponse.getSource());
+    assertEquals(orderRequest.getShipTo(), orderResponse.getDestination());
     assertEquals(NUMBER_OF_ITEMS, orderResponse.getNumberOfItems());
-    assertEquals(PriceCalculator.calculateTotalPrice(order), orderResponse.getTotalPrice(), 0);
+    assertEquals(PriceCalculator.calculateTotalPrice(orderRequest), orderResponse.getTotalPrice(), 0);
   }
 }

@@ -7,8 +7,8 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+import com.raksit.example.order.common.model.dto.OrderRequest;
 import com.raksit.example.order.common.model.dto.OrderResponse;
-import com.raksit.example.order.common.model.entity.Order;
 import com.raksit.example.order.create.service.CreateOrderService;
 import com.raksit.example.order.util.JsonConverter;
 import com.raksit.example.order.util.MockOrderFactory;
@@ -36,23 +36,23 @@ public class CreateOrderControllerTest {
 
   @Test
   public void createOrder_ShouldReturnOrderDtoWithNumberOfItemsAndTotalPrice() throws Exception {
-    Order order = MockOrderFactory.createSampleOrder(NUMBER_OF_ITEMS);
+    OrderRequest orderRequest = MockOrderFactory.createSampleOrderRequest(NUMBER_OF_ITEMS);
     OrderResponse orderResponse = OrderResponse.builder()
-        .source(order.getSource())
-        .destination(order.getDestination())
+        .source(orderRequest.getSoldTo())
+        .destination(orderRequest.getShipTo())
         .numberOfItems(NUMBER_OF_ITEMS)
-        .totalPrice(PriceCalculator.calculateTotalPrice(order))
+        .totalPrice(PriceCalculator.calculateTotalPrice(orderRequest))
         .build();
 
-    when(createOrderService.createOrder(any(Order.class))).thenReturn(orderResponse);
+    when(createOrderService.createOrder(any(OrderRequest.class))).thenReturn(orderResponse);
 
     mvc.perform(post("/")
-        .content(JsonConverter.convertObjectToJsonString(order))
+        .content(JsonConverter.convertObjectToJsonString(orderRequest))
         .contentType(MediaType.APPLICATION_JSON))
         .andExpect(status().isOk())
-        .andExpect(jsonPath("$.source", is(order.getSource())))
-        .andExpect(jsonPath("$.destination", is(order.getDestination())))
+        .andExpect(jsonPath("$.source", is(orderRequest.getSoldTo())))
+        .andExpect(jsonPath("$.destination", is(orderRequest.getShipTo())))
         .andExpect(jsonPath("$.numberOfItems", is(NUMBER_OF_ITEMS)))
-        .andExpect(jsonPath("$.totalPrice", is(PriceCalculator.calculateTotalPrice(order))));
+        .andExpect(jsonPath("$.totalPrice", is(PriceCalculator.calculateTotalPrice(orderRequest))));
   }
 }
