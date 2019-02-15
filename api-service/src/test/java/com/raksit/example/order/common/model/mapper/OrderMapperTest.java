@@ -16,10 +16,10 @@ public class OrderMapperTest {
   private static final int NUMBER_OF_ITEMS = 3;
 
   @Test
-  public void orderToOrderDto() {
+  public void orderToOrderResponse() {
     Order order = MockOrderFactory.createSampleOrder(NUMBER_OF_ITEMS);
 
-    OrderResponse orderResponse = OrderMapper.INSTANCE.orderToOrderDto(order);
+    OrderResponse orderResponse = OrderMapper.INSTANCE.orderToOrderResponse(order);
 
     assertEquals(order.getSource(), orderResponse.getSource());
     assertEquals(order.getDestination(), orderResponse.getDestination());

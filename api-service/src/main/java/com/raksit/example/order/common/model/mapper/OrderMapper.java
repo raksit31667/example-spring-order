@@ -11,7 +11,7 @@ public abstract class OrderMapper {
 
   public static final OrderMapper INSTANCE = Mappers.getMapper(OrderMapper.class);
 
-  public OrderResponse orderToOrderDto(Order order) {
+  public OrderResponse orderToOrderResponse(Order order) {
     return OrderResponse.builder()
         .source(order.getSource())
         .destination(order.getDestination())

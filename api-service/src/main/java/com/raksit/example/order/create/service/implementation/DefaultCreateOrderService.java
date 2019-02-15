@@ -19,6 +19,6 @@ public class DefaultCreateOrderService implements CreateOrderService {
 
   @Override
   public OrderResponse createOrder(Order order) {
-    return OrderMapper.INSTANCE.orderToOrderDto(orderRepository.save(order));
+    return OrderMapper.INSTANCE.orderToOrderResponse(orderRepository.save(order));
   }
 }
