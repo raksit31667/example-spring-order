@@ -4,6 +4,7 @@ import static io.restassured.RestAssured.given;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 
+import com.raksit.example.order.common.model.dto.OrderRequest;
 import com.raksit.example.order.common.model.entity.Order;
 import com.raksit.example.order.common.model.entity.OrderLineItem;
 import io.restassured.http.ContentType;
@@ -19,14 +20,14 @@ public class CreateOrderControllerIsolationTest extends IsolationTest {
         .price(2000.0)
         .build();
 
-    Order order = Order.builder()
-        .source("Bangkok")
-        .destination("Houston")
+    OrderRequest orderRequest = OrderRequest.builder()
+        .soldTo("Bangkok")
+        .shipTo("Houston")
         .items(Collections.nCopies(3, orderLineItem))
         .build();
 
     given().contentType(ContentType.JSON)
-        .body(order)
+        .body(orderRequest)
         .when().post("/")
         .then()
         .statusCode(200)
