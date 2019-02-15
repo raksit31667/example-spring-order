@@ -1,6 +1,7 @@
 package com.raksit.example.order.util;
 
 import com.github.javafaker.Faker;
+import com.raksit.example.order.common.model.dto.OrderRequest;
 import com.raksit.example.order.common.model.entity.Order;
 import com.raksit.example.order.common.model.entity.OrderLineItem;
 import java.util.Collections;
@@ -13,6 +14,14 @@ public class MockOrderFactory {
     return OrderLineItem.builder()
         .name(FAKER.beer().name())
         .price(FAKER.number().randomDouble(2, 1000, 2000))
+        .build();
+  }
+
+  public static OrderRequest createSampleOrderRequest(int numberOfItems) {
+    return OrderRequest.builder()
+        .soldTo(FAKER.company().name())
+        .shipTo(FAKER.company().name())
+        .items(Collections.nCopies(numberOfItems, createSampleOrderLineItems()))
         .build();
   }
 
