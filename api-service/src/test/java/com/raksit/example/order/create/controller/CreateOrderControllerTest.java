@@ -41,7 +41,7 @@ public class CreateOrderControllerTest {
         .source(orderRequest.getSoldTo())
         .destination(orderRequest.getShipTo())
         .numberOfItems(NUMBER_OF_ITEMS)
-        .totalPrice(PriceCalculator.calculateTotalPrice(orderRequest))
+        .totalPrice(PriceCalculator.calculateTotalPrice(orderRequest.getItems()))
         .build();
 
     when(createOrderService.createOrder(any(OrderRequest.class))).thenReturn(orderResponse);
@@ -53,6 +53,6 @@ public class CreateOrderControllerTest {
         .andExpect(jsonPath("$.source", is(orderRequest.getSoldTo())))
         .andExpect(jsonPath("$.destination", is(orderRequest.getShipTo())))
         .andExpect(jsonPath("$.numberOfItems", is(NUMBER_OF_ITEMS)))
-        .andExpect(jsonPath("$.totalPrice", is(PriceCalculator.calculateTotalPrice(orderRequest))));
+        .andExpect(jsonPath("$.totalPrice", is(PriceCalculator.calculateTotalPrice(orderRequest.getItems()))));
   }
 }

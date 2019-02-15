@@ -22,7 +22,7 @@ public abstract class OrderMapper {
         .source(order.getSource())
         .destination(order.getDestination())
         .numberOfItems(order.getItems().size())
-        .totalPrice(PriceCalculator.calculateTotalPrice(order))
+        .totalPrice(PriceCalculator.calculateTotalPrice(order.getItems()))
         .build();
   }
 }

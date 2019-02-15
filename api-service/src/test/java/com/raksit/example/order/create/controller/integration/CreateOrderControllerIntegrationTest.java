@@ -61,6 +61,6 @@ public class CreateOrderControllerIntegrationTest {
     assertEquals(orderRequest.getSoldTo(), orderResponse.getSource());
     assertEquals(orderRequest.getShipTo(), orderResponse.getDestination());
     assertEquals(NUMBER_OF_ITEMS, orderResponse.getNumberOfItems());
-    assertEquals(PriceCalculator.calculateTotalPrice(orderRequest), orderResponse.getTotalPrice(), 0);
+    assertEquals(PriceCalculator.calculateTotalPrice(orderRequest.getItems()), orderResponse.getTotalPrice(), 0);
   }
 }

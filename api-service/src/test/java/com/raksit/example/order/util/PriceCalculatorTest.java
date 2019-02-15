@@ -2,7 +2,6 @@ package com.raksit.example.order.util;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-import com.raksit.example.order.common.model.dto.OrderRequest;
 import com.raksit.example.order.common.model.entity.OrderLineItem;
 import java.util.Collections;
 import java.util.List;
