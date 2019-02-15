@@ -1,7 +1,7 @@
 package com.raksit.example.order.create.controller;
 
+import com.raksit.example.order.common.model.dto.OrderRequest;
 import com.raksit.example.order.common.model.dto.OrderResponse;
-import com.raksit.example.order.common.model.entity.Order;
 import com.raksit.example.order.create.service.CreateOrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -18,7 +18,7 @@ public class CreateOrderController {
 
   @PostMapping("/")
   @ResponseStatus(HttpStatus.OK)
-  public OrderResponse createOrder(@RequestBody Order order) {
-    return createOrderService.createOrder(order);
+  public OrderResponse createOrder(@RequestBody OrderRequest orderRequest) {
+    return createOrderService.createOrder(orderRequest);
   }
 }
