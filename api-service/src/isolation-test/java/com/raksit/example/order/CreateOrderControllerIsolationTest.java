@@ -5,7 +5,6 @@ import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 
 import com.raksit.example.order.common.model.dto.OrderRequest;
-import com.raksit.example.order.common.model.entity.Order;
 import com.raksit.example.order.common.model.entity.OrderLineItem;
 import io.restassured.http.ContentType;
 import java.util.Collections;
@@ -15,20 +14,20 @@ public class CreateOrderControllerIsolationTest extends IsolationTest {
 
   @Test
   public void createOrder_ShouldReturnOrderDtoWithNumberOfItemsAndTotalPrice() {
-    OrderLineItem orderLineItem = OrderLineItem.builder()
-        .name("Diesel")
-        .price(2000.0)
-        .build();
+    OrderLineItem orderLineItem = OrderLineItem.builder().name("Diesel").price(2000.0).build();
 
-    OrderRequest orderRequest = OrderRequest.builder()
-        .soldTo("Bangkok")
-        .shipTo("Houston")
-        .items(Collections.nCopies(3, orderLineItem))
-        .build();
+    OrderRequest orderRequest =
+        OrderRequest.builder()
+            .soldTo("Bangkok")
+            .shipTo("Houston")
+            .items(Collections.nCopies(3, orderLineItem))
+            .build();
 
-    given().contentType(ContentType.JSON)
+    given()
+        .contentType(ContentType.JSON)
         .body(orderRequest)
-        .when().post("/")
+        .when()
+        .post("/")
         .then()
         .statusCode(200)
         .body("source", is("Bangkok"))

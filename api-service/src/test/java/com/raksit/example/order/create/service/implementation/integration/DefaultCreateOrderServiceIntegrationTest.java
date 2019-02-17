@@ -21,11 +21,9 @@ public class DefaultCreateOrderServiceIntegrationTest {
 
   private static final int NUMBER_OF_ITEMS = 3;
 
-  @Autowired
-  private CreateOrderService createOrderService;
+  @Autowired private CreateOrderService createOrderService;
 
-  @Autowired
-  private OrderRepository orderRepository;
+  @Autowired private OrderRepository orderRepository;
 
   @AfterEach
   public void tearDown() {
@@ -41,6 +39,9 @@ public class DefaultCreateOrderServiceIntegrationTest {
     assertEquals(orderRequest.getSoldTo(), orderResponse.getSource());
     assertEquals(orderRequest.getShipTo(), orderResponse.getDestination());
     assertEquals(NUMBER_OF_ITEMS, orderResponse.getNumberOfItems());
-    assertEquals(PriceCalculator.calculateTotalPrice(orderRequest.getItems()), orderResponse.getTotalPrice(), 0);
+    assertEquals(
+        PriceCalculator.calculateTotalPrice(orderRequest.getItems()),
+        orderResponse.getTotalPrice(),
+        0);
   }
 }

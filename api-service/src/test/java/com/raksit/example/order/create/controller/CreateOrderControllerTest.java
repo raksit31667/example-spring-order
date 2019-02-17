@@ -28,31 +28,33 @@ public class CreateOrderControllerTest {
 
   private static final int NUMBER_OF_ITEMS = 3;
 
-  @Autowired
-  private MockMvc mvc;
+  @Autowired private MockMvc mvc;
 
-  @MockBean
-  private CreateOrderService createOrderService;
+  @MockBean private CreateOrderService createOrderService;
 
   @Test
   public void createOrder_ShouldReturnOrderDtoWithNumberOfItemsAndTotalPrice() throws Exception {
     OrderRequest orderRequest = MockOrderFactory.createSampleOrderRequest(NUMBER_OF_ITEMS);
-    OrderResponse orderResponse = OrderResponse.builder()
-        .source(orderRequest.getSoldTo())
-        .destination(orderRequest.getShipTo())
-        .numberOfItems(NUMBER_OF_ITEMS)
-        .totalPrice(PriceCalculator.calculateTotalPrice(orderRequest.getItems()))
-        .build();
+    OrderResponse orderResponse =
+        OrderResponse.builder()
+            .source(orderRequest.getSoldTo())
+            .destination(orderRequest.getShipTo())
+            .numberOfItems(NUMBER_OF_ITEMS)
+            .totalPrice(PriceCalculator.calculateTotalPrice(orderRequest.getItems()))
+            .build();
 
     when(createOrderService.createOrder(any(OrderRequest.class))).thenReturn(orderResponse);
 
-    mvc.perform(post("/")
-        .content(JsonConverter.convertObjectToJsonString(orderRequest))
-        .contentType(MediaType.APPLICATION_JSON))
+    mvc.perform(
+            post("/")
+                .content(JsonConverter.convertObjectToJsonString(orderRequest))
+                .contentType(MediaType.APPLICATION_JSON))
         .andExpect(status().isOk())
         .andExpect(jsonPath("$.source", is(orderRequest.getSoldTo())))
         .andExpect(jsonPath("$.destination", is(orderRequest.getShipTo())))
         .andExpect(jsonPath("$.numberOfItems", is(NUMBER_OF_ITEMS)))
-        .andExpect(jsonPath("$.totalPrice", is(PriceCalculator.calculateTotalPrice(orderRequest.getItems()))));
+        .andExpect(
+            jsonPath(
+                "$.totalPrice", is(PriceCalculator.calculateTotalPrice(orderRequest.getItems()))));
   }
 }

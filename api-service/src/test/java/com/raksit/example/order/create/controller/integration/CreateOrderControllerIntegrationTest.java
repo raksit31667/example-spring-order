@@ -29,11 +29,9 @@ public class CreateOrderControllerIntegrationTest {
 
   private static final int NUMBER_OF_ITEMS = 3;
 
-  @Autowired
-  private TestRestTemplate restTemplate;
+  @Autowired private TestRestTemplate restTemplate;
 
-  @Autowired
-  private OrderRepository orderRepository;
+  @Autowired private OrderRepository orderRepository;
 
   private HttpHeaders httpHeaders;
 
@@ -53,7 +51,8 @@ public class CreateOrderControllerIntegrationTest {
     OrderRequest orderRequest = MockOrderFactory.createSampleOrderRequest(NUMBER_OF_ITEMS);
 
     HttpEntity<OrderRequest> httpEntity = new HttpEntity<>(orderRequest, httpHeaders);
-    ResponseEntity<OrderResponse> responseEntity = restTemplate.postForEntity("/", httpEntity, OrderResponse.class);
+    ResponseEntity<OrderResponse> responseEntity =
+        restTemplate.postForEntity("/", httpEntity, OrderResponse.class);
     OrderResponse orderResponse = responseEntity.getBody();
 
     assertNotNull(orderResponse);
@@ -61,6 +60,9 @@ public class CreateOrderControllerIntegrationTest {
     assertEquals(orderRequest.getSoldTo(), orderResponse.getSource());
     assertEquals(orderRequest.getShipTo(), orderResponse.getDestination());
     assertEquals(NUMBER_OF_ITEMS, orderResponse.getNumberOfItems());
-    assertEquals(PriceCalculator.calculateTotalPrice(orderRequest.getItems()), orderResponse.getTotalPrice(), 0);
+    assertEquals(
+        PriceCalculator.calculateTotalPrice(orderRequest.getItems()),
+        orderResponse.getTotalPrice(),
+        0);
   }
 }

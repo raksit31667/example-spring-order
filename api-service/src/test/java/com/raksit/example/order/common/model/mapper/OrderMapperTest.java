@@ -36,6 +36,7 @@ public class OrderMapperTest {
     assertEquals(order.getSource(), orderResponse.getSource());
     assertEquals(order.getDestination(), orderResponse.getDestination());
     assertEquals(NUMBER_OF_ITEMS, orderResponse.getNumberOfItems());
-    assertEquals(PriceCalculator.calculateTotalPrice(order.getItems()), orderResponse.getTotalPrice(), 0);
+    assertEquals(
+        PriceCalculator.calculateTotalPrice(order.getItems()), orderResponse.getTotalPrice(), 0);
   }
 }

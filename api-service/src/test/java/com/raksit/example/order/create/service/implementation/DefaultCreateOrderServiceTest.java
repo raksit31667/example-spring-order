@@ -36,19 +36,23 @@ public class DefaultCreateOrderServiceTest {
   @Test
   public void createOrder_ShouldReturnOrderDtoWithNumberOfItemsAndTotalPrice() throws Exception {
     OrderRequest orderRequest = MockOrderFactory.createSampleOrderRequest(NUMBER_OF_ITEMS);
-    Order order = Order.builder()
-        .source(orderRequest.getSoldTo())
-        .destination(orderRequest.getShipTo())
-        .items(orderRequest.getItems())
-        .build();
+    Order order =
+        Order.builder()
+            .source(orderRequest.getSoldTo())
+            .destination(orderRequest.getShipTo())
+            .items(orderRequest.getItems())
+            .build();
 
-      when(orderRepository.save(any(Order.class))).thenReturn(order);
+    when(orderRepository.save(any(Order.class))).thenReturn(order);
 
     OrderResponse orderResponse = createOrderService.createOrder(orderRequest);
 
     assertEquals(orderRequest.getSoldTo(), orderResponse.getSource());
     assertEquals(orderRequest.getShipTo(), orderResponse.getDestination());
     assertEquals(NUMBER_OF_ITEMS, orderResponse.getNumberOfItems());
-    assertEquals(PriceCalculator.calculateTotalPrice(orderRequest.getItems()), orderResponse.getTotalPrice(), 0);
+    assertEquals(
+        PriceCalculator.calculateTotalPrice(orderRequest.getItems()),
+        orderResponse.getTotalPrice(),
+        0);
   }
 }

@@ -13,10 +13,7 @@ public class PriceCalculatorTest {
 
   @Test
   public void calculateTotalPrice_ShouldReturnCorrectPrice() {
-    OrderLineItem orderLineItem = OrderLineItem.builder()
-        .name("Diesel")
-        .price(2000.0)
-        .build();
+    OrderLineItem orderLineItem = OrderLineItem.builder().name("Diesel").price(2000.0).build();
 
     List<OrderLineItem> orderLineItems = Collections.nCopies(NUMBER_OF_ITEMS, orderLineItem);
 

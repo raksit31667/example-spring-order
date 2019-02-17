@@ -13,8 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class CreateOrderController {
 
-  @Autowired
-  private CreateOrderService createOrderService;
+  @Autowired private CreateOrderService createOrderService;
 
   @PostMapping("/")
   @ResponseStatus(HttpStatus.OK)
