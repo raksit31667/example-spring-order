@@ -20,7 +20,7 @@ apply plugin: 'org.unbroken-dome.test-sets'
 apply plugin: 'jacoco'
 
 group = 'com.raksit.example'
-version = '0.0.1-SNAPSHOT'
+version = '0.0.1'
 sourceCompatibility = '1.8'
 
 repositories {
