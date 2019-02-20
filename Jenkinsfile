@@ -6,7 +6,9 @@ pipeline {
     stages {
         stage("Clone") {
             steps {
-                git "https://github.com/raksit31667/example-spring-order.git"
+                git branch: "master"
+                    url: "git@github.com:raksit31667/example-spring-order.git",
+                    credentialsId: "github"
             }
         }
         stage("Unit test") {
