@@ -6,7 +6,7 @@ pipeline {
     stages {
         stage("Clone") {
             steps {
-                git branch: "master"
+                git branch: "master",
                     url: "git@github.com:raksit31667/example-spring-order.git",
                     credentialsId: "github"
             }
