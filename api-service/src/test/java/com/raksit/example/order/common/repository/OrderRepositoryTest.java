@@ -1,6 +1,7 @@
 package com.raksit.example.order.common.repository;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
 import com.raksit.example.order.common.model.entity.Order;
@@ -31,16 +32,13 @@ public class OrderRepositoryTest {
   public void createOrder_ShouldSaveOrderIntoDatabase() {
     Order order = MockOrderFactory.createSampleOrder(NUMBER_OF_ITEMS);
 
-    orderRepository.save(order);
+    Order savedOrder = orderRepository.save(order);
 
-    Optional<Order> savedOrder = orderRepository.findById(1L);
-
-    assertTrue(savedOrder.isPresent());
-    assertEquals(order, savedOrder.get());
+    assertNotNull(savedOrder);
   }
 
   @Test
-  public void findBySource_ShouldReturnOrdersWithSpecificSource() {
+  public void findAllBySource_ShouldReturnOrdersWithSpecificSource() {
     Order order = MockOrderFactory.createSampleOrder(NUMBER_OF_ITEMS);
     Order anotherOrder = MockOrderFactory.createSampleOrder(NUMBER_OF_ITEMS);
     orderRepository.save(order);
@@ -49,6 +47,7 @@ public class OrderRepositoryTest {
     Optional<List<Order>> actualOrders = orderRepository.findAllBySource(order.getSource());
 
     assertTrue(actualOrders.isPresent());
+    assertEquals(1, actualOrders.get().size());
     assertEquals(order, actualOrders.get().get(0));
   }
 }
