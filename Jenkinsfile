@@ -1,5 +1,4 @@
 def gitCommitId = null
-def dockerRegistryAndImageName = null
 
 pipeline {
     agent any
@@ -11,11 +10,13 @@ pipeline {
     stages {
         stage("Clone") {
             steps {
-                git branch: "master",
-                    url: "git@github.com:raksit31667/example-spring-order.git",
-                    credentialsId: "github"
+                script {
+                    git branch: "master",
+                            url: "git@github.com:raksit31667/example-spring-order.git",
+                            credentialsId: "github"
 
-                gitCommitId = sh(returnStdout: true, script: "git log -n 1 --pretty=format:'%h'").trim()
+                    gitCommitId = sh(returnStdout: true, script: "git log -n 1 --pretty=format:'%h'").trim()
+                }
             }
         }
         stage("Unit test") {
@@ -49,23 +50,27 @@ pipeline {
         }
         stage("Deploy") {
             steps {
-                dockerRegistryAndImageName = sh(
-                        script: "oc get imagestream --namespace='${namespace}' ${serviceName} -o='jsonpath={.status.dockerImageRepository}'",
-                        returnStdout: true).trim()
+                script {
+                    def dockerRegistryAndImageName = sh(
+                            script: "oc get imagestream --namespace='${namespace}' ${serviceName} -o='jsonpath={.status.dockerImageRepository}'",
+                            returnStdout: true).trim()
 
-                sh "oc process openshift/${serviceName}-deployment-config.yaml --ignore-unknown-parameters=true -p REPLICAS='${replicaCount}' DOCKER_REGISTRY='${dockerRegistryAndImageName}:${gitCommitId}' -p SPRING_PROFILES_ACTIVE='dev' | oc apply --namespace='${namespaceDev}' -f -"
-                openshiftDeploy depCfg: "${serviceName}-deployment", namespace: "${namespace}"
-                sh "oc rollout status dc ${serviceName}-deployment -w --namespace='${namespace}'"
-                sh "oc apply openshift/${serviceName}-service.yaml --namespace='${namespace}' -f -"
+                    sh "oc process openshift/${serviceName}-deployment-config.yaml --ignore-unknown-parameters=true -p REPLICAS='${replicaCount}' DOCKER_REGISTRY='${dockerRegistryAndImageName}:${gitCommitId}' -p SPRING_PROFILES_ACTIVE='dev' | oc apply --namespace='${namespaceDev}' -f -"
+                    openshiftDeploy depCfg: "${serviceName}-deployment", namespace: "${namespace}"
+                    sh "oc rollout status dc ${serviceName}-deployment -w --namespace='${namespace}'"
+                    sh "oc apply openshift/${serviceName}-service.yaml --namespace='${namespace}' -f -"
+                }
             }
         }
         stage('Verify Deployment') {
             steps {
-                try {
-                    verifyDeployment(namespace, serviceName, replicaCount)
-                } catch (Throwable e) {
-                    sh "oc rollback ${serviceName} --namespace='${namespace}'"
-                    throw e
+                script {
+                    try {
+                        verifyDeployment(namespace, serviceName, replicaCount)
+                    } catch (Throwable e) {
+                        sh "oc rollback ${serviceName} --namespace='${namespace}'"
+                        throw e
+                    }
                 }
             }
         }
