@@ -1,0 +1,48 @@
+kind: Template
+apiVersion: v1
+metadata:
+  name: order-build-and-imagestream
+parameters:
+  - name: GIT_HASH
+    displayName: Git hash
+    description: Git hash for the commit from which we are build the image
+    value: default
+  - name: JENKINS_BUILD_NUMBER
+    displayName: Jenkins build number
+    description: The number of the jenkins build that built this image
+    value: default
+objects:
+  - apiVersion: v1
+    kind: ImageStream
+    metadata:
+      name: order
+      labels:
+        application: order
+    spec:
+      tags:
+        - name: latest
+  - apiVersion: v1
+    kind: BuildConfig
+    metadata:
+      name: order
+    spec:
+      output:
+        to:
+          kind: ImageStreamTag
+          name: order:latest
+      source:
+        binary: {}
+        type: Binary
+      strategy:
+        dockerStrategy:
+          buildArgs:
+            - name: JENKINS_BUILD_NUMBER
+              value: ${JENKINS_BUILD_NUMBER}
+            - name: GIT_HASH
+              value: ${GIT_HASH}
+        type: Docker
+      successfulBuildsHistoryLimit: 5
+      triggers:
+        - github:
+            secret: 4004467cd5785fb4
+          type: GitHub
