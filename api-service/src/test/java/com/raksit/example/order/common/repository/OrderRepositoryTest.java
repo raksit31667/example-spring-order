@@ -48,6 +48,6 @@ public class OrderRepositoryTest {
 
     assertTrue(actualOrders.isPresent());
     assertEquals(1, actualOrders.get().size());
-    assertEquals(order, actualOrders.get().get(0));
+    assertEquals(order, actualOrders.get().iterator().next());
   }
 }
