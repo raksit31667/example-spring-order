@@ -8,14 +8,12 @@ import com.raksit.example.order.common.model.dto.OrderRequest;
 import com.raksit.example.order.common.model.dto.OrderResponse;
 import com.raksit.example.order.common.model.entity.Order;
 import com.raksit.example.order.common.repository.OrderRepository;
-import com.raksit.example.order.create.service.CreateOrderService;
 import com.raksit.example.order.util.MockOrderFactory;
 import com.raksit.example.order.util.PriceCalculator;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 @ExtendWith(MockitoExtension.class)
@@ -23,15 +21,11 @@ public class DefaultCreateOrderServiceTest {
 
   private static final int NUMBER_OF_ITEMS = 3;
 
-  private CreateOrderService createOrderService;
+  @InjectMocks
+  private DefaultCreateOrderService createOrderService;
 
-  @Mock private OrderRepository orderRepository;
-
-  @BeforeEach
-  public void setUp() {
-    MockitoAnnotations.initMocks(this);
-    createOrderService = new DefaultCreateOrderService(orderRepository);
-  }
+  @Mock
+  private OrderRepository orderRepository;
 
   @Test
   public void createOrder_ShouldReturnOrderDtoWithNumberOfItemsAndTotalPrice() throws Exception {

@@ -14,10 +14,6 @@ public class DefaultCreateOrderService implements CreateOrderService {
 
   @Autowired private OrderRepository orderRepository;
 
-  public DefaultCreateOrderService(OrderRepository orderRepository) {
-    this.orderRepository = orderRepository;
-  }
-
   @Override
   public OrderResponse createOrder(OrderRequest orderRequest) {
     Order order = OrderMapper.INSTANCE.orderRequestToOrder(orderRequest);
