@@ -59,11 +59,13 @@ pipeline {
                 }
             }
             stage('Verify Deployment') {
-                try {
-                    verifyDeployment(namespace, serviceName, replicaCount)
-                } catch (Throwable e) {
-                    sh "oc rollback ${serviceName} --namespace='${namespace}'"
-                    throw e
+                steps {
+                    try {
+                        verifyDeployment(namespace, serviceName, replicaCount)
+                    } catch (Throwable e) {
+                        sh "oc rollback ${serviceName} --namespace='${namespace}'"
+                        throw e
+                    }
                 }
             }
         }
