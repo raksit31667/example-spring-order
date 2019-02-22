@@ -5,6 +5,7 @@ import static org.junit.Assert.assertTrue;
 
 import com.raksit.example.order.common.model.entity.Order;
 import com.raksit.example.order.util.MockOrderFactory;
+import java.util.List;
 import java.util.Optional;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
@@ -27,7 +28,7 @@ public class OrderRepositoryTest {
   }
 
   @Test
-  public void createOrder_ShouldSaveOrderIntoDatabase() throws Exception {
+  public void createOrder_ShouldSaveOrderIntoDatabase() {
     Order order = MockOrderFactory.createSampleOrder(NUMBER_OF_ITEMS);
 
     orderRepository.save(order);
@@ -36,5 +37,18 @@ public class OrderRepositoryTest {
 
     assertTrue(savedOrder.isPresent());
     assertEquals(order, savedOrder.get());
+  }
+
+  @Test
+  public void findBySource_ShouldReturnOrdersWithSpecificSource() {
+    Order order = MockOrderFactory.createSampleOrder(NUMBER_OF_ITEMS);
+    Order anotherOrder = MockOrderFactory.createSampleOrder(NUMBER_OF_ITEMS);
+    orderRepository.save(order);
+    orderRepository.save(anotherOrder);
+
+    Optional<List<Order>> actualOrders = orderRepository.findAllBySource(order.getSource());
+
+    assertTrue(actualOrders.isPresent());
+    assertEquals(order, actualOrders.get().get(0));
   }
 }
