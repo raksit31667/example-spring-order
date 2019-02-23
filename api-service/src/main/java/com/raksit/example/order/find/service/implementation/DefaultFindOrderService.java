@@ -1,5 +1,6 @@
 package com.raksit.example.order.find.service.implementation;
 
+import com.raksit.example.order.common.exception.OrderNotFoundException;
 import com.raksit.example.order.common.model.entity.Order;
 import com.raksit.example.order.common.repository.OrderRepository;
 import com.raksit.example.order.find.service.FindOrderService;
@@ -14,7 +15,7 @@ public class DefaultFindOrderService implements FindOrderService {
   private OrderRepository orderRepository;
 
   @Override
-  public List<Order> getOrdersBySource(String source) {
-    return orderRepository.findAllBySource(source).get();
+  public List<Order> getOrdersBySource(String source) throws OrderNotFoundException {
+    return orderRepository.findAllBySource(source).orElseThrow(OrderNotFoundException::new);
   }
 }

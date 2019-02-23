@@ -27,7 +27,7 @@ public class DefaultFindOrderServiceTest {
   @Mock private OrderRepository orderRepository;
 
   @Test
-  public void getOrdersBySource_ShouldReturnOrdersWithSpecificSource() {
+  public void getOrdersBySource_ShouldReturnOrdersWithSpecificSource() throws Exception {
     Order thaiOrder = MockOrderFactory.createSampleOrder(NUMBER_OF_ITEMS);
     Order chineseOrder = MockOrderFactory.createSampleOrder(NUMBER_OF_ITEMS);
     thaiOrder.setSource("Bangkok");
