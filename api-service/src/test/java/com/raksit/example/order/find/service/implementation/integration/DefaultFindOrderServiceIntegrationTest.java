@@ -1,7 +1,9 @@
 package com.raksit.example.order.find.service.implementation.integration;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
+import com.raksit.example.order.common.exception.OrderNotFoundException;
 import com.raksit.example.order.common.model.entity.Order;
 import com.raksit.example.order.common.repository.OrderRepository;
 import com.raksit.example.order.find.service.FindOrderService;
@@ -42,5 +44,20 @@ public class DefaultFindOrderServiceIntegrationTest {
     Order actualOrder = findOrderService.getOrdersBySource("Bangkok").iterator().next();
 
     assertEquals("Bangkok", actualOrder.getSource());
+  }
+
+  @Test
+  public void getOrdersBySource_NotFound_ShouldThrowOrderNotFoundException() {
+    Order thaiOrder = MockOrderFactory.createSampleOrder(NUMBER_OF_ITEMS);
+    Order chineseOrder = MockOrderFactory.createSampleOrder(NUMBER_OF_ITEMS);
+    thaiOrder.setSource("Bangkok");
+    chineseOrder.setSource("Wuhan");
+
+    orderRepository.save(thaiOrder);
+    orderRepository.save(chineseOrder);
+
+    assertThrows(OrderNotFoundException.class, () -> {
+      findOrderService.getOrdersBySource("Houston");
+    });
   }
 }

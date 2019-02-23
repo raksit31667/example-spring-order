@@ -1,9 +1,11 @@
 package com.raksit.example.order.find.service.implementation;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.when;
 
+import com.raksit.example.order.common.exception.OrderNotFoundException;
 import com.raksit.example.order.common.model.entity.Order;
 import com.raksit.example.order.common.repository.OrderRepository;
 import com.raksit.example.order.util.MockOrderFactory;
@@ -37,5 +39,20 @@ public class DefaultFindOrderServiceTest {
     Order actualOrder = findOrderService.getOrdersBySource("Bangkok").iterator().next();
 
     assertEquals("Bangkok", actualOrder.getSource());
+  }
+
+  @Test
+  public void getOrdersBySource_NotFound_ShouldThrowOrderNotFoundException() {
+    Order thaiOrder = MockOrderFactory.createSampleOrder(NUMBER_OF_ITEMS);
+    Order chineseOrder = MockOrderFactory.createSampleOrder(NUMBER_OF_ITEMS);
+    thaiOrder.setSource("Bangkok");
+    chineseOrder.setSource("Wuhan");
+
+    when(orderRepository.findAllBySource(eq("Houston")))
+        .thenReturn(Optional.empty());
+
+    assertThrows(OrderNotFoundException.class, () -> {
+      findOrderService.getOrdersBySource("Houston");
+    });
   }
 }
