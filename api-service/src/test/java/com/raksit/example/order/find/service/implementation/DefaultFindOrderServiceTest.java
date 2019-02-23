@@ -1,8 +1,6 @@
 package com.raksit.example.order.find.service.implementation;
 
-import static java.util.Arrays.asList;
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.when;
 
@@ -37,9 +35,8 @@ public class DefaultFindOrderServiceTest {
     when(orderRepository.findAllBySource(eq("Bangkok")))
         .thenReturn(Optional.of(Collections.singletonList(thaiOrder)));
 
-    Optional<List<Order>> actualOrders = findOrderService.getOrdersBySource("Bangkok");
+    List<Order> actualOrders = findOrderService.getOrdersBySource("Bangkok");
 
-    assertTrue(actualOrders.isPresent());
-    assertEquals(thaiOrder, actualOrders.get().iterator().next());
+    assertEquals(thaiOrder, actualOrders.iterator().next());
   }
 }
