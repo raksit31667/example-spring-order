@@ -1,28 +1,34 @@
-package com.raksit.example.order.find.service.implementation;
+package com.raksit.example.order.find.service.implementation.integration;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.mockito.ArgumentMatchers.eq;
-import static org.mockito.Mockito.when;
 
 import com.raksit.example.order.common.model.entity.Order;
 import com.raksit.example.order.common.repository.OrderRepository;
+import com.raksit.example.order.find.service.FindOrderService;
 import com.raksit.example.order.util.MockOrderFactory;
-import java.util.Collections;
-import java.util.Optional;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 
-@ExtendWith(MockitoExtension.class)
-public class DefaultFindOrderServiceTest {
+@ExtendWith(SpringExtension.class)
+@SpringBootTest
+public class DefaultFindOrderServiceIntegrationTest {
 
   private static final int NUMBER_OF_ITEMS = 3;
 
-  @InjectMocks private DefaultFindOrderService findOrderService;
+  @Autowired
+  private FindOrderService findOrderService;
 
-  @Mock private OrderRepository orderRepository;
+  @Autowired
+  private OrderRepository orderRepository;
+
+  @AfterEach
+  private void tearDown() {
+    orderRepository.deleteAll();
+  }
 
   @Test
   public void getOrdersBySource_ShouldReturnOrdersWithSpecificSource() {
@@ -31,9 +37,8 @@ public class DefaultFindOrderServiceTest {
     thaiOrder.setSource("Bangkok");
     chineseOrder.setSource("Wuhan");
 
-    when(orderRepository.findAllBySource(eq("Bangkok")))
-        .thenReturn(Optional.of(Collections.singletonList(thaiOrder)));
-
+    orderRepository.save(thaiOrder);
+    orderRepository.save(chineseOrder);
     Order actualOrder = findOrderService.getOrdersBySource("Bangkok").iterator().next();
 
     assertEquals("Bangkok", actualOrder.getSource());
