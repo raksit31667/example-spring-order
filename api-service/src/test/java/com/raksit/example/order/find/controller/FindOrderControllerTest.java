@@ -34,6 +34,7 @@ public class FindOrderControllerTest {
   @Test
   public void getOrdersBySource_ShouldReturnOrdersWithSpecificSource() throws Exception {
     Order thaiOrder = MockOrderFactory.createSampleOrder(NUMBER_OF_ITEMS);
+    thaiOrder.setSource("Bangkok");
 
     when(findOrderService.getOrdersBySource(eq("Bangkok")))
         .thenReturn(Collections.singletonList(thaiOrder));

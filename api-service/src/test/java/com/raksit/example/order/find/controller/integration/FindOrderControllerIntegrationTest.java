@@ -6,10 +6,12 @@ import static org.hamcrest.Matchers.hasProperty;
 import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.is;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import com.raksit.example.order.common.model.entity.Order;
 import com.raksit.example.order.common.repository.OrderRepository;
 import com.raksit.example.order.util.MockOrderFactory;
+import java.util.Arrays;
 import java.util.List;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
@@ -18,7 +20,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
 import org.springframework.boot.test.web.client.TestRestTemplate;
-import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
@@ -26,7 +27,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 
 @ExtendWith(SpringExtension.class)
 @SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
-public class FIndOrderControllerIntegrationTest {
+public class FindOrderControllerIntegrationTest {
 
   private static final int NUMBER_OF_ITEMS = 3;
 
@@ -50,14 +51,17 @@ public class FIndOrderControllerIntegrationTest {
     orderRepository.save(chineseOrder);
 
     UriComponentsBuilder uriBuilder =
-        UriComponentsBuilder.fromHttpUrl("/").queryParam("source", "Bangkok");
+        UriComponentsBuilder.fromUriString("/orders").queryParam("source", "Bangkok");
 
-    ResponseEntity<List<Order>> responseEntity =
+    ResponseEntity<Order[]> responseEntity =
         restTemplate.getForEntity(
-            uriBuilder.toUriString(), null, new ParameterizedTypeReference<List<Order>>() {});
+            uriBuilder.build().toString(), Order[].class);
 
     assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
-    assertThat(responseEntity.getBody(), hasSize(1));
-    assertThat(responseEntity.getBody(), everyItem(hasProperty("source", is("Bangkok"))));
+    assertNotNull(responseEntity.getBody());
+
+    List<Order> actualOrders = Arrays.asList(responseEntity.getBody());
+    assertThat(actualOrders, hasSize(1));
+    assertThat(actualOrders, everyItem(hasProperty("source", is("Bangkok"))));
   }
 }
