@@ -7,6 +7,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+import com.raksit.example.order.common.exception.OrderNotFoundException;
 import com.raksit.example.order.common.model.entity.Order;
 import com.raksit.example.order.find.service.FindOrderService;
 import com.raksit.example.order.util.MockOrderFactory;
@@ -25,11 +26,9 @@ public class FindOrderControllerTest {
 
   private static final int NUMBER_OF_ITEMS = 3;
 
-  @Autowired
-  private MockMvc mvc;
+  @Autowired private MockMvc mvc;
 
-  @MockBean
-  private FindOrderService findOrderService;
+  @MockBean private FindOrderService findOrderService;
 
   @Test
   public void getOrdersBySource_ShouldReturnOrdersWithSpecificSource() throws Exception {
@@ -39,9 +38,16 @@ public class FindOrderControllerTest {
     when(findOrderService.getOrdersBySource(eq("Bangkok")))
         .thenReturn(Collections.singletonList(thaiOrder));
 
-    mvc.perform(get("/orders")
-    .param("source", "Bangkok"))
+    mvc.perform(get("/orders").param("source", "Bangkok"))
         .andExpect(status().isOk())
         .andExpect(jsonPath("$[0].source", is("Bangkok")));
+  }
+
+  @Test
+  public void getOrdersBySource_NotFound_ShouldReturnNotFound() throws Exception {
+    when(findOrderService.getOrdersBySource(eq("Bangkok"))).thenThrow(new OrderNotFoundException());
+
+    mvc.perform(get("/orders").param("source", "Bangkok"))
+        .andExpect(status().isNotFound());
   }
 }

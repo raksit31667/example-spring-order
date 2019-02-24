@@ -54,8 +54,7 @@ public class FindOrderControllerIntegrationTest {
         UriComponentsBuilder.fromUriString("/orders").queryParam("source", "Bangkok");
 
     ResponseEntity<Order[]> responseEntity =
-        restTemplate.getForEntity(
-            uriBuilder.build().toString(), Order[].class);
+        restTemplate.getForEntity(uriBuilder.build().toString(), Order[].class);
 
     assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
     assertNotNull(responseEntity.getBody());
@@ -63,5 +62,19 @@ public class FindOrderControllerIntegrationTest {
     List<Order> actualOrders = Arrays.asList(responseEntity.getBody());
     assertThat(actualOrders, hasSize(1));
     assertThat(actualOrders, everyItem(hasProperty("source", is("Bangkok"))));
+  }
+
+  @Test
+  public void getOrdersBySource_NotFound_ShouldReturnNotFound() throws Exception {
+    Order someOrder = MockOrderFactory.createSampleOrder(NUMBER_OF_ITEMS);
+    someOrder.setSource("Somewhere");
+    orderRepository.save(someOrder);
+
+    UriComponentsBuilder uriBuilder =
+        UriComponentsBuilder.fromUriString("/orders").queryParam("source", "Bangkok");
+
+    ResponseEntity<Object> responseEntity = restTemplate.getForEntity(uriBuilder.build().toString(), null, Object.class);
+
+    assertEquals(HttpStatus.NOT_FOUND, responseEntity.getStatusCode());
   }
 }
