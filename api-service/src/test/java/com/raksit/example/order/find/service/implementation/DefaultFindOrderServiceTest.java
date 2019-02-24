@@ -39,6 +39,7 @@ public class DefaultFindOrderServiceTest {
     Order actualOrder = findOrderService.getOrdersBySource("Bangkok").iterator().next();
 
     assertEquals("Bangkok", actualOrder.getSource());
+    assertEquals(thaiOrder.getDestination(), actualOrder.getDestination());
   }
 
   @Test
