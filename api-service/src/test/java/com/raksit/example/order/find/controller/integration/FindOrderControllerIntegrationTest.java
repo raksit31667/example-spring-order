@@ -8,6 +8,7 @@ import static org.hamcrest.Matchers.is;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
+import com.raksit.example.order.common.exception.OrderExceptionResponse;
 import com.raksit.example.order.common.model.entity.Order;
 import com.raksit.example.order.common.repository.OrderRepository;
 import com.raksit.example.order.util.MockOrderFactory;
@@ -41,7 +42,7 @@ public class FindOrderControllerIntegrationTest {
   }
 
   @Test
-  public void getOrdersBySource_ShouldReturnOrdersWithSpecificSource() throws Exception {
+  public void getOrdersBySource_ShouldReturnOrdersWithSpecificSource() {
     Order thaiOrder = MockOrderFactory.createSampleOrder(NUMBER_OF_ITEMS);
     Order chineseOrder = MockOrderFactory.createSampleOrder(NUMBER_OF_ITEMS);
     thaiOrder.setSource("Bangkok");
@@ -65,7 +66,7 @@ public class FindOrderControllerIntegrationTest {
   }
 
   @Test
-  public void getOrdersBySource_NotFound_ShouldReturnNotFound() throws Exception {
+  public void getOrdersBySource_NotFound_ShouldReturnNotFound() {
     Order someOrder = MockOrderFactory.createSampleOrder(NUMBER_OF_ITEMS);
     someOrder.setSource("Somewhere");
     orderRepository.save(someOrder);
@@ -73,7 +74,9 @@ public class FindOrderControllerIntegrationTest {
     UriComponentsBuilder uriBuilder =
         UriComponentsBuilder.fromUriString("/orders").queryParam("source", "Bangkok");
 
-    ResponseEntity<Object> responseEntity = restTemplate.getForEntity(uriBuilder.build().toString(), null, Object.class);
+    ResponseEntity<OrderExceptionResponse> responseEntity =
+        restTemplate.getForEntity(
+            uriBuilder.build().toString(), null, OrderExceptionResponse.class);
 
     assertEquals(HttpStatus.NOT_FOUND, responseEntity.getStatusCode());
   }

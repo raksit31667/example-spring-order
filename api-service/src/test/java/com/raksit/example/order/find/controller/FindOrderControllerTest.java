@@ -48,6 +48,7 @@ public class FindOrderControllerTest {
     when(findOrderService.getOrdersBySource(eq("Bangkok"))).thenThrow(new OrderNotFoundException());
 
     mvc.perform(get("/orders").param("source", "Bangkok"))
-        .andExpect(status().isNotFound());
+        .andExpect(status().isNotFound())
+        .andExpect(jsonPath("$.message").value("Order Not Found"));
   }
 }
