@@ -52,7 +52,7 @@ public class CreateOrderControllerIntegrationTest {
 
     HttpEntity<OrderRequest> httpEntity = new HttpEntity<>(orderRequest, httpHeaders);
     ResponseEntity<OrderResponse> responseEntity =
-        restTemplate.postForEntity("/", httpEntity, OrderResponse.class);
+        restTemplate.postForEntity("/orders", httpEntity, OrderResponse.class);
     OrderResponse orderResponse = responseEntity.getBody();
 
     assertNotNull(orderResponse);

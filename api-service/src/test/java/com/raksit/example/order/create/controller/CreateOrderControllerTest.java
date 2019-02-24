@@ -46,7 +46,7 @@ public class CreateOrderControllerTest {
     when(createOrderService.createOrder(any(OrderRequest.class))).thenReturn(orderResponse);
 
     mvc.perform(
-            post("/")
+            post("/orders")
                 .content(JsonConverter.convertObjectToJsonString(orderRequest))
                 .contentType(MediaType.APPLICATION_JSON))
         .andExpect(status().isOk())

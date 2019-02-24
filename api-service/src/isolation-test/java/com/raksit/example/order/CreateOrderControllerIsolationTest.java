@@ -27,7 +27,7 @@ public class CreateOrderControllerIsolationTest extends IsolationTest {
         .contentType(ContentType.JSON)
         .body(orderRequest)
         .when()
-        .post("/")
+        .post("/orders")
         .then()
         .statusCode(200)
         .body("source", is("Bangkok"))
