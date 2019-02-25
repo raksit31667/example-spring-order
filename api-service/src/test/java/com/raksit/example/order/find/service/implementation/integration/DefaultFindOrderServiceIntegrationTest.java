@@ -29,7 +29,7 @@ public class DefaultFindOrderServiceIntegrationTest {
   private OrderRepository orderRepository;
 
   @AfterEach
-  private void tearDown() {
+  public void tearDown() {
     orderRepository.deleteAll();
   }
 

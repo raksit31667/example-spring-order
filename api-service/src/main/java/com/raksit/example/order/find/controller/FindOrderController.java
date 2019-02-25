@@ -1,6 +1,7 @@
 package com.raksit.example.order.find.controller;
 
 import com.raksit.example.order.common.exception.OrderExceptionResponse;
+import com.raksit.example.order.common.model.dto.OrderResponse;
 import com.raksit.example.order.common.model.entity.Order;
 import com.raksit.example.order.find.service.FindOrderService;
 import io.swagger.annotations.Api;
@@ -28,7 +29,7 @@ public class FindOrderController {
       @ApiResponse(code = 404, message = "Order Not Found", response = OrderExceptionResponse.class)
   })
   @ApiOperation(value = "Get order by source (sold-to)")
-  public List<Order> getOrdersBySource(@RequestParam String source) throws Exception {
+  public List<OrderResponse> getOrdersBySource(@RequestParam String source) throws Exception {
     return findOrderService.getOrdersBySource(source);
   }
 }

@@ -8,6 +8,7 @@ import com.raksit.example.order.common.model.dto.OrderResponse;
 import com.raksit.example.order.common.model.entity.Order;
 import com.raksit.example.order.util.MockOrderFactory;
 import com.raksit.example.order.util.PriceCalculator;
+import java.util.Iterator;
 import java.util.List;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -49,11 +50,11 @@ public class OrderMapperTest {
 
     List<OrderResponse> orderResponses =
         OrderMapper.INSTANCE.ordersToOrderResponses(asList(order, anotherOrder));
+    Iterator orderResponseIterator = orderResponses.iterator();
+
+    assertEquals(OrderMapper.INSTANCE.orderToOrderResponse(order), orderResponseIterator.next());
 
     assertEquals(
-        OrderMapper.INSTANCE.orderToOrderResponse(order), orderResponses.iterator().next());
-
-    assertEquals(
-        OrderMapper.INSTANCE.orderToOrderResponse(anotherOrder), orderResponses.iterator().next());
+        OrderMapper.INSTANCE.orderToOrderResponse(anotherOrder), orderResponseIterator.next());
   }
 }

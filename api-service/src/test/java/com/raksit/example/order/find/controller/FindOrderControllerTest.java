@@ -9,6 +9,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import com.raksit.example.order.common.exception.OrderNotFoundException;
 import com.raksit.example.order.common.model.entity.Order;
+import com.raksit.example.order.common.model.mapper.OrderMapper;
 import com.raksit.example.order.find.service.FindOrderService;
 import com.raksit.example.order.util.MockOrderFactory;
 import java.util.Collections;
@@ -36,7 +37,7 @@ public class FindOrderControllerTest {
     thaiOrder.setSource("Bangkok");
 
     when(findOrderService.getOrdersBySource(eq("Bangkok")))
-        .thenReturn(Collections.singletonList(thaiOrder));
+        .thenReturn(Collections.singletonList(OrderMapper.INSTANCE.orderToOrderResponse(thaiOrder)));
 
     mvc.perform(get("/orders").param("source", "Bangkok"))
         .andExpect(status().isOk())
