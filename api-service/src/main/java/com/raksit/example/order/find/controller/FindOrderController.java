@@ -21,7 +21,7 @@ public class FindOrderController {
 
   @GetMapping("/orders")
   @ResponseStatus(HttpStatus.OK)
-  @ApiOperation(value = "Get Order By Source (Sold-to)")
+  @ApiOperation(value = "Get Order by Source (Sold-to)")
   public List<Order> getOrdersBySource(@RequestParam String source) throws Exception {
     return findOrderService.getOrdersBySource(source);
   }
