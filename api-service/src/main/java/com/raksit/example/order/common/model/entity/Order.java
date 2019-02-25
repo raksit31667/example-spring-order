@@ -2,6 +2,7 @@ package com.raksit.example.order.common.model.entity;
 
 import java.util.List;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -27,6 +28,6 @@ public class Order {
   private String source;
   private String destination;
 
-  @OneToMany(mappedBy = "order")
+  @OneToMany(fetch = FetchType.EAGER, mappedBy = "order")
   private List<OrderLineItem> items;
 }
