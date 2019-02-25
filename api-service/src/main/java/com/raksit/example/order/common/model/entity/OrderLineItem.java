@@ -25,7 +25,7 @@ public class OrderLineItem {
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private long id;
 
-  @ManyToOne(fetch = FetchType.EAGER)
+  @ManyToOne
   @JoinColumn(name = "order_id", nullable = false)
   private Order order;
 

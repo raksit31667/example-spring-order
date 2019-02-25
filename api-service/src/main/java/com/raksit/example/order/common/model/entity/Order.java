@@ -28,6 +28,6 @@ public class Order {
   private String source;
   private String destination;
 
-  @OneToMany(fetch = FetchType.EAGER, mappedBy = "order")
+  @OneToMany(fetch = FetchType.LAZY, mappedBy = "order")
   private List<OrderLineItem> items;
 }

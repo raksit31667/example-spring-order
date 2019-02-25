@@ -9,6 +9,7 @@ import com.raksit.example.order.common.model.entity.Order;
 import com.raksit.example.order.common.repository.OrderRepository;
 import com.raksit.example.order.find.service.FindOrderService;
 import com.raksit.example.order.util.MockOrderFactory;
+import javax.transaction.Transactional;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -18,15 +19,14 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 @ExtendWith(SpringExtension.class)
 @SpringBootTest
+@Transactional
 public class DefaultFindOrderServiceIntegrationTest {
 
   private static final int NUMBER_OF_ITEMS = 3;
 
-  @Autowired
-  private FindOrderService findOrderService;
+  @Autowired private FindOrderService findOrderService;
 
-  @Autowired
-  private OrderRepository orderRepository;
+  @Autowired private OrderRepository orderRepository;
 
   @AfterEach
   public void tearDown() {
@@ -42,7 +42,8 @@ public class DefaultFindOrderServiceIntegrationTest {
 
     orderRepository.save(thaiOrder);
     orderRepository.save(chineseOrder);
-    OrderResponse actualOrderResponse = findOrderService.getOrdersBySource("Bangkok").iterator().next();
+    OrderResponse actualOrderResponse =
+        findOrderService.getOrdersBySource("Bangkok").iterator().next();
 
     assertEquals("Bangkok", actualOrderResponse.getSource());
     assertEquals(thaiOrder.getDestination(), actualOrderResponse.getDestination());
@@ -58,8 +59,10 @@ public class DefaultFindOrderServiceIntegrationTest {
     orderRepository.save(thaiOrder);
     orderRepository.save(chineseOrder);
 
-    assertThrows(OrderNotFoundException.class, () -> {
-      findOrderService.getOrdersBySource("Houston");
-    });
+    assertThrows(
+        OrderNotFoundException.class,
+        () -> {
+          findOrderService.getOrdersBySource("Houston");
+        });
   }
 }
