@@ -20,7 +20,7 @@ public class CreateOrderController {
 
   @PostMapping("/orders")
   @ResponseStatus(HttpStatus.CREATED)
-  @ApiOperation(value = "Create an Order")
+  @ApiOperation(value = "Create an order")
   public OrderResponse createOrder(@RequestBody OrderRequest orderRequest) {
     return createOrderService.createOrder(orderRequest);
   }
