@@ -49,7 +49,7 @@ public class CreateOrderControllerTest {
             post("/orders")
                 .content(JsonConverter.convertObjectToJsonString(orderRequest))
                 .contentType(MediaType.APPLICATION_JSON))
-        .andExpect(status().isOk())
+        .andExpect(status().isCreated())
         .andExpect(jsonPath("$.source", is(orderRequest.getSoldTo())))
         .andExpect(jsonPath("$.destination", is(orderRequest.getShipTo())))
         .andExpect(jsonPath("$.numberOfItems", is(NUMBER_OF_ITEMS)))

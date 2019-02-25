@@ -56,7 +56,7 @@ public class CreateOrderControllerIntegrationTest {
     OrderResponse orderResponse = responseEntity.getBody();
 
     assertNotNull(orderResponse);
-    assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
+    assertEquals(HttpStatus.CREATED, responseEntity.getStatusCode());
     assertEquals(orderRequest.getSoldTo(), orderResponse.getSource());
     assertEquals(orderRequest.getShipTo(), orderResponse.getDestination());
     assertEquals(NUMBER_OF_ITEMS, orderResponse.getNumberOfItems());

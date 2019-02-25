@@ -9,6 +9,7 @@ import com.raksit.example.order.common.model.entity.OrderLineItem;
 import io.restassured.http.ContentType;
 import java.util.Collections;
 import org.junit.jupiter.api.Test;
+import org.springframework.http.HttpStatus;
 
 public class CreateOrderControllerIsolationTest extends IsolationTest {
 
@@ -29,7 +30,7 @@ public class CreateOrderControllerIsolationTest extends IsolationTest {
         .when()
         .post("/orders")
         .then()
-        .statusCode(200)
+        .statusCode(201)
         .body("source", is("Bangkok"))
         .body("destination", is("Houston"))
         .body("numberOfItems", is(3))
