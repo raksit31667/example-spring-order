@@ -19,7 +19,7 @@ public class CreateOrderController {
   @Autowired private CreateOrderService createOrderService;
 
   @PostMapping("/orders")
-  @ResponseStatus(HttpStatus.OK)
+  @ResponseStatus(HttpStatus.CREATED)
   @ApiOperation(value = "Create an Order")
   public OrderResponse createOrder(@RequestBody OrderRequest orderRequest) {
     return createOrderService.createOrder(orderRequest);
