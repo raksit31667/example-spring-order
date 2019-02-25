@@ -4,6 +4,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import com.raksit.example.order.common.exception.OrderNotFoundException;
+import com.raksit.example.order.common.model.dto.OrderResponse;
 import com.raksit.example.order.common.model.entity.Order;
 import com.raksit.example.order.common.repository.OrderRepository;
 import com.raksit.example.order.find.service.FindOrderService;
@@ -41,10 +42,10 @@ public class DefaultFindOrderServiceIntegrationTest {
 
     orderRepository.save(thaiOrder);
     orderRepository.save(chineseOrder);
-    Order actualOrder = findOrderService.getOrdersBySource("Bangkok").iterator().next();
+    OrderResponse actualOrderResponse = findOrderService.getOrdersBySource("Bangkok").iterator().next();
 
-    assertEquals("Bangkok", actualOrder.getSource());
-    assertEquals(thaiOrder.getDestination(), actualOrder.getDestination());
+    assertEquals("Bangkok", actualOrderResponse.getSource());
+    assertEquals(thaiOrder.getDestination(), actualOrderResponse.getDestination());
   }
 
   @Test

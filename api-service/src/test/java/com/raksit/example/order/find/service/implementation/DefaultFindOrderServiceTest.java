@@ -6,9 +6,11 @@ import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.when;
 
 import com.raksit.example.order.common.exception.OrderNotFoundException;
+import com.raksit.example.order.common.model.dto.OrderResponse;
 import com.raksit.example.order.common.model.entity.Order;
 import com.raksit.example.order.common.repository.OrderRepository;
 import com.raksit.example.order.util.MockOrderFactory;
+import com.raksit.example.order.util.PriceCalculator;
 import java.util.Collections;
 import java.util.Optional;
 import org.junit.jupiter.api.Test;
@@ -36,10 +38,11 @@ public class DefaultFindOrderServiceTest {
     when(orderRepository.findAllBySource(eq("Bangkok")))
         .thenReturn(Optional.of(Collections.singletonList(thaiOrder)));
 
-    Order actualOrder = findOrderService.getOrdersBySource("Bangkok").iterator().next();
+    OrderResponse actualOrderResponse =
+        findOrderService.getOrdersBySource("Bangkok").iterator().next();
 
-    assertEquals("Bangkok", actualOrder.getSource());
-    assertEquals(thaiOrder.getDestination(), actualOrder.getDestination());
+    assertEquals("Bangkok", actualOrderResponse.getSource());
+    assertEquals(thaiOrder.getDestination(), actualOrderResponse.getDestination());
   }
 
   @Test
@@ -49,11 +52,12 @@ public class DefaultFindOrderServiceTest {
     thaiOrder.setSource("Bangkok");
     chineseOrder.setSource("Wuhan");
 
-    when(orderRepository.findAllBySource(eq("Houston")))
-        .thenReturn(Optional.empty());
+    when(orderRepository.findAllBySource(eq("Houston"))).thenReturn(Optional.empty());
 
-    assertThrows(OrderNotFoundException.class, () -> {
-      findOrderService.getOrdersBySource("Houston");
-    });
+    assertThrows(
+        OrderNotFoundException.class,
+        () -> {
+          findOrderService.getOrdersBySource("Houston");
+        });
   }
 }
