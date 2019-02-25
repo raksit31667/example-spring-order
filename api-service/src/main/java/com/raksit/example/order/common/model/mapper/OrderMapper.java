@@ -4,6 +4,8 @@ import com.raksit.example.order.common.model.dto.OrderRequest;
 import com.raksit.example.order.common.model.dto.OrderResponse;
 import com.raksit.example.order.common.model.entity.Order;
 import com.raksit.example.order.util.PriceCalculator;
+import java.util.List;
+import org.mapstruct.IterableMapping;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.factory.Mappers;
@@ -16,6 +18,9 @@ public abstract class OrderMapper {
   @Mapping(source = "soldTo", target = "source")
   @Mapping(source = "shipTo", target = "destination")
   public abstract Order orderRequestToOrder(OrderRequest orderRequest);
+
+  @IterableMapping
+  public abstract List<OrderResponse> ordersToOrderResponses(List<Order> orders);
 
   public OrderResponse orderToOrderResponse(Order order) {
     return OrderResponse.builder()
