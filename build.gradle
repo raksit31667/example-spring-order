@@ -27,3 +27,11 @@ allprojects {
         maven { url 'https://repo.spring.io/milestone' }
     }
 }
+
+sonarqube {
+    properties {
+        property 'sonar.projectName', "order"
+        property 'sonar.java.source', "1.8"
+        property 'sonar.coverage.exclusions', "**/dto/**, **/entity/**, **/exception/**, **/config/**"
+    }
+}
