@@ -35,6 +35,9 @@ pipeline {
                 sh "./gradlew isolationTest -i"
             }
         }
+        stage('OWASP Dependency Check') {
+            sh 'gradle dependencyCheckAggregate'
+        }
         stage("Sonar Check") {
             steps {
                 sh "./gradlew sonarqube -Dsonar.host.url=https://sonarqube-raksit31667.1d35.starter-us-east-1.openshiftapps.com -Dsonar.projectVersion=${gitCommitId}"
