@@ -15,6 +15,7 @@ buildscript {
 }
 
 apply plugin: 'org.springframework.boot'
+apply plugin: 'checkstyle'
 apply plugin: 'io.spring.dependency-management'
 apply plugin: 'org.unbroken-dome.test-sets'
 apply plugin: 'jacoco'
@@ -95,6 +96,15 @@ bootRun {
     } else {
         systemProperty 'spring.profiles.active', 'local'
     }
+}
+
+checkstyle {
+    toolVersion = "8.10.1"
+    ignoreFailures = false
+    sourceSets = [sourceSets.main]
+    maxErrors = 0
+    maxWarnings = 0
+    reportsDir = file("$project.buildDir/reports/checkstyle")
 }
 
 jacoco {
