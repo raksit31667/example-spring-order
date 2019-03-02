@@ -12,10 +12,11 @@ public class OrderExceptionHandler extends ResponseEntityExceptionHandler {
 
   @ExceptionHandler(OrderNotFoundException.class)
   public ResponseEntity<OrderExceptionResponse> handleOrderNotFound(OrderNotFoundException ex) {
-    OrderExceptionResponse exceptionResponse = OrderExceptionResponse.builder()
-        .timestamp(LocalDateTime.now())
-        .message("Order Not Found")
-        .build();
+    OrderExceptionResponse exceptionResponse =
+        OrderExceptionResponse.builder()
+            .timestamp(LocalDateTime.now())
+            .message("Order Not Found")
+            .build();
 
     return new ResponseEntity<>(exceptionResponse, HttpStatus.NOT_FOUND);
   }

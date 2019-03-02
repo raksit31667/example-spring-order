@@ -21,11 +21,9 @@ public class DefaultCreateOrderServiceTest {
 
   private static final int NUMBER_OF_ITEMS = 3;
 
-  @InjectMocks
-  private DefaultCreateOrderService createOrderService;
+  @InjectMocks private DefaultCreateOrderService createOrderService;
 
-  @Mock
-  private OrderRepository orderRepository;
+  @Mock private OrderRepository orderRepository;
 
   @Test
   public void createOrder_ShouldReturnOrderDtoWithNumberOfItemsAndTotalPrice() throws Exception {

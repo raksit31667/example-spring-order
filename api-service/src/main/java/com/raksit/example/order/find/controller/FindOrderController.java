@@ -2,7 +2,6 @@ package com.raksit.example.order.find.controller;
 
 import com.raksit.example.order.common.exception.OrderExceptionResponse;
 import com.raksit.example.order.common.model.dto.OrderResponse;
-import com.raksit.example.order.common.model.entity.Order;
 import com.raksit.example.order.find.service.FindOrderService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -20,14 +19,17 @@ import org.springframework.web.bind.annotation.RestController;
 @Api(tags = {"Order"})
 public class FindOrderController {
 
-  @Autowired
-  private FindOrderService findOrderService;
+  @Autowired private FindOrderService findOrderService;
 
   @GetMapping("/orders")
   @ResponseStatus(HttpStatus.OK)
-  @ApiResponses(value = {
-      @ApiResponse(code = 404, message = "Order Not Found", response = OrderExceptionResponse.class)
-  })
+  @ApiResponses(
+      value = {
+        @ApiResponse(
+            code = 404,
+            message = "Order Not Found",
+            response = OrderExceptionResponse.class)
+      })
   @ApiOperation(value = "Get order by source (sold-to)")
   public List<OrderResponse> getOrdersBySource(@RequestParam String source) throws Exception {
     return findOrderService.getOrdersBySource(source);

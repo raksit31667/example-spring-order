@@ -37,7 +37,8 @@ public class FindOrderControllerTest {
     thaiOrder.setSource("Bangkok");
 
     when(findOrderService.getOrdersBySource(eq("Bangkok")))
-        .thenReturn(Collections.singletonList(OrderMapper.INSTANCE.orderToOrderResponse(thaiOrder)));
+        .thenReturn(
+            Collections.singletonList(OrderMapper.INSTANCE.orderToOrderResponse(thaiOrder)));
 
     mvc.perform(get("/orders").param("source", "Bangkok"))
         .andExpect(status().isOk())

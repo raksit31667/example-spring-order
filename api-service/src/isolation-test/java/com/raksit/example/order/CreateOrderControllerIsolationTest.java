@@ -9,7 +9,6 @@ import com.raksit.example.order.common.model.entity.OrderLineItem;
 import io.restassured.http.ContentType;
 import java.util.Collections;
 import org.junit.jupiter.api.Test;
-import org.springframework.http.HttpStatus;
 
 public class CreateOrderControllerIsolationTest extends IsolationTest {
 
