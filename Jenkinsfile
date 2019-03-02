@@ -19,9 +19,10 @@ pipeline {
                 }
             }
         }
-        stage("Check style") {
+        stage("Check style & pmd") {
             steps {
                 sh "./gradlew checkStyleMain -i"
+                sh "./gradlew pmdMain -i"
             }
         }
         stage("Unit test") {
