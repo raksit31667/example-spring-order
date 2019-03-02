@@ -16,6 +16,7 @@ buildscript {
 
 apply plugin: 'org.springframework.boot'
 apply plugin: 'checkstyle'
+apply plugin: 'pmd'
 apply plugin: 'io.spring.dependency-management'
 apply plugin: 'org.unbroken-dome.test-sets'
 apply plugin: 'jacoco'
@@ -105,6 +106,14 @@ checkstyle {
     maxErrors = 0
     maxWarnings = 0
     reportsDir = file("$project.buildDir/reports/checkstyle")
+}
+
+pmd {
+    toolVersion = "6.4.0"
+    ignoreFailures = false
+    sourceSets = [sourceSets.main]
+    reportsDir = file("$project.buildDir/reports/pmd")
+    ruleSets = ["java-basic", "java-braces"]
 }
 
 jacoco {
