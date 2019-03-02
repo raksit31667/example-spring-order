@@ -32,6 +32,7 @@ allprojects {
     dependencyCheck {
         failBuildOnCVSS = 7
         format = 'ALL'
+        suppressionFile = 'config/dependencyCheck/suppressions.xml'
     }
 }
 

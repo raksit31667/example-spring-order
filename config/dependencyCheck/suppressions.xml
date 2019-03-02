@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<suppressions xmlns="https://jeremylong.github.io/DependencyCheck/dependency-suppression.1.1.xsd">
+  <suppress>
+    <notes><![CDATA[This suppresses a specific cve from spring-cloud-starter-kubernetes-config-0.3.0.RELEASE.jar]]></notes>
+    <sha1>ad3c3fc4c1ff008bdc134665233a6a77b45fa1b3</sha1>
+    <cve>CVE-2016-1906</cve>
+  </suppress>
+  <suppress>
+    <notes><![CDATA[This suppresses a specific cve from spring-cloud-kubernetes-config-0.3.0.RELEASE.jar]]></notes>
+    <sha1>2592f66be39e4c76a6424e327cfc72d95a170bec</sha1>
+    <cve>CVE-2016-1906</cve>
+  </suppress>
+  <suppress>
+    <notes><![CDATA[This suppresses a specific cve from spring-cloud-kubernetes-core-0.3.0.RELEASE.jar]]></notes>
+    <sha1>270b6fee0badf0aa69e6aa86a6ae7a5d21d07044</sha1>
+    <cve>CVE-2016-1906</cve>
+  </suppress>
+  <suppress>
+    <notes><![CDATA[This suppresses a specific cve from kubernetes-client-3.1.10.jar]]></notes>
+    <sha1>1246e6f102b51b4f6cd48bcfe70acdddfe5138ba</sha1>
+    <cve>CVE-2016-1906</cve>
+  </suppress>
+</suppressions>
