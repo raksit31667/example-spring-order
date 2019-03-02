@@ -5,6 +5,7 @@ buildscript {
         maven { url 'https://repo.spring.io/milestone' }
     }
     dependencies {
+        classpath 'org.owasp:dependency-check-gradle:3.3.2'
         classpath 'org.sonarsource.scanner.gradle:sonarqube-gradle-plugin:2.6.2'
     }
 }
@@ -16,6 +17,7 @@ apply plugin: 'org.sonarqube'
 allprojects {
     apply plugin: 'idea'
     apply plugin: 'java'
+    apply plugin: 'org.owasp.dependencycheck'
 
     group = 'com.raksit.example'
     version = '0.0.1-SNAPSHOT'
@@ -25,6 +27,11 @@ allprojects {
         mavenCentral()
         maven { url 'https://repo.spring.io/snapshot' }
         maven { url 'https://repo.spring.io/milestone' }
+    }
+
+    dependencyCheck {
+        failBuildOnCVSS = 7
+        format = 'ALL'
     }
 }
 
