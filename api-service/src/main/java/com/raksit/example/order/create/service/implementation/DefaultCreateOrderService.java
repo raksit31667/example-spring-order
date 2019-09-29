@@ -13,10 +13,13 @@ import org.springframework.stereotype.Service;
 public class DefaultCreateOrderService implements CreateOrderService {
 
   @Autowired private OrderRepository orderRepository;
+  
+  @Autowired
+  private OrderMapper orderMapper;
 
   @Override
   public OrderResponse createOrder(OrderRequest orderRequest) {
-    Order order = OrderMapper.INSTANCE.orderRequestToOrder(orderRequest);
-    return OrderMapper.INSTANCE.orderToOrderResponse(orderRepository.save(order));
+    Order order = orderMapper.orderRequestToOrder(orderRequest);
+    return orderMapper.orderToOrderResponse(orderRepository.save(order));
   }
 }

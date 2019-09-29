@@ -6,13 +6,10 @@ import com.raksit.example.order.common.model.dto.OrderResponse;
 import com.raksit.example.order.common.model.entity.Order;
 import com.raksit.example.order.common.model.entity.OrderLineItem;
 import com.raksit.example.order.util.PriceCalculator;
-import org.mapstruct.Mapper;
-import org.mapstruct.factory.Mappers;
+import org.springframework.stereotype.Component;
 
-@Mapper
-public abstract class OrderMapper {
-
-  public static final OrderMapper INSTANCE = Mappers.getMapper(OrderMapper.class);
+@Component
+public class OrderMapper {
 
   public Order orderRequestToOrder(OrderRequest orderRequest) {
     return Order.builder()

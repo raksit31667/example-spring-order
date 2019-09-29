@@ -1,13 +1,9 @@
 package com.raksit.example.order.find.service.implementation;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.mockito.ArgumentMatchers.eq;
-import static org.mockito.Mockito.when;
-
 import com.raksit.example.order.common.exception.OrderNotFoundException;
 import com.raksit.example.order.common.model.dto.OrderResponse;
 import com.raksit.example.order.common.model.entity.Order;
+import com.raksit.example.order.common.model.mapper.OrderMapper;
 import com.raksit.example.order.common.repository.OrderRepository;
 import com.raksit.example.order.util.MockOrderFactory;
 import java.util.Collections;
@@ -18,14 +14,22 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.mockito.ArgumentMatchers.eq;
+import static org.mockito.Mockito.when;
+
 @ExtendWith(MockitoExtension.class)
 class DefaultFindOrderServiceTest {
 
   private static final int NUMBER_OF_ITEMS = 3;
 
-  @InjectMocks private DefaultFindOrderService findOrderService;
-
   @Mock private OrderRepository orderRepository;
+
+  @Mock
+  private OrderMapper orderMapper;
+
+  @InjectMocks private DefaultFindOrderService findOrderService;
 
   @Test
   void shouldReturnOrdersWithSourceBangkokWhenGetOrdersBySourceGivenSourceBangkok() throws Exception {
@@ -36,6 +40,10 @@ class DefaultFindOrderServiceTest {
 
     when(orderRepository.findAllBySource(eq("Bangkok")))
         .thenReturn(Optional.of(Collections.singletonList(thaiOrder)));
+    when(orderMapper.orderToOrderResponse(thaiOrder)).thenReturn(OrderResponse.builder()
+        .source("Bangkok")
+        .destination(thaiOrder.getDestination())
+        .build());
 
     OrderResponse actualOrderResponse =
         findOrderService.getOrdersBySource("Bangkok").iterator().next();

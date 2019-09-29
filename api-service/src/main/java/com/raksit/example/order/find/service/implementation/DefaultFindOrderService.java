@@ -17,12 +17,15 @@ public class DefaultFindOrderService implements FindOrderService {
   @Autowired
   private OrderRepository orderRepository;
 
+  @Autowired
+  private OrderMapper orderMapper;
+
   @Override
   public List<OrderResponse> getOrdersBySource(String source) throws OrderNotFoundException {
     List<Order> orders = orderRepository.findAllBySource(source)
         .orElseThrow(OrderNotFoundException::new);
 
-    return orders.stream().map(OrderMapper.INSTANCE::orderToOrderResponse)
+    return orders.stream().map(order -> orderMapper.orderToOrderResponse(order))
         .collect(Collectors.toList());
   }
 }

@@ -8,10 +8,12 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import com.raksit.example.order.common.exception.OrderNotFoundException;
+import com.raksit.example.order.common.model.dto.OrderResponse;
 import com.raksit.example.order.common.model.entity.Order;
 import com.raksit.example.order.common.model.mapper.OrderMapper;
 import com.raksit.example.order.find.service.FindOrderService;
 import com.raksit.example.order.util.MockOrderFactory;
+import com.raksit.example.order.util.PriceCalculator;
 import java.util.Collections;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -33,12 +35,18 @@ class FindOrderControllerTest {
 
   @Test
   void shouldReturnOrdersWithBangkokSourceWhenGetOrdersBySourceGivenSourceBangkok() throws Exception {
-    Order thaiOrder = MockOrderFactory.createSampleOrder(NUMBER_OF_ITEMS);
-    thaiOrder.setSource("Bangkok");
+    Order order = MockOrderFactory.createSampleOrder(NUMBER_OF_ITEMS);
+    order.setSource("Bangkok");
+
+    OrderResponse orderResponse = OrderResponse.builder()
+        .source(order.getSource())
+        .destination(order.getDestination())
+        .totalPrice(PriceCalculator.calculateTotalPrice(order.getItems()))
+        .build();
 
     when(findOrderService.getOrdersBySource(eq("Bangkok")))
         .thenReturn(
-            Collections.singletonList(OrderMapper.INSTANCE.orderToOrderResponse(thaiOrder)));
+            Collections.singletonList(orderResponse));
 
     mvc.perform(get("/orders").param("source", "Bangkok"))
         .andExpect(status().isOk())

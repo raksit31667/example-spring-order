@@ -7,6 +7,7 @@ import static org.mockito.Mockito.when;
 import com.raksit.example.order.common.model.dto.OrderRequest;
 import com.raksit.example.order.common.model.dto.OrderResponse;
 import com.raksit.example.order.common.model.entity.Order;
+import com.raksit.example.order.common.model.mapper.OrderMapper;
 import com.raksit.example.order.common.repository.OrderRepository;
 import com.raksit.example.order.util.MockOrderFactory;
 import com.raksit.example.order.util.PriceCalculator;
@@ -21,9 +22,12 @@ class DefaultCreateOrderServiceTest {
 
   private static final int NUMBER_OF_ITEMS = 3;
 
-  @InjectMocks private DefaultCreateOrderService createOrderService;
-
   @Mock private OrderRepository orderRepository;
+
+  @Mock
+  private OrderMapper orderMapper;
+
+  @InjectMocks private DefaultCreateOrderService createOrderService;
 
   @Test
   void shouldReturnOrderResponseWithNumberOfItemsAndTotalPriceWhenCreateOrderGivenOrderRequest() {
@@ -34,7 +38,14 @@ class DefaultCreateOrderServiceTest {
             .items(orderRequest.getItems())
             .build();
 
-    when(orderRepository.save(any(Order.class))).thenReturn(order);
+    when(orderMapper.orderRequestToOrder(orderRequest)).thenReturn(order);
+    when(orderRepository.save(order)).thenReturn(order);
+    when(orderMapper.orderToOrderResponse(order)).thenReturn(OrderResponse.builder()
+        .source(order.getSource())
+        .destination(order.getDestination())
+        .numberOfItems(NUMBER_OF_ITEMS)
+        .totalPrice(PriceCalculator.calculateTotalPrice(orderRequest.getItems()))
+        .build());
 
     OrderResponse orderResponse = createOrderService.createOrder(orderRequest);
 
