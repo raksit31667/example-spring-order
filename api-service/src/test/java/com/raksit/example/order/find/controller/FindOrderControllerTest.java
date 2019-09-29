@@ -32,7 +32,7 @@ class FindOrderControllerTest {
   @MockBean private FindOrderService findOrderService;
 
   @Test
-  void shouldReturnOrdersWithBangkokSourceWhenGetOrdersBySourceGivenSourceBangkok() throws Exception {
+  void shouldReturnOrdersWithBangkokSourceWhenFindOrdersBySourceGivenSourceBangkok() throws Exception {
     Order order = MockOrderFactory.createSampleOrder(NUMBER_OF_ITEMS);
     order.setSource("Bangkok");
 
@@ -42,7 +42,7 @@ class FindOrderControllerTest {
         .totalPrice(3000.0)
         .build();
 
-    when(findOrderService.getOrdersBySource(eq("Bangkok")))
+    when(findOrderService.findOrdersBySource(eq("Bangkok")))
         .thenReturn(
             Collections.singletonList(orderResponse));
 
@@ -52,8 +52,8 @@ class FindOrderControllerTest {
   }
 
   @Test
-  void shouldReturnStatusNotFoundWhenGetOrdersBySourceGivenOrdersWithSourceBangkokNotFound() throws Exception {
-    when(findOrderService.getOrdersBySource(eq("Bangkok"))).thenThrow(new OrderNotFoundException());
+  void shouldReturnStatusNotFoundWhenFindOrdersBySourceGivenOrdersWithSourceBangkokNotFound() throws Exception {
+    when(findOrderService.findOrdersBySource(eq("Bangkok"))).thenThrow(new OrderNotFoundException());
 
     mvc.perform(get("/orders").param("source", "Bangkok"))
         .andExpect(status().isNotFound())

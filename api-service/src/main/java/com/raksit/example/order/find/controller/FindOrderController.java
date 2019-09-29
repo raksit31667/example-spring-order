@@ -31,7 +31,7 @@ public class FindOrderController {
             response = OrderExceptionResponse.class)
       })
   @ApiOperation(value = "Get order by source (sold-to)")
-  public List<OrderResponse> getOrdersBySource(@RequestParam String source) throws Exception {
-    return findOrderService.getOrdersBySource(source);
+  public List<OrderResponse> findOrdersBySource(@RequestParam String source) throws Exception {
+    return findOrderService.findOrdersBySource(source);
   }
 }

@@ -37,7 +37,7 @@ class DefaultFindOrderServiceIntegrationTest {
   }
 
   @Test
-  void shouldReturnOrdersWithSourceBangkokWhenGetOrdersBySourceGivenSourceBangkok() throws Exception {
+  void shouldReturnOrdersWithSourceBangkokWhenFindOrdersBySourceGivenSourceBangkok() throws Exception {
     Order thaiOrder = MockOrderFactory.createSampleOrder(NUMBER_OF_ITEMS);
     Order chineseOrder = MockOrderFactory.createSampleOrder(NUMBER_OF_ITEMS);
     thaiOrder.setSource("Bangkok");
@@ -46,14 +46,14 @@ class DefaultFindOrderServiceIntegrationTest {
     orderRepository.save(thaiOrder);
     orderRepository.save(chineseOrder);
     OrderResponse actualOrderResponse =
-        findOrderService.getOrdersBySource("Bangkok").iterator().next();
+        findOrderService.findOrdersBySource("Bangkok").iterator().next();
 
     assertEquals("Bangkok", actualOrderResponse.getSource());
     assertEquals(thaiOrder.getDestination(), actualOrderResponse.getDestination());
   }
 
   @Test
-  void shouldThrowOrderNotFoundExceptionWhenGetOrdersBySourceGivenOrdersWithSourceHoustonNotFound() {
+  void shouldThrowOrderNotFoundExceptionWhenFindOrdersBySourceGivenOrdersWithSourceHoustonNotFound() {
     Order thaiOrder = MockOrderFactory.createSampleOrder(NUMBER_OF_ITEMS);
     Order chineseOrder = MockOrderFactory.createSampleOrder(NUMBER_OF_ITEMS);
     thaiOrder.setSource("Bangkok");
@@ -62,6 +62,6 @@ class DefaultFindOrderServiceIntegrationTest {
     orderRepository.save(thaiOrder);
     orderRepository.save(chineseOrder);
 
-    assertThrows(OrderNotFoundException.class, () -> findOrderService.getOrdersBySource("Houston"));
+    assertThrows(OrderNotFoundException.class, () -> findOrderService.findOrdersBySource("Houston"));
   }
 }

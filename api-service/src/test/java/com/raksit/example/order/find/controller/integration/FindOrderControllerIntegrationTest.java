@@ -47,7 +47,7 @@ class FindOrderControllerIntegrationTest {
   }
 
   @Test
-  void shouldReturnOrdersWithBangkokSourceWhenGetOrdersBySourceGivenSourceBangkok() {
+  void shouldReturnOrdersWithBangkokSourceWhenFindOrdersBySourceGivenSourceBangkok() {
     Order thaiOrder = MockOrderFactory.createSampleOrder(NUMBER_OF_ITEMS);
     Order chineseOrder = MockOrderFactory.createSampleOrder(NUMBER_OF_ITEMS);
     thaiOrder.setSource("Bangkok");
@@ -71,7 +71,7 @@ class FindOrderControllerIntegrationTest {
   }
 
   @Test
-  void shouldReturnStatusNotFoundWhenGetOrdersBySourceGivenOrdersWithSourceBangkokNotFound() {
+  void shouldReturnStatusNotFoundWhenFindOrdersBySourceGivenOrdersWithSourceBangkokNotFound() {
     Order someOrder = MockOrderFactory.createSampleOrder(NUMBER_OF_ITEMS);
     someOrder.setSource("Somewhere");
     orderRepository.save(someOrder);
