@@ -25,19 +25,3 @@ spring:
     ddl-auto: update
   main:
     allow-bean-definition-overriding: true
----
-spring:
-  profiles: test
-  flyway:
-    enabled: true
-  cloud:
-    kubernetes:
-      enabled: false
-  jpa:
-    open-in-view: true
-    database-platform: org.hibernate.dialect.PostgreSQLDialect
-    properties:
-      hibernate.enable_lazy_load_no_trans: true
-      hibernate.show_sql: false
-  main:
-    allow-bean-definition-overriding: true

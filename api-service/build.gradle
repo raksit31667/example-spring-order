@@ -68,7 +68,6 @@ testSets {
 }
 
 test {
-    systemProperty 'spring.profiles.active', 'test'
     testLogging.showStandardStreams = false
     useJUnitPlatform()
 
