@@ -5,7 +5,9 @@ import com.raksit.example.order.common.model.dto.OrderRequest;
 import com.raksit.example.order.common.model.entity.Order;
 import com.raksit.example.order.common.model.entity.OrderLineItem;
 import java.util.Collections;
+import lombok.experimental.UtilityClass;
 
+@UtilityClass
 public class MockOrderFactory {
 
   private static final Faker FAKER = new Faker();
