@@ -17,7 +17,7 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 @ExtendWith(SpringExtension.class)
 @SpringBootTest
-public class DefaultCreateOrderServiceIntegrationTest {
+class DefaultCreateOrderServiceIntegrationTest {
 
   private static final int NUMBER_OF_ITEMS = 3;
 
@@ -26,12 +26,12 @@ public class DefaultCreateOrderServiceIntegrationTest {
   @Autowired private OrderRepository orderRepository;
 
   @AfterEach
-  public void tearDown() {
+  void tearDown() {
     orderRepository.deleteAll();
   }
 
   @Test
-  public void createOrder_ShouldReturnOrderDtoWithNumberOfItemsAndTotalPrice() throws Exception {
+  void shouldReturnOrderResponseWithNumberOfItemsAndTotalPriceWhenCreateOrderGivenOrderRequest() {
     OrderRequest orderRequest = MockOrderFactory.createSampleOrderRequest(NUMBER_OF_ITEMS);
 
     OrderResponse orderResponse = createOrderService.createOrder(orderRequest);

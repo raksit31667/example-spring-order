@@ -15,12 +15,12 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 @ExtendWith(MockitoExtension.class)
-public class OrderMapperTest {
+class OrderMapperTest {
 
   private static final int NUMBER_OF_ITEMS = 3;
 
   @Test
-  public void orderRequestToOrder() {
+  void shouldReturnOrderWhenOrderRequestToOrderGivenOrderRequest() {
     OrderRequest orderRequest = MockOrderFactory.createSampleOrderRequest(NUMBER_OF_ITEMS);
 
     Order order = OrderMapper.INSTANCE.orderRequestToOrder(orderRequest);
@@ -31,7 +31,7 @@ public class OrderMapperTest {
   }
 
   @Test
-  public void orderToOrderResponse() {
+  void shouldReturnOrderResponseWhenOrderToOrderResponseGivenOrder() {
     Order order = MockOrderFactory.createSampleOrder(NUMBER_OF_ITEMS);
 
     OrderResponse orderResponse = OrderMapper.INSTANCE.orderToOrderResponse(order);
@@ -44,7 +44,7 @@ public class OrderMapperTest {
   }
 
   @Test
-  public void ordersToOrderResponses() {
+  void shouldReturnOrderResponseWhenOrdersToOrderResponseGivenListOfOrders() {
     Order order = MockOrderFactory.createSampleOrder(NUMBER_OF_ITEMS);
     Order anotherOrder = MockOrderFactory.createSampleOrder(NUMBER_OF_ITEMS);
 

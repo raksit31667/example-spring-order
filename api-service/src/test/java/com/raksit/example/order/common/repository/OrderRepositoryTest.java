@@ -17,7 +17,7 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 @ExtendWith(SpringExtension.class)
 @DataJpaTest
-public class OrderRepositoryTest {
+class OrderRepositoryTest {
 
   private static final int NUMBER_OF_ITEMS = 3;
 
@@ -29,16 +29,7 @@ public class OrderRepositoryTest {
   }
 
   @Test
-  public void createOrder_ShouldSaveOrderIntoDatabase() {
-    Order order = MockOrderFactory.createSampleOrder(NUMBER_OF_ITEMS);
-
-    Order savedOrder = orderRepository.save(order);
-
-    assertNotNull(savedOrder);
-  }
-
-  @Test
-  public void findAllBySource_ShouldReturnOrdersWithSpecificSource() {
+  void shouldReturnListOfOrdersWithSourceNameWhenFindAllBySourceGivenSourceName() {
     Order order = MockOrderFactory.createSampleOrder(NUMBER_OF_ITEMS);
     Order anotherOrder = MockOrderFactory.createSampleOrder(NUMBER_OF_ITEMS);
     orderRepository.save(order);

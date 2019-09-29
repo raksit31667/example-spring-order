@@ -7,12 +7,12 @@ import java.util.Collections;
 import java.util.List;
 import org.junit.jupiter.api.Test;
 
-public class PriceCalculatorTest {
+class PriceCalculatorTest {
 
   private static final int NUMBER_OF_ITEMS = 3;
 
   @Test
-  public void calculateTotalPrice_ShouldReturnCorrectPrice() {
+  void shouldReturn6000WhenCalculateTotalPriceGiven3OrdersWithPrice2000Each() {
     OrderLineItem orderLineItem = OrderLineItem.builder().name("Diesel").price(2000.0).build();
 
     List<OrderLineItem> orderLineItems = Collections.nCopies(NUMBER_OF_ITEMS, orderLineItem);

@@ -19,7 +19,7 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 @ExtendWith(MockitoExtension.class)
-public class DefaultFindOrderServiceTest {
+class DefaultFindOrderServiceTest {
 
   private static final int NUMBER_OF_ITEMS = 3;
 
@@ -28,7 +28,7 @@ public class DefaultFindOrderServiceTest {
   @Mock private OrderRepository orderRepository;
 
   @Test
-  public void getOrdersBySource_ShouldReturnOrdersWithSpecificSource() throws Exception {
+  void shouldReturnOrdersWithSourceBangkokWhenGetOrdersBySourceGivenSourceBangkok() throws Exception {
     Order thaiOrder = MockOrderFactory.createSampleOrder(NUMBER_OF_ITEMS);
     Order chineseOrder = MockOrderFactory.createSampleOrder(NUMBER_OF_ITEMS);
     thaiOrder.setSource("Bangkok");
@@ -45,7 +45,7 @@ public class DefaultFindOrderServiceTest {
   }
 
   @Test
-  public void getOrdersBySource_NotFound_ShouldThrowOrderNotFoundException() {
+  void shouldThrowOrderNotFoundExceptionWhenGetOrdersBySourceGivenOrdersWithSourceHoustonNotFound() {
     Order thaiOrder = MockOrderFactory.createSampleOrder(NUMBER_OF_ITEMS);
     Order chineseOrder = MockOrderFactory.createSampleOrder(NUMBER_OF_ITEMS);
     thaiOrder.setSource("Bangkok");
@@ -53,10 +53,6 @@ public class DefaultFindOrderServiceTest {
 
     when(orderRepository.findAllBySource(eq("Houston"))).thenReturn(Optional.empty());
 
-    assertThrows(
-        OrderNotFoundException.class,
-        () -> {
-          findOrderService.getOrdersBySource("Houston");
-        });
+    assertThrows(OrderNotFoundException.class, () -> findOrderService.getOrdersBySource("Houston"));
   }
 }

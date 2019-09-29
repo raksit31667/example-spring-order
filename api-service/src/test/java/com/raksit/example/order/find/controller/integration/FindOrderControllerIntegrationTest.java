@@ -28,7 +28,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 
 @ExtendWith(SpringExtension.class)
 @SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
-public class FindOrderControllerIntegrationTest {
+class FindOrderControllerIntegrationTest {
 
   private static final int NUMBER_OF_ITEMS = 3;
 
@@ -37,12 +37,12 @@ public class FindOrderControllerIntegrationTest {
   @Autowired private OrderRepository orderRepository;
 
   @AfterEach
-  public void tearDown() {
+  void tearDown() {
     orderRepository.deleteAll();
   }
 
   @Test
-  public void getOrdersBySource_ShouldReturnOrdersWithSpecificSource() {
+  void shouldReturnOrdersWithBangkokSourceWhenGetOrdersBySourceGivenSourceBangkok() {
     Order thaiOrder = MockOrderFactory.createSampleOrder(NUMBER_OF_ITEMS);
     Order chineseOrder = MockOrderFactory.createSampleOrder(NUMBER_OF_ITEMS);
     thaiOrder.setSource("Bangkok");
@@ -66,7 +66,7 @@ public class FindOrderControllerIntegrationTest {
   }
 
   @Test
-  public void getOrdersBySource_NotFound_ShouldReturnNotFound() {
+  void shouldReturnStatusNotFoundWhenGetOrdersBySourceGivenOrdersWithSourceBangkokNotFound() {
     Order someOrder = MockOrderFactory.createSampleOrder(NUMBER_OF_ITEMS);
     someOrder.setSource("Somewhere");
     orderRepository.save(someOrder);

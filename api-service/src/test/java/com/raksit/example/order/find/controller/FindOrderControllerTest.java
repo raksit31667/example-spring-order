@@ -23,7 +23,7 @@ import org.springframework.test.web.servlet.MockMvc;
 
 @ExtendWith(SpringExtension.class)
 @WebMvcTest(controllers = FindOrderController.class, secure = false)
-public class FindOrderControllerTest {
+class FindOrderControllerTest {
 
   private static final int NUMBER_OF_ITEMS = 3;
 
@@ -32,7 +32,7 @@ public class FindOrderControllerTest {
   @MockBean private FindOrderService findOrderService;
 
   @Test
-  public void getOrdersBySource_ShouldReturnOrdersWithSpecificSource() throws Exception {
+  void shouldReturnOrdersWithBangkokSourceWhenGetOrdersBySourceGivenSourceBangkok() throws Exception {
     Order thaiOrder = MockOrderFactory.createSampleOrder(NUMBER_OF_ITEMS);
     thaiOrder.setSource("Bangkok");
 
@@ -46,7 +46,7 @@ public class FindOrderControllerTest {
   }
 
   @Test
-  public void getOrdersBySource_NotFound_ShouldReturnNotFound() throws Exception {
+  void shouldReturnStatusNotFoundWhenGetOrdersBySourceGivenOrdersWithSourceBangkokNotFound() throws Exception {
     when(findOrderService.getOrdersBySource(eq("Bangkok"))).thenThrow(new OrderNotFoundException());
 
     mvc.perform(get("/orders").param("source", "Bangkok"))

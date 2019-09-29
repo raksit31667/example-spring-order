@@ -10,14 +10,13 @@ import io.restassured.http.ContentType;
 import java.util.Collections;
 import org.junit.jupiter.api.Test;
 
-public class CreateOrderControllerIsolationTest extends IsolationTest {
+class CreateOrderControllerIsolationTest extends IsolationTest {
 
   @Test
-  public void createOrder_ShouldReturnOrderDtoWithNumberOfItemsAndTotalPrice() {
+  void shouldReturnOrderResponseWithNumberOfItemsAndTotalPriceWhenCreateOrderGivenOrderRequest() {
     OrderLineItem orderLineItem = OrderLineItem.builder().name("Diesel").price(2000.0).build();
 
-    OrderRequest orderRequest =
-        OrderRequest.builder()
+    OrderRequest orderRequest = OrderRequest.builder()
             .soldTo("Bangkok")
             .shipTo("Houston")
             .items(Collections.nCopies(3, orderLineItem))

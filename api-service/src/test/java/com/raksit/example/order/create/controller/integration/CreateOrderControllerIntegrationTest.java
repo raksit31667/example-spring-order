@@ -25,7 +25,7 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 @ExtendWith(SpringExtension.class)
 @SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
-public class CreateOrderControllerIntegrationTest {
+class CreateOrderControllerIntegrationTest {
 
   private static final int NUMBER_OF_ITEMS = 3;
 
@@ -36,18 +36,18 @@ public class CreateOrderControllerIntegrationTest {
   private HttpHeaders httpHeaders;
 
   @BeforeEach
-  public void setUp() {
+  void setUp() {
     httpHeaders = new HttpHeaders();
     httpHeaders.setContentType(MediaType.APPLICATION_JSON);
   }
 
   @AfterEach
-  public void tearDown() {
+  void tearDown() {
     orderRepository.deleteAll();
   }
 
   @Test
-  public void createOrder_ShouldReturnOrderDtoWithNumberOfItemsAndTotalPrice() throws Exception {
+  void shouldReturnOrderResponseWithNumberOfItemsAndTotalPriceWhenCreateOrderGivenOrderRequest() {
     OrderRequest orderRequest = MockOrderFactory.createSampleOrderRequest(NUMBER_OF_ITEMS);
 
     HttpEntity<OrderRequest> httpEntity = new HttpEntity<>(orderRequest, httpHeaders);

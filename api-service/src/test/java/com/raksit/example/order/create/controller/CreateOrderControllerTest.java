@@ -24,7 +24,7 @@ import org.springframework.test.web.servlet.MockMvc;
 
 @ExtendWith(SpringExtension.class)
 @WebMvcTest(controllers = CreateOrderController.class, secure = false)
-public class CreateOrderControllerTest {
+class CreateOrderControllerTest {
 
   private static final int NUMBER_OF_ITEMS = 3;
 
@@ -33,7 +33,7 @@ public class CreateOrderControllerTest {
   @MockBean private CreateOrderService createOrderService;
 
   @Test
-  public void createOrder_ShouldReturnOrderDtoWithNumberOfItemsAndTotalPrice() throws Exception {
+  void shouldReturnOrderResponseWithNumberOfItemsAndTotalPriceWhenCreateOrderGivenOrderRequest() throws Exception {
     OrderRequest orderRequest = MockOrderFactory.createSampleOrderRequest(NUMBER_OF_ITEMS);
     OrderResponse orderResponse =
         OrderResponse.builder()

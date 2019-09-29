@@ -17,7 +17,7 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 @ExtendWith(MockitoExtension.class)
-public class DefaultCreateOrderServiceTest {
+class DefaultCreateOrderServiceTest {
 
   private static final int NUMBER_OF_ITEMS = 3;
 
@@ -26,10 +26,9 @@ public class DefaultCreateOrderServiceTest {
   @Mock private OrderRepository orderRepository;
 
   @Test
-  public void createOrder_ShouldReturnOrderDtoWithNumberOfItemsAndTotalPrice() throws Exception {
+  void shouldReturnOrderResponseWithNumberOfItemsAndTotalPriceWhenCreateOrderGivenOrderRequest() {
     OrderRequest orderRequest = MockOrderFactory.createSampleOrderRequest(NUMBER_OF_ITEMS);
-    Order order =
-        Order.builder()
+    Order order = Order.builder()
             .source(orderRequest.getSoldTo())
             .destination(orderRequest.getShipTo())
             .items(orderRequest.getItems())
