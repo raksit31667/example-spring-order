@@ -5,7 +5,6 @@ import com.raksit.example.order.common.model.dto.OrderRequest;
 import com.raksit.example.order.common.model.dto.OrderResponse;
 import com.raksit.example.order.common.model.entity.Order;
 import com.raksit.example.order.common.model.entity.OrderLineItem;
-import com.raksit.example.order.util.PriceCalculator;
 import java.util.stream.Collectors;
 import org.springframework.stereotype.Component;
 
@@ -27,7 +26,7 @@ public class OrderMapper {
         .source(order.getSource())
         .destination(order.getDestination())
         .numberOfItems(order.getItems().size())
-        .totalPrice(PriceCalculator.calculateTotalPrice(order.getItems()))
+        .totalPrice(order.getSubTotal())
         .build();
   }
 

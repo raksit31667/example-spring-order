@@ -30,4 +30,8 @@ public class Order {
 
   @OneToMany(fetch = FetchType.LAZY, mappedBy = "order")
   private List<OrderLineItem> items;
+
+  public Double getSubTotal() {
+    return items.stream().mapToDouble(OrderLineItem::getPrice).sum();
+  }
 }
