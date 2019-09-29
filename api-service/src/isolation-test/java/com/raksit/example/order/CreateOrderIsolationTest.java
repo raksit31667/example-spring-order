@@ -10,7 +10,7 @@ import io.restassured.http.ContentType;
 import java.util.Collections;
 import org.junit.jupiter.api.Test;
 
-class CreateOrderControllerIsolationTest extends IsolationTest {
+class CreateOrderIsolationTest extends IsolationTest {
 
   @Test
   void shouldReturnOrderResponseWithNumberOfItemsAndTotalPriceWhenCreateOrderGivenOrderRequest() {
