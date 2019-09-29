@@ -1,10 +1,10 @@
 spring:
-application:
-  name: order
-cloud:
-  kubernetes:
-    reload:
-      enabled: true
+  application:
+    name: order
+  cloud:
+    kubernetes:
+      reload:
+        enabled: true
 ---
 spring:
   profiles: local
@@ -25,7 +25,7 @@ spring:
     allow-bean-definition-overriding: true
 ---
 spring:
-  profiles: local-test
+  profiles: test
   cloud:
     kubernetes:
       enabled: false
