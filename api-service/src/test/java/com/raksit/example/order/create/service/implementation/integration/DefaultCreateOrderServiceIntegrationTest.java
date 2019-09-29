@@ -1,13 +1,10 @@
 package com.raksit.example.order.create.service.implementation.integration;
 
-import static org.junit.Assert.assertEquals;
-
 import com.raksit.example.order.common.model.dto.OrderRequest;
 import com.raksit.example.order.common.model.dto.OrderResponse;
 import com.raksit.example.order.common.repository.OrderRepository;
 import com.raksit.example.order.create.service.CreateOrderService;
 import com.raksit.example.order.util.MockOrderFactory;
-import com.raksit.example.order.util.PriceCalculator;
 import io.zonky.test.db.AutoConfigureEmbeddedDatabase;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
@@ -17,6 +14,8 @@ import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabas
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase.Replace;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
+
+import static org.junit.Assert.assertEquals;
 
 @ExtendWith(SpringExtension.class)
 @AutoConfigureTestDatabase(replace = Replace.NONE)
@@ -44,9 +43,6 @@ class DefaultCreateOrderServiceIntegrationTest {
     assertEquals(orderRequest.getSoldTo(), orderResponse.getSource());
     assertEquals(orderRequest.getShipTo(), orderResponse.getDestination());
     assertEquals(NUMBER_OF_ITEMS, orderResponse.getNumberOfItems());
-    assertEquals(
-        PriceCalculator.calculateTotalPrice(orderRequest.getItems()),
-        orderResponse.getTotalPrice(),
-        0);
+    assertEquals(3000.0, orderResponse.getTotalPrice(), 0);
   }
 }

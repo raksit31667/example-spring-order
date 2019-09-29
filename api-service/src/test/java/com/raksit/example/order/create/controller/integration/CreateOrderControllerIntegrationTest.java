@@ -4,7 +4,6 @@ import com.raksit.example.order.common.model.dto.OrderRequest;
 import com.raksit.example.order.common.model.dto.OrderResponse;
 import com.raksit.example.order.common.repository.OrderRepository;
 import com.raksit.example.order.util.MockOrderFactory;
-import com.raksit.example.order.util.PriceCalculator;
 import io.zonky.test.db.AutoConfigureEmbeddedDatabase;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -65,9 +64,6 @@ class CreateOrderControllerIntegrationTest {
     assertEquals(orderRequest.getSoldTo(), orderResponse.getSource());
     assertEquals(orderRequest.getShipTo(), orderResponse.getDestination());
     assertEquals(NUMBER_OF_ITEMS, orderResponse.getNumberOfItems());
-    assertEquals(
-        PriceCalculator.calculateTotalPrice(orderRequest.getItems()),
-        orderResponse.getTotalPrice(),
-        0);
+    assertEquals(3000.0, orderResponse.getTotalPrice(), 0);
   }
 }

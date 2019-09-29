@@ -6,7 +6,6 @@ import com.raksit.example.order.common.model.dto.OrderResponse;
 import com.raksit.example.order.common.model.entity.Order;
 import com.raksit.example.order.common.model.entity.OrderLineItem;
 import com.raksit.example.order.util.MockOrderFactory;
-import com.raksit.example.order.util.PriceCalculator;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -52,7 +51,6 @@ class OrderMapperTest {
     assertEquals(order.getSource(), orderResponse.getSource());
     assertEquals(order.getDestination(), orderResponse.getDestination());
     assertEquals(NUMBER_OF_ITEMS, orderResponse.getNumberOfItems());
-    assertEquals(
-        PriceCalculator.calculateTotalPrice(order.getItems()), orderResponse.getTotalPrice(), 0);
+    assertEquals(3000.0, orderResponse.getTotalPrice(), 0);
   }
 }

@@ -1,21 +1,19 @@
 package com.raksit.example.order.create.service.implementation;
 
-import static org.junit.Assert.assertEquals;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.when;
-
 import com.raksit.example.order.common.model.dto.OrderRequest;
 import com.raksit.example.order.common.model.dto.OrderResponse;
 import com.raksit.example.order.common.model.entity.Order;
 import com.raksit.example.order.common.model.mapper.OrderMapper;
 import com.raksit.example.order.common.repository.OrderRepository;
 import com.raksit.example.order.util.MockOrderFactory;
-import com.raksit.example.order.util.PriceCalculator;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+
+import static org.junit.Assert.assertEquals;
+import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
 class DefaultCreateOrderServiceTest {
@@ -44,7 +42,7 @@ class DefaultCreateOrderServiceTest {
         .source(order.getSource())
         .destination(order.getDestination())
         .numberOfItems(NUMBER_OF_ITEMS)
-        .totalPrice(PriceCalculator.calculateTotalPrice(orderRequest.getItems()))
+        .totalPrice(3000.0)
         .build());
 
     OrderResponse orderResponse = createOrderService.createOrder(orderRequest);
@@ -52,9 +50,6 @@ class DefaultCreateOrderServiceTest {
     assertEquals(orderRequest.getSoldTo(), orderResponse.getSource());
     assertEquals(orderRequest.getShipTo(), orderResponse.getDestination());
     assertEquals(NUMBER_OF_ITEMS, orderResponse.getNumberOfItems());
-    assertEquals(
-        PriceCalculator.calculateTotalPrice(orderRequest.getItems()),
-        orderResponse.getTotalPrice(),
-        0);
+    assertEquals(3000.0, orderResponse.getTotalPrice(), 0);
   }
 }

@@ -16,14 +16,14 @@ public class MockOrderFactory {
   public static OrderLineItem createSampleOrderLineItems() {
     return OrderLineItem.builder()
         .name(FAKER.beer().name())
-        .price(FAKER.number().randomDouble(2, 1000, 2000))
+        .price(1000.0)
         .build();
   }
 
   public static OrderLineItemRequest createSampleOrderLineItemRequests() {
     return OrderLineItemRequest.builder()
         .name(FAKER.beer().name())
-        .price(FAKER.number().randomDouble(2, 1000, 2000))
+        .price(1000.0)
         .build();
   }
 
