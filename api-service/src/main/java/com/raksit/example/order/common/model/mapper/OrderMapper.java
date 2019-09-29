@@ -1,12 +1,12 @@
 package com.raksit.example.order.common.model.mapper;
 
+import com.raksit.example.order.common.model.dto.OrderLineItemRequest;
 import com.raksit.example.order.common.model.dto.OrderRequest;
 import com.raksit.example.order.common.model.dto.OrderResponse;
 import com.raksit.example.order.common.model.entity.Order;
+import com.raksit.example.order.common.model.entity.OrderLineItem;
 import com.raksit.example.order.util.PriceCalculator;
-import java.util.List;
 import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
 import org.mapstruct.factory.Mappers;
 
 @Mapper
@@ -14,11 +14,20 @@ public abstract class OrderMapper {
 
   public static final OrderMapper INSTANCE = Mappers.getMapper(OrderMapper.class);
 
-  @Mapping(source = "soldTo", target = "source")
-  @Mapping(source = "shipTo", target = "destination")
-  public abstract Order orderRequestToOrder(OrderRequest orderRequest);
+  public Order orderRequestToOrder(OrderRequest orderRequest) {
+    return Order.builder()
+        .source(orderRequest.getSoldTo())
+        .destination(orderRequest.getShipTo())
+        .items(orderRequest.getItems())
+        .build();
+  }
 
-  public abstract List<OrderResponse> ordersToOrderResponses(List<Order> orders);
+  public OrderLineItem orderLineItemRequestToOrderLineItem(OrderLineItemRequest lineItemRequest) {
+    return OrderLineItem.builder()
+        .name(lineItemRequest.getName())
+        .price(lineItemRequest.getPrice())
+        .build();
+  }
 
   public OrderResponse orderToOrderResponse(Order order) {
     return OrderResponse.builder()

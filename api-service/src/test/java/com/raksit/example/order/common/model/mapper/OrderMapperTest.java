@@ -3,9 +3,11 @@ package com.raksit.example.order.common.model.mapper;
 import static java.util.Arrays.asList;
 import static org.junit.Assert.assertEquals;
 
+import com.raksit.example.order.common.model.dto.OrderLineItemRequest;
 import com.raksit.example.order.common.model.dto.OrderRequest;
 import com.raksit.example.order.common.model.dto.OrderResponse;
 import com.raksit.example.order.common.model.entity.Order;
+import com.raksit.example.order.common.model.entity.OrderLineItem;
 import com.raksit.example.order.util.MockOrderFactory;
 import com.raksit.example.order.util.PriceCalculator;
 import java.util.Iterator;
@@ -31,6 +33,16 @@ class OrderMapperTest {
   }
 
   @Test
+  void shouldReturnOrderLineItemWhenOrderLineItemRequestToOrderLineItemGivenOrderLineItemRequest() {
+    OrderLineItemRequest orderLineItemRequest = MockOrderFactory.createSampleOrderLineItemRequests();
+
+    OrderLineItem orderLineItem = OrderMapper.INSTANCE.orderLineItemRequestToOrderLineItem(orderLineItemRequest);
+
+    assertEquals(orderLineItem.getName(), orderLineItemRequest.getName());
+    assertEquals(orderLineItem.getPrice(), orderLineItemRequest.getPrice());
+  }
+
+  @Test
   void shouldReturnOrderResponseWhenOrderToOrderResponseGivenOrder() {
     Order order = MockOrderFactory.createSampleOrder(NUMBER_OF_ITEMS);
 
@@ -41,20 +53,5 @@ class OrderMapperTest {
     assertEquals(NUMBER_OF_ITEMS, orderResponse.getNumberOfItems());
     assertEquals(
         PriceCalculator.calculateTotalPrice(order.getItems()), orderResponse.getTotalPrice(), 0);
-  }
-
-  @Test
-  void shouldReturnOrderResponseWhenOrdersToOrderResponseGivenListOfOrders() {
-    Order order = MockOrderFactory.createSampleOrder(NUMBER_OF_ITEMS);
-    Order anotherOrder = MockOrderFactory.createSampleOrder(NUMBER_OF_ITEMS);
-
-    List<OrderResponse> orderResponses =
-        OrderMapper.INSTANCE.ordersToOrderResponses(asList(order, anotherOrder));
-    Iterator orderResponseIterator = orderResponses.iterator();
-
-    assertEquals(OrderMapper.INSTANCE.orderToOrderResponse(order), orderResponseIterator.next());
-
-    assertEquals(
-        OrderMapper.INSTANCE.orderToOrderResponse(anotherOrder), orderResponseIterator.next());
   }
 }
