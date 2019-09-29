@@ -1,11 +1,11 @@
-package com.raksit.example.order.create.service.implementation.integration;
+package com.raksit.example.order.create.service;
 
+import com.raksit.example.order.common.model.dto.OrderLineItemRequest;
 import com.raksit.example.order.common.model.dto.OrderRequest;
 import com.raksit.example.order.common.model.dto.OrderResponse;
 import com.raksit.example.order.common.repository.OrderRepository;
-import com.raksit.example.order.create.service.CreateOrderService;
-import com.raksit.example.order.util.MockOrderFactory;
 import io.zonky.test.db.AutoConfigureEmbeddedDatabase;
+import java.util.Collections;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -36,12 +36,18 @@ class DefaultCreateOrderServiceIntegrationTest {
 
   @Test
   void shouldReturnOrderResponseWithNumberOfItemsAndTotalPriceWhenCreateOrderGivenOrderRequest() {
-    OrderRequest orderRequest = MockOrderFactory.createSampleOrderRequest(NUMBER_OF_ITEMS);
+    OrderRequest orderRequest = OrderRequest.builder()
+        .soldTo("Bangkok")
+        .shipTo("Houston")
+        .items(Collections.nCopies(NUMBER_OF_ITEMS, OrderLineItemRequest.builder()
+            .price(1000.0)
+            .build()))
+        .build();
 
     OrderResponse orderResponse = createOrderService.createOrder(orderRequest);
 
-    assertEquals(orderRequest.getSoldTo(), orderResponse.getSource());
-    assertEquals(orderRequest.getShipTo(), orderResponse.getDestination());
+    assertEquals("Bangkok", orderResponse.getSource());
+    assertEquals("Houston", orderResponse.getDestination());
     assertEquals(NUMBER_OF_ITEMS, orderResponse.getNumberOfItems());
     assertEquals(3000.0, orderResponse.getTotalPrice(), 0);
   }

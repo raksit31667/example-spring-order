@@ -1,5 +1,6 @@
-package com.raksit.example.order;
+package com.raksit.example.order.create;
 
+import com.raksit.example.order.IsolationTest;
 import com.raksit.example.order.common.model.dto.OrderLineItemRequest;
 import com.raksit.example.order.common.model.dto.OrderRequest;
 import io.restassured.http.ContentType;

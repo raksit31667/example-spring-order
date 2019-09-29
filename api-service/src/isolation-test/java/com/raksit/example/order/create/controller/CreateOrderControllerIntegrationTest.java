@@ -1,10 +1,11 @@
-package com.raksit.example.order.create.controller.integration;
+package com.raksit.example.order.create.controller;
 
+import com.raksit.example.order.common.model.dto.OrderLineItemRequest;
 import com.raksit.example.order.common.model.dto.OrderRequest;
 import com.raksit.example.order.common.model.dto.OrderResponse;
 import com.raksit.example.order.common.repository.OrderRepository;
-import com.raksit.example.order.util.MockOrderFactory;
 import io.zonky.test.db.AutoConfigureEmbeddedDatabase;
+import java.util.Collections;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -52,7 +53,13 @@ class CreateOrderControllerIntegrationTest {
 
   @Test
   void shouldReturnOrderResponseWithNumberOfItemsAndTotalPriceWhenCreateOrderGivenOrderRequest() {
-    OrderRequest orderRequest = MockOrderFactory.createSampleOrderRequest(NUMBER_OF_ITEMS);
+    OrderRequest orderRequest = OrderRequest.builder()
+        .soldTo("Bangkok")
+        .shipTo("Houston")
+        .items(Collections.nCopies(NUMBER_OF_ITEMS, OrderLineItemRequest.builder()
+            .price(1000.0)
+            .build()))
+        .build();
 
     HttpEntity<OrderRequest> httpEntity = new HttpEntity<>(orderRequest, httpHeaders);
     ResponseEntity<OrderResponse> responseEntity =
@@ -61,8 +68,8 @@ class CreateOrderControllerIntegrationTest {
 
     assertNotNull(orderResponse);
     assertEquals(HttpStatus.CREATED, responseEntity.getStatusCode());
-    assertEquals(orderRequest.getSoldTo(), orderResponse.getSource());
-    assertEquals(orderRequest.getShipTo(), orderResponse.getDestination());
+    assertEquals("Bangkok", orderResponse.getSource());
+    assertEquals("Houston", orderResponse.getDestination());
     assertEquals(NUMBER_OF_ITEMS, orderResponse.getNumberOfItems());
     assertEquals(3000.0, orderResponse.getTotalPrice(), 0);
   }
