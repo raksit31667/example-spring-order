@@ -1,25 +1,28 @@
 package com.raksit.example.order;
 
-import static io.restassured.RestAssured.given;
-import static org.hamcrest.CoreMatchers.equalTo;
-import static org.hamcrest.CoreMatchers.is;
-
+import com.raksit.example.order.common.model.dto.OrderLineItemRequest;
 import com.raksit.example.order.common.model.dto.OrderRequest;
-import com.raksit.example.order.common.model.entity.OrderLineItem;
 import io.restassured.http.ContentType;
 import java.util.Collections;
 import org.junit.jupiter.api.Test;
+
+import static io.restassured.RestAssured.given;
+import static org.hamcrest.CoreMatchers.equalTo;
+import static org.hamcrest.CoreMatchers.is;
 
 class CreateOrderIsolationTest extends IsolationTest {
 
   @Test
   void shouldReturnOrderResponseWithNumberOfItemsAndTotalPriceWhenCreateOrderGivenOrderRequest() {
-    OrderLineItem orderLineItem = OrderLineItem.builder().name("Diesel").price(2000.0).build();
+    OrderLineItemRequest orderLineItemRequest = OrderLineItemRequest.builder()
+        .name("Diesel")
+        .price(2000.0)
+        .build();
 
     OrderRequest orderRequest = OrderRequest.builder()
             .soldTo("Bangkok")
             .shipTo("Houston")
-            .items(Collections.nCopies(3, orderLineItem))
+            .items(Collections.nCopies(3, orderLineItemRequest))
             .build();
 
     given()
