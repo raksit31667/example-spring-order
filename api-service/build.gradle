@@ -62,8 +62,8 @@ dependencyManagement {
 }
 
 testSets {
-    isolationTest {
-        dirName = 'isolation-test'
+    integrationTest {
+        dirName = 'integration-test'
     }
 }
 
@@ -85,7 +85,7 @@ test {
     }
 }
 
-isolationTest {
+integrationTest {
     testLogging.showStandardStreams = false
     useJUnitPlatform()
 
