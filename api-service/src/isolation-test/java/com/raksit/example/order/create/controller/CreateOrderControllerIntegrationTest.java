@@ -1,36 +1,26 @@
 package com.raksit.example.order.create.controller;
 
+import com.raksit.example.order.IntegrationTest;
 import com.raksit.example.order.common.model.dto.OrderLineItemRequest;
 import com.raksit.example.order.common.model.dto.OrderRequest;
 import com.raksit.example.order.common.model.dto.OrderResponse;
 import com.raksit.example.order.common.repository.OrderRepository;
-import io.zonky.test.db.AutoConfigureEmbeddedDatabase;
 import java.util.Collections;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
-import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase.Replace;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
-@ExtendWith(SpringExtension.class)
-@AutoConfigureTestDatabase(replace = Replace.NONE)
-@AutoConfigureEmbeddedDatabase
-@SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
-class CreateOrderControllerIntegrationTest {
+class CreateOrderControllerIntegrationTest extends IntegrationTest {
 
   private static final int NUMBER_OF_ITEMS = 3;
 
