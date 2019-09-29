@@ -16,9 +16,13 @@ jobs:
         uses: actions/setup-java@v1
         with:
           java-version: 1.8
+      - name: Coding standard
+        run: |
+          ./gradlew checkStyleMain
+          ./gradlew pmdMain
       - name: Unit test
         run: ./gradlew test
-      - name: Isolation test
-        run: ./gradlew isolationTest
+      - name: Integration test
+        run: ./gradlew integrationTest
       - name: Build
         run: ./gradlew build
