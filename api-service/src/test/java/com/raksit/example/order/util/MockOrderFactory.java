@@ -20,7 +20,7 @@ public class MockOrderFactory {
         .build();
   }
 
-  public static OrderLineItemRequest createSampleOrderLineItemRequests() {
+  public static OrderLineItemRequest createSampleOrderLineItemRequest() {
     return OrderLineItemRequest.builder()
         .name(FAKER.beer().name())
         .price(1000.0)
@@ -31,7 +31,7 @@ public class MockOrderFactory {
     return OrderRequest.builder()
         .soldTo(FAKER.company().name())
         .shipTo(FAKER.company().name())
-        .items(Collections.nCopies(numberOfItems, createSampleOrderLineItems()))
+        .items(Collections.nCopies(numberOfItems, createSampleOrderLineItemRequest()))
         .build();
   }
 

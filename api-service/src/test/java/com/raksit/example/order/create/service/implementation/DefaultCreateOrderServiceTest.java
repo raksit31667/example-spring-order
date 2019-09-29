@@ -3,9 +3,11 @@ package com.raksit.example.order.create.service.implementation;
 import com.raksit.example.order.common.model.dto.OrderRequest;
 import com.raksit.example.order.common.model.dto.OrderResponse;
 import com.raksit.example.order.common.model.entity.Order;
+import com.raksit.example.order.common.model.entity.OrderLineItem;
 import com.raksit.example.order.common.model.mapper.OrderMapper;
 import com.raksit.example.order.common.repository.OrderRepository;
 import com.raksit.example.order.util.MockOrderFactory;
+import java.util.Collections;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -33,7 +35,9 @@ class DefaultCreateOrderServiceTest {
     Order order = Order.builder()
             .source(orderRequest.getSoldTo())
             .destination(orderRequest.getShipTo())
-            .items(orderRequest.getItems())
+            .items(Collections.nCopies(NUMBER_OF_ITEMS, OrderLineItem.builder()
+                .price(1000.0)
+                .build()))
             .build();
 
     when(orderMapper.orderRequestToOrder(orderRequest)).thenReturn(order);
