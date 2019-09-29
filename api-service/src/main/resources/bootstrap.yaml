@@ -8,13 +8,15 @@ spring:
 ---
 spring:
   profiles: local
+  flyway:
+    enabled: true
   cloud:
     kubernetes:
       enabled: false
   datasource:
-    url: jdbc:postgresql://localhost:5432/order?useUnicode=true&characterEncoding=utf8
-    username: raksit
-    password:
+    url: jdbc:postgresql://localhost:5433/order?useUnicode=true&characterEncoding=utf8
+    username: local
+    password: local
   jpa:
     properties:
       hibernate:
@@ -26,18 +28,16 @@ spring:
 ---
 spring:
   profiles: test
+  flyway:
+    enabled: true
   cloud:
     kubernetes:
       enabled: false
-  datasource:
-    url: jdbc:h2:mem:test;DB_CLOSE_DELAY=-1
-    username: sa
-    password:
   jpa:
-    database: H2
-    database-platform: org.hibernate.dialect.H2Dialect
-    generate-ddl: true
-  hibernate:
-    ddl-auto: create-drop
+    open-in-view: true
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    properties:
+      hibernate.enable_lazy_load_no_trans: true
+      hibernate.show_sql: false
   main:
     allow-bean-definition-overriding: true
