@@ -1,6 +1,7 @@
 package com.raksit.example.order.common.model.entity;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -23,10 +24,6 @@ public class OrderLineItem {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private long id;
-
-  @ManyToOne
-  @JoinColumn(name = "order_id", nullable = false)
-  private Order order;
 
   private String name;
   private Double price;

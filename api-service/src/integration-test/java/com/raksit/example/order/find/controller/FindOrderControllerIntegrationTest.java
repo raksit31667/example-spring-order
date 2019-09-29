@@ -1,26 +1,20 @@
-package com.raksit.example.order.find.controller.integration;
+package com.raksit.example.order.find.controller;
 
+import com.raksit.example.order.IntegrationTest;
 import com.raksit.example.order.common.exception.OrderExceptionResponse;
 import com.raksit.example.order.common.model.entity.Order;
 import com.raksit.example.order.common.repository.OrderRepository;
-import com.raksit.example.order.util.MockOrderFactory;
-import io.zonky.test.db.AutoConfigureEmbeddedDatabase;
 import java.util.Arrays;
 import java.util.List;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
-import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase.Replace;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.web.util.UriComponentsBuilder;
 
+import static com.google.common.collect.Lists.newArrayList;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.everyItem;
 import static org.hamcrest.Matchers.hasProperty;
@@ -29,13 +23,7 @@ import static org.hamcrest.Matchers.is;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
-@ExtendWith(SpringExtension.class)
-@AutoConfigureTestDatabase(replace = Replace.NONE)
-@AutoConfigureEmbeddedDatabase
-@SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
-class FindOrderControllerIntegrationTest {
-
-  private static final int NUMBER_OF_ITEMS = 3;
+class FindOrderControllerIntegrationTest extends IntegrationTest {
 
   @Autowired private TestRestTemplate restTemplate;
 
@@ -48,10 +36,17 @@ class FindOrderControllerIntegrationTest {
 
   @Test
   void shouldReturnOrdersWithBangkokSourceWhenFindOrdersBySourceGivenSourceBangkok() {
-    Order thaiOrder = MockOrderFactory.createSampleOrder(NUMBER_OF_ITEMS);
-    Order chineseOrder = MockOrderFactory.createSampleOrder(NUMBER_OF_ITEMS);
-    thaiOrder.setSource("Bangkok");
-    chineseOrder.setSource("Wuhan");
+    Order thaiOrder = Order.builder()
+        .source("Bangkok")
+        .destination("Houston")
+        .items(newArrayList())
+        .build();
+
+    Order chineseOrder = Order.builder()
+        .source("Wuhan")
+        .destination("Houston")
+        .items(newArrayList())
+        .build();
 
     orderRepository.save(thaiOrder);
     orderRepository.save(chineseOrder);
@@ -72,8 +67,11 @@ class FindOrderControllerIntegrationTest {
 
   @Test
   void shouldReturnStatusNotFoundWhenFindOrdersBySourceGivenOrdersWithSourceBangkokNotFound() {
-    Order someOrder = MockOrderFactory.createSampleOrder(NUMBER_OF_ITEMS);
-    someOrder.setSource("Somewhere");
+    Order someOrder = Order.builder()
+        .source("Somewhere")
+        .destination("Houston")
+        .items(newArrayList())
+        .build();
     orderRepository.save(someOrder);
 
     UriComponentsBuilder uriBuilder =

@@ -60,7 +60,7 @@ class CreateOrderControllerIntegrationTest extends IntegrationTest {
     assertEquals(HttpStatus.CREATED, responseEntity.getStatusCode());
     assertEquals("Bangkok", orderResponse.getSource());
     assertEquals("Houston", orderResponse.getDestination());
-    assertEquals(NUMBER_OF_ITEMS, orderResponse.getNumberOfItems());
+    assertEquals(NUMBER_OF_ITEMS, orderResponse.getNumberOfItems(), 0);
     assertEquals(3000.0, orderResponse.getTotalPrice(), 0);
   }
 }

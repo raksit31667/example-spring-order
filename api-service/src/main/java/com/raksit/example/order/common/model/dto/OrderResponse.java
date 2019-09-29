@@ -13,6 +13,6 @@ public class OrderResponse {
 
   private String source;
   private String destination;
-  private int numberOfItems;
-  private double totalPrice;
+  private Integer numberOfItems;
+  private Double totalPrice;
 }
