@@ -68,4 +68,34 @@ class DefaultFindOrderServiceTest {
     // Then
     assertThrows(OrderNotFoundException.class, () -> findOrderService.findOrdersBySource("Houston"));
   }
+
+  @Test
+  void shouldReturnOrderResponseWhenFindOrderByIdGivenOrderIdExists() throws OrderNotFoundException {
+    // Given
+    Order order = MockOrderFactory.createSampleOrder(NUMBER_OF_ITEMS);
+    OrderResponse orderResponse = OrderResponse.builder()
+        .source(order.getSource())
+        .destination(order.getDestination())
+        .numberOfItems(NUMBER_OF_ITEMS)
+        .totalPrice(6000.0)
+        .build();
+    when(orderRepository.findById(1L)).thenReturn(Optional.of(order));
+    when(orderMapper.orderToOrderResponse(order)).thenReturn(orderResponse);
+
+    // When
+    OrderResponse actual = findOrderService.findOrderById(1L);
+
+    // Then
+    assertEquals(orderResponse, actual);
+  }
+
+  @Test
+  void shouldThrowOrderNotFoundExceptionWhenFindOrderByIdGivenOrderNotExist() {
+    // Given
+    when(orderRepository.findById(1L)).thenReturn(Optional.empty());
+
+    // When
+    // Then
+    assertThrows(OrderNotFoundException.class, () -> findOrderService.findOrderById(1L));
+  }
 }

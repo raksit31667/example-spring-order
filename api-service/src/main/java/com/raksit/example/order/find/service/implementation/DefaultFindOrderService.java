@@ -29,7 +29,9 @@ public class DefaultFindOrderService implements FindOrderService {
   }
 
   @Override
-  public OrderResponse findOrderById(Long id) {
-    return null;
+  public OrderResponse findOrderById(Long id) throws OrderNotFoundException {
+    return orderRepository.findById(id)
+        .map(order -> orderMapper.orderToOrderResponse(order))
+        .orElseThrow(OrderNotFoundException::new);
   }
 }
