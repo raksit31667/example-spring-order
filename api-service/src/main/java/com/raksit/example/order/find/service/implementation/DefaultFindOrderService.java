@@ -27,4 +27,9 @@ public class DefaultFindOrderService implements FindOrderService {
     return orders.stream().map(order -> orderMapper.orderToOrderResponse(order))
         .collect(Collectors.toList());
   }
+
+  @Override
+  public OrderResponse findOrderById(Long id) {
+    return null;
+  }
 }

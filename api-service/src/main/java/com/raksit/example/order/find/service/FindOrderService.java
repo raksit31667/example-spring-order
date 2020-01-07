@@ -6,4 +6,6 @@ import java.util.List;
 
 public interface FindOrderService {
   List<OrderResponse> findOrdersBySource(String source) throws OrderNotFoundException;
+
+  OrderResponse findOrderById(Long id) throws OrderNotFoundException;
 }

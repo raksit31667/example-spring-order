@@ -52,12 +52,40 @@ class FindOrderControllerTest {
   }
 
   @Test
-  void shouldReturnStatusNotFoundWhenFindOrdersBySourceGivenOrdersWithSourceBangkokNotFound() throws Exception {
+  void shouldThrowOrderNotFoundWhenFindOrdersBySourceGivenOrdersWithSourceBangkokNotFound() throws Exception {
     // Given
     when(findOrderService.findOrdersBySource(eq("Bangkok"))).thenThrow(new OrderNotFoundException());
 
     // When
     // Then
     assertThrows(OrderNotFoundException.class, () -> findOrderController.findOrdersBySource("Bangkok"));
+  }
+
+  @Test
+  void shouldReturnOrderWhenFindByIdGivenOrderWithIdExists() throws Exception {
+    // Given
+    Order order = MockOrderFactory.createSampleOrder(NUMBER_OF_ITEMS);
+    OrderResponse orderResponse = OrderResponse.builder()
+        .source(order.getSource())
+        .destination(order.getDestination())
+        .totalPrice(3000.0)
+        .build();
+    when(findOrderService.findOrderById(eq(1L))).thenReturn(orderResponse);
+
+    // When
+    OrderResponse actual = findOrderController.findOrderById(1L);
+
+    // Then
+    assertEquals(orderResponse, actual);
+  }
+
+  @Test
+  void shouldThrowOrderNotFoundWhenFindOrderByIdGivenOrderWithIdNotExist() throws Exception {
+    // Given
+    when(findOrderService.findOrderById(eq(1L))).thenThrow(new OrderNotFoundException());
+
+    // When
+    // Then
+    assertThrows(OrderNotFoundException.class, () -> findOrderController.findOrderById(1L));
   }
 }
