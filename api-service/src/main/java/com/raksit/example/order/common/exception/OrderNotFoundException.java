@@ -1,3 +1,3 @@
 package com.raksit.example.order.common.exception;
 
-public class OrderNotFoundException extends Exception {}
+public class OrderNotFoundException extends RuntimeException {}

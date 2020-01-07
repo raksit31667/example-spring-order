@@ -32,11 +32,11 @@ public class FindOrderController {
             response = OrderExceptionResponse.class)
       })
   @ApiOperation(value = "Get order by source (sold-to)")
-  public List<OrderResponse> findOrdersBySource(@RequestParam String source) throws Exception {
+  public List<OrderResponse> findOrdersBySource(@RequestParam String source) {
     return findOrderService.findOrdersBySource(source);
   }
 
-  public OrderResponse findOrderById(Long id) throws Exception {
+  public OrderResponse findOrderById(Long id) {
     return findOrderService.findOrderById(id);
   }
 }

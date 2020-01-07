@@ -21,7 +21,7 @@ public class DefaultFindOrderService implements FindOrderService {
   private OrderMapper orderMapper;
 
   @Override
-  public List<OrderResponse> findOrdersBySource(String source) throws OrderNotFoundException {
+  public List<OrderResponse> findOrdersBySource(String source) {
     List<Order> orders = orderRepository.findAllBySource(source)
         .orElseThrow(OrderNotFoundException::new);
     return orders.stream().map(order -> orderMapper.orderToOrderResponse(order))
@@ -29,7 +29,7 @@ public class DefaultFindOrderService implements FindOrderService {
   }
 
   @Override
-  public OrderResponse findOrderById(Long id) throws OrderNotFoundException {
+  public OrderResponse findOrderById(Long id) {
     return orderRepository.findById(id)
         .map(order -> orderMapper.orderToOrderResponse(order))
         .orElseThrow(OrderNotFoundException::new);

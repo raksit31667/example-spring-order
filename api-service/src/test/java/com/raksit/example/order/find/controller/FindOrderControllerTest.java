@@ -31,7 +31,7 @@ class FindOrderControllerTest {
   private FindOrderController findOrderController;
 
   @Test
-  void shouldReturnOrdersWithBangkokSourceWhenFindOrdersBySourceGivenSourceBangkok() throws Exception {
+  void shouldReturnOrdersWithBangkokSourceWhenFindOrdersBySourceGivenSourceBangkok() {
     // Given
     Order order = MockOrderFactory.createSampleOrder(NUMBER_OF_ITEMS);
     order.setSource("Bangkok");
@@ -52,7 +52,7 @@ class FindOrderControllerTest {
   }
 
   @Test
-  void shouldThrowOrderNotFoundWhenFindOrdersBySourceGivenOrdersWithSourceBangkokNotFound() throws Exception {
+  void shouldThrowOrderNotFoundWhenFindOrdersBySourceGivenOrdersWithSourceBangkokNotFound() {
     // Given
     when(findOrderService.findOrdersBySource(eq("Bangkok"))).thenThrow(new OrderNotFoundException());
 
@@ -62,7 +62,7 @@ class FindOrderControllerTest {
   }
 
   @Test
-  void shouldReturnOrderWhenFindByIdGivenOrderWithIdExists() throws Exception {
+  void shouldReturnOrderWhenFindByIdGivenOrderWithIdExists() {
     // Given
     Order order = MockOrderFactory.createSampleOrder(NUMBER_OF_ITEMS);
     OrderResponse orderResponse = OrderResponse.builder()
@@ -80,7 +80,7 @@ class FindOrderControllerTest {
   }
 
   @Test
-  void shouldThrowOrderNotFoundWhenFindOrderByIdGivenOrderWithIdNotExist() throws Exception {
+  void shouldThrowOrderNotFoundWhenFindOrderByIdGivenOrderWithIdNotExist() {
     // Given
     when(findOrderService.findOrderById(eq(1L))).thenThrow(new OrderNotFoundException());
 
