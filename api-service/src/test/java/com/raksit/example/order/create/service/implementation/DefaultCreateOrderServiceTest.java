@@ -31,6 +31,7 @@ class DefaultCreateOrderServiceTest {
 
   @Test
   void shouldReturnOrderResponseWithNumberOfItemsAndTotalPriceWhenCreateOrderGivenOrderRequest() {
+    // Given
     OrderRequest orderRequest = MockOrderFactory.createSampleOrderRequest(NUMBER_OF_ITEMS);
     Order order = Order.builder()
             .source(orderRequest.getSoldTo())
@@ -39,7 +40,6 @@ class DefaultCreateOrderServiceTest {
                 .price(1000.0)
                 .build()))
             .build();
-
     when(orderMapper.orderRequestToOrder(orderRequest)).thenReturn(order);
     when(orderRepository.save(order)).thenReturn(order);
     when(orderMapper.orderToOrderResponse(order)).thenReturn(OrderResponse.builder()
@@ -49,8 +49,10 @@ class DefaultCreateOrderServiceTest {
         .totalPrice(3000.0)
         .build());
 
+    // When
     OrderResponse orderResponse = createOrderService.createOrder(orderRequest);
 
+    // Then
     assertEquals(orderRequest.getSoldTo(), orderResponse.getSource());
     assertEquals(orderRequest.getShipTo(), orderResponse.getDestination());
     assertEquals(NUMBER_OF_ITEMS, orderResponse.getNumberOfItems(), 0);

@@ -26,6 +26,7 @@ class CreateOrderControllerTest {
 
   @Test
   void shouldReturnOrderResponseWithNumberOfItemsAndTotalPriceWhenCreateOrderGivenOrderRequest() {
+    // Given
     OrderRequest orderRequest = MockOrderFactory.createSampleOrderRequest(NUMBER_OF_ITEMS);
     OrderResponse orderResponse = OrderResponse.builder()
             .source(orderRequest.getSoldTo())
@@ -33,11 +34,12 @@ class CreateOrderControllerTest {
             .numberOfItems(NUMBER_OF_ITEMS)
             .totalPrice(3000.0)
             .build();
-
     when(createOrderService.createOrder(orderRequest)).thenReturn(orderResponse);
 
+    // When
     OrderResponse actual = createOrderController.createOrder(orderRequest);
 
+    // Then
     assertEquals(orderResponse, actual);
   }
 }

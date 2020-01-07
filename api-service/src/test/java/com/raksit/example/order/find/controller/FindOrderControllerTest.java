@@ -32,28 +32,32 @@ class FindOrderControllerTest {
 
   @Test
   void shouldReturnOrdersWithBangkokSourceWhenFindOrdersBySourceGivenSourceBangkok() throws Exception {
+    // Given
     Order order = MockOrderFactory.createSampleOrder(NUMBER_OF_ITEMS);
     order.setSource("Bangkok");
-
     OrderResponse orderResponse = OrderResponse.builder()
         .source(order.getSource())
         .destination(order.getDestination())
         .totalPrice(3000.0)
         .build();
-
     when(findOrderService.findOrdersBySource(eq("Bangkok")))
         .thenReturn(Collections.singletonList(orderResponse));
 
+    // When
     List<OrderResponse> actual = findOrderController.findOrdersBySource("Bangkok");
 
+    // Then
     List<OrderResponse> expected = newArrayList(orderResponse);
     assertEquals(expected, actual);
   }
 
   @Test
   void shouldReturnStatusNotFoundWhenFindOrdersBySourceGivenOrdersWithSourceBangkokNotFound() throws Exception {
+    // Given
     when(findOrderService.findOrdersBySource(eq("Bangkok"))).thenThrow(new OrderNotFoundException());
 
+    // When
+    // Then
     assertThrows(OrderNotFoundException.class, () -> findOrderController.findOrdersBySource("Bangkok"));
   }
 }

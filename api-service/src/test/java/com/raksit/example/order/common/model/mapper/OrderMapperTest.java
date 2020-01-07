@@ -24,6 +24,7 @@ class OrderMapperTest {
 
   @Test
   void shouldReturnOrderWhenOrderRequestToOrderGivenOrderRequest() {
+    // Given
     OrderRequest orderRequest = MockOrderFactory.createSampleOrderRequest(1);
     doReturn(OrderLineItem.builder()
         .name(orderRequest.getItems().get(0).getName())
@@ -32,31 +33,38 @@ class OrderMapperTest {
         .when(orderMapper)
         .orderLineItemRequestToOrderLineItem(orderRequest.getItems().get(0));
 
+    // When
     Order order = orderMapper.orderRequestToOrder(orderRequest);
 
+    // Then
     assertEquals(orderRequest.getSoldTo(), order.getSource());
     assertEquals(orderRequest.getShipTo(), order.getDestination());
-
     assertEquals(orderRequest.getItems().get(0).getName(), order.getItems().get(0).getName());
     assertEquals(orderRequest.getItems().get(0).getPrice(), order.getItems().get(0).getPrice(), 0);
   }
 
   @Test
   void shouldReturnOrderLineItemWhenOrderLineItemRequestToOrderLineItemGivenOrderLineItemRequest() {
+    // Given
     OrderLineItemRequest orderLineItemRequest = MockOrderFactory.createSampleOrderLineItemRequest();
 
+    // When
     OrderLineItem orderLineItem = orderMapper.orderLineItemRequestToOrderLineItem(orderLineItemRequest);
 
+    // Then
     assertEquals(orderLineItem.getName(), orderLineItemRequest.getName());
     assertEquals(orderLineItem.getPrice(), orderLineItemRequest.getPrice());
   }
 
   @Test
   void shouldReturnOrderResponseWhenOrderToOrderResponseGivenOrder() {
+    // Given
     Order order = MockOrderFactory.createSampleOrder(NUMBER_OF_ITEMS);
 
+    // When
     OrderResponse orderResponse = orderMapper.orderToOrderResponse(order);
 
+    // Then
     assertEquals(order.getSource(), orderResponse.getSource());
     assertEquals(order.getDestination(), orderResponse.getDestination());
     assertEquals(NUMBER_OF_ITEMS, orderResponse.getNumberOfItems(), 0);
