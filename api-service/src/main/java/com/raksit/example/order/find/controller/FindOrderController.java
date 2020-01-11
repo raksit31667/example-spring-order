@@ -23,12 +23,13 @@ public class FindOrderController {
   @Autowired private FindOrderService findOrderService;
 
   @GetMapping
-  @ApiOperation(value = "Get order by source (sold-to)")
+  @ApiOperation("Get order by source (sold-to)")
   public List<OrderResponse> findOrdersBySource(@RequestParam String source) {
     return findOrderService.findOrdersBySource(source);
   }
 
   @GetMapping("/{orderId}")
+  @ApiOperation("Get order by id")
   @ApiResponses(
       value = {
           @ApiResponse(
