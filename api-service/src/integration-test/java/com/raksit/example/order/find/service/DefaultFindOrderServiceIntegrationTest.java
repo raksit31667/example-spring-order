@@ -1,6 +1,7 @@
 package com.raksit.example.order.find.service;
 
 import com.raksit.example.order.IntegrationTest;
+import com.raksit.example.order.common.exception.OrderNotFoundException;
 import com.raksit.example.order.common.model.dto.OrderResponse;
 import com.raksit.example.order.common.model.entity.Order;
 import com.raksit.example.order.common.repository.OrderRepository;
@@ -11,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import static com.google.common.collect.Lists.newArrayList;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 class DefaultFindOrderServiceIntegrationTest extends IntegrationTest {
 
@@ -70,10 +72,40 @@ class DefaultFindOrderServiceIntegrationTest extends IntegrationTest {
     orderRepository.save(chineseOrder);
 
     // When
-    List<OrderResponse> actual = findOrderService.findOrdersBySource("Bangkok");
+    List<OrderResponse> actual = findOrderService.findOrdersBySource("XXX");
 
     // Then
     List<OrderResponse> expected = newArrayList();
     assertEquals(expected, actual);
+  }
+
+  @Test
+  void shouldReturnOrderWhenFindOrderByIdGivenOrderWithIdExists() {
+    // Given
+    Order order = Order.builder()
+        .source("Bangkok")
+        .destination("Houston")
+        .items(newArrayList())
+        .build();
+    Order savedOrder = orderRepository.save(order);
+
+    // When
+    OrderResponse actual = findOrderService.findOrderById(savedOrder.getId());
+
+    // Then
+    OrderResponse expected = OrderResponse.builder()
+        .source("Bangkok")
+        .destination("Houston")
+        .numberOfItems(0)
+        .totalPrice(0.0)
+        .build();
+    assertEquals(expected, actual);
+  }
+
+  @Test
+  void shouldThrowOrderNotFoundExceptionWhenFindOrderByIdGivenOrderWithIdNotExist() {
+    // When
+    // Then
+    assertThrows(OrderNotFoundException.class, () -> findOrderService.findOrderById(1L));
   }
 }
