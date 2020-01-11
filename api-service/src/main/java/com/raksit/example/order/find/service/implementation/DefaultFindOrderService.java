@@ -22,8 +22,7 @@ public class DefaultFindOrderService implements FindOrderService {
 
   @Override
   public List<OrderResponse> findOrdersBySource(String source) {
-    List<Order> orders = orderRepository.findAllBySource(source)
-        .orElseThrow(OrderNotFoundException::new);
+    List<Order> orders = orderRepository.findAllBySource(source);
     return orders.stream().map(order -> orderMapper.orderToOrderResponse(order))
         .collect(Collectors.toList());
   }

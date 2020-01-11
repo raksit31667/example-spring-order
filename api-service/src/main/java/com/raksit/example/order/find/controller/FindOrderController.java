@@ -1,7 +1,6 @@
 package com.raksit.example.order.find.controller;
 
 import com.raksit.example.order.common.exception.OrderExceptionResponse;
-import com.raksit.example.order.common.exception.OrderNotFoundException;
 import com.raksit.example.order.common.model.dto.OrderResponse;
 import com.raksit.example.order.find.service.FindOrderService;
 import io.swagger.annotations.Api;

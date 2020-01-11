@@ -3,7 +3,6 @@ package com.raksit.example.order.common.repository;
 import com.raksit.example.order.common.model.entity.Order;
 import io.zonky.test.db.AutoConfigureEmbeddedDatabase;
 import java.util.List;
-import java.util.Optional;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -13,8 +12,7 @@ import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabas
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @ExtendWith(SpringExtension.class)
 @DataJpaTest
@@ -40,10 +38,9 @@ class OrderRepositoryTest {
     orderRepository.save(order);
     orderRepository.save(anotherOrder);
 
-    Optional<List<Order>> actualOrders = orderRepository.findAllBySource("Bangkok");
+    List<Order> actualOrders = orderRepository.findAllBySource("Bangkok");
 
-    assertTrue(actualOrders.isPresent());
-    assertEquals(1, actualOrders.get().size());
-    assertEquals(order, actualOrders.get().iterator().next());
+    assertEquals(1, actualOrders.size());
+    assertEquals(order, actualOrders.iterator().next());
   }
 }

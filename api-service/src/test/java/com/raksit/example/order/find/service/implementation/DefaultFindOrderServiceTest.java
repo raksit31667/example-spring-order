@@ -7,6 +7,7 @@ import com.raksit.example.order.common.model.mapper.OrderMapper;
 import com.raksit.example.order.common.repository.OrderRepository;
 import com.raksit.example.order.util.MockOrderFactory;
 import java.util.Collections;
+import java.util.List;
 import java.util.Optional;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -14,6 +15,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import static com.google.common.collect.Lists.newArrayList;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.eq;
@@ -40,7 +42,7 @@ class DefaultFindOrderServiceTest {
     chineseOrder.setSource("Wuhan");
 
     when(orderRepository.findAllBySource(eq("Bangkok")))
-        .thenReturn(Optional.of(Collections.singletonList(thaiOrder)));
+        .thenReturn(Collections.singletonList(thaiOrder));
     when(orderMapper.orderToOrderResponse(thaiOrder)).thenReturn(OrderResponse.builder()
         .source("Bangkok")
         .destination(thaiOrder.getDestination())
@@ -56,17 +58,20 @@ class DefaultFindOrderServiceTest {
   }
 
   @Test
-  void shouldThrowOrderNotFoundExceptionWhenFindOrdersBySourceGivenOrdersWithSourceHoustonNotFound() {
+  void shouldReturnEmptyOrderWhenFindOrdersBySourceGivenOrdersWithSourceHoustonNotFound() {
     // Given
     Order thaiOrder = MockOrderFactory.createSampleOrder(NUMBER_OF_ITEMS);
     Order chineseOrder = MockOrderFactory.createSampleOrder(NUMBER_OF_ITEMS);
     thaiOrder.setSource("Bangkok");
     chineseOrder.setSource("Wuhan");
-    when(orderRepository.findAllBySource(eq("Houston"))).thenReturn(Optional.empty());
+    when(orderRepository.findAllBySource(eq("Houston"))).thenReturn(newArrayList());
 
     // When
+    List<OrderResponse> actual = findOrderService.findOrdersBySource("Houston");
+
     // Then
-    assertThrows(OrderNotFoundException.class, () -> findOrderService.findOrdersBySource("Houston"));
+    List<Object> expected = newArrayList();
+    assertEquals(expected, actual);
   }
 
   @Test
