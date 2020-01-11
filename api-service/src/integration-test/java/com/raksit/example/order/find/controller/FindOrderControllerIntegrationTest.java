@@ -1,6 +1,7 @@
 package com.raksit.example.order.find.controller;
 
 import com.raksit.example.order.IntegrationTest;
+import com.raksit.example.order.common.model.dto.OrderResponse;
 import com.raksit.example.order.common.model.entity.Order;
 import com.raksit.example.order.common.repository.OrderRepository;
 import java.util.List;
@@ -13,6 +14,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import static com.google.common.collect.Lists.newArrayList;
+import static java.lang.String.valueOf;
 import static java.util.Arrays.asList;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.everyItem;
@@ -85,5 +87,31 @@ class FindOrderControllerIntegrationTest extends IntegrationTest {
     assertNotNull(responseEntity.getBody());
     List<Order> actualOrders = asList(responseEntity.getBody());
     assertThat(actualOrders, hasSize(0));
+  }
+
+  @Test
+  void shouldReturnOrderWhenFindByIdGivenOrderWithIdExists() {
+    // Given
+    Order order = Order.builder()
+        .source("Bangkok")
+        .destination("Houston")
+        .items(newArrayList())
+        .build();
+    Order savedOrder = orderRepository.save(order);
+
+    // When
+    ResponseEntity<OrderResponse> responseEntity =
+        restTemplate.getForEntity("/orders/" + savedOrder.getId(), OrderResponse.class);
+
+    // Then
+    assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
+    assertNotNull(responseEntity.getBody());
+    OrderResponse expected = OrderResponse.builder()
+        .source("Bangkok")
+        .destination("Houston")
+        .numberOfItems(0)
+        .totalPrice(0.0)
+        .build();
+    assertEquals(expected, responseEntity.getBody());
   }
 }
