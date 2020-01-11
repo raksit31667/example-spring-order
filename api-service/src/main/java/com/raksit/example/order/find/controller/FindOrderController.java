@@ -28,7 +28,7 @@ public class FindOrderController {
     return findOrderService.findOrdersBySource(source);
   }
 
-  @GetMapping("/orderId")
+  @GetMapping("/{orderId}")
   @ApiResponses(
       value = {
           @ApiResponse(
