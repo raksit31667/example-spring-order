@@ -51,7 +51,7 @@ dependencies {
     testCompile 'com.github.javafaker:javafaker:0.16'
     testRuntime 'org.junit.jupiter:junit-jupiter-engine:5.2.0'
     testCompile 'io.rest-assured:rest-assured:3.1.0'
-    testCompile 'io.zonky.test:embedded-database-spring-test:1.3.3'
+    testCompile 'io.zonky.test:embedded-database-spring-test:1.5.2'
     annotationProcessor 'org.projectlombok:lombok:1.18.4'
 }
 
