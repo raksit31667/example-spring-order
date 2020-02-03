@@ -105,7 +105,7 @@ bootRun {
 }
 
 checkstyle {
-    toolVersion = "8.29"
+    toolVersion = "8.10.1"
     ignoreFailures = false
     sourceSets = [sourceSets.main]
     maxErrors = 0
@@ -133,3 +133,9 @@ jacocoTestReport {
         html.destination = file("$buildDir/reports/jacoco")
     }
 }
+
+check.dependsOn(integrationTest)
+test.shouldRunAfter(pmdMain)
+integrationTest.shouldRunAfter(test)
+
+
