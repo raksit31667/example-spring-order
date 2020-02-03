@@ -36,7 +36,9 @@ pipeline {
             }
         }
         stage('OWASP Dependency Check') {
-            sh 'gradle dependencyCheckAggregate'
+            steps {
+                sh "./gradlew dependencyCheckAggregate -i"
+            }
         }
         stage("Sonar Check") {
             steps {
