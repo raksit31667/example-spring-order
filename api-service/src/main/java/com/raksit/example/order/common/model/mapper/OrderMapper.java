@@ -3,8 +3,10 @@ package com.raksit.example.order.common.model.mapper;
 import com.raksit.example.order.common.model.dto.OrderLineItemRequest;
 import com.raksit.example.order.common.model.dto.OrderRequest;
 import com.raksit.example.order.common.model.dto.OrderResponse;
+import com.raksit.example.order.common.model.entity.Money;
 import com.raksit.example.order.common.model.entity.Order;
 import com.raksit.example.order.common.model.entity.OrderLineItem;
+import java.util.Currency;
 import java.util.stream.Collectors;
 import org.springframework.stereotype.Component;
 
@@ -33,7 +35,7 @@ public class OrderMapper {
   OrderLineItem orderLineItemRequestToOrderLineItem(OrderLineItemRequest lineItemRequest) {
     return OrderLineItem.builder()
         .name(lineItemRequest.getName())
-        .price(lineItemRequest.getPrice())
+        .money(new Money(lineItemRequest.getPrice(), Currency.getInstance("THB")))
         .build();
   }
 }

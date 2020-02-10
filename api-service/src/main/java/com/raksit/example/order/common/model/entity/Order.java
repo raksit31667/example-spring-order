@@ -35,6 +35,6 @@ public class Order {
   private List<OrderLineItem> items;
 
   public Double getSubTotal() {
-    return items.stream().mapToDouble(OrderLineItem::getPrice).sum();
+    return items.stream().mapToDouble(item -> item.getMoney().getPrice()).sum();
   }
 }

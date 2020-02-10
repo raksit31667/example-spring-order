@@ -3,9 +3,11 @@ package com.raksit.example.order.util;
 import com.github.javafaker.Faker;
 import com.raksit.example.order.common.model.dto.OrderLineItemRequest;
 import com.raksit.example.order.common.model.dto.OrderRequest;
+import com.raksit.example.order.common.model.entity.Money;
 import com.raksit.example.order.common.model.entity.Order;
 import com.raksit.example.order.common.model.entity.OrderLineItem;
 import java.util.Collections;
+import java.util.Currency;
 import lombok.experimental.UtilityClass;
 
 @UtilityClass
@@ -16,7 +18,7 @@ public class MockOrderFactory {
   public static OrderLineItem createSampleOrderLineItems() {
     return OrderLineItem.builder()
         .name(FAKER.beer().name())
-        .price(1000.0)
+        .money(new Money(1000.0, Currency.getInstance("THB")))
         .build();
   }
 

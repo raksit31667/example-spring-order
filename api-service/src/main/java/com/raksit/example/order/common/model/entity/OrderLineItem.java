@@ -1,5 +1,6 @@
 package com.raksit.example.order.common.model.entity;
 
+import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -23,6 +24,7 @@ public class OrderLineItem {
   private long id;
 
   private String name;
-  private Double price;
-  private String currency;
+
+  @Embedded
+  private Money money;
 }

@@ -1,6 +1,7 @@
 package com.raksit.example.order.common.model.entity;
 
 import java.util.Collections;
+import java.util.Currency;
 import java.util.List;
 import org.junit.jupiter.api.Test;
 
@@ -14,7 +15,9 @@ class OrderTest {
   @Test
   void shouldReturn6000WhenGetSubTotalGiven3OrdersWithPrice2000Each() {
     // Given
-    OrderLineItem orderLineItem = OrderLineItem.builder().price(2000.0).build();
+    OrderLineItem orderLineItem = OrderLineItem.builder()
+        .money(new Money(2000.0, Currency.getInstance("THB")))
+        .build();
     List<OrderLineItem> orderLineItems = Collections.nCopies(NUMBER_OF_ITEMS, orderLineItem);
     Order order = Order.builder()
         .items(orderLineItems)
@@ -30,7 +33,10 @@ class OrderTest {
   @Test
   void shouldReturn4500WhenGetSubTotalGiven2OrdersWithPrice2250Each() {
     // Given
-    OrderLineItem orderLineItem = OrderLineItem.builder().name("Diesel").price(2250.0).build();
+    OrderLineItem orderLineItem = OrderLineItem.builder()
+        .name("Diesel")
+        .money(new Money(2250.0, Currency.getInstance("THB")))
+        .build();
     List<OrderLineItem> orderLineItems = Collections.nCopies(2, orderLineItem);
     Order order = Order.builder()
         .items(orderLineItems)

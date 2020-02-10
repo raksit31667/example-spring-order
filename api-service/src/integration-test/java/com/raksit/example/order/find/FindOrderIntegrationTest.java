@@ -1,11 +1,13 @@
 package com.raksit.example.order.find;
 
 import com.raksit.example.order.IntegrationTest;
+import com.raksit.example.order.common.model.entity.Money;
 import com.raksit.example.order.common.model.entity.Order;
 import com.raksit.example.order.common.model.entity.OrderLineItem;
 import com.raksit.example.order.common.repository.OrderRepository;
 import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
+import java.util.Currency;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -38,7 +40,7 @@ class FindOrderIntegrationTest extends IntegrationTest {
   void shouldReturnOrdersWithBangkokSourceWhenFindOrdersBySourceGivenSourceBangkok() {
     OrderLineItem orderLineItem = OrderLineItem.builder()
         .name("Diesel")
-        .price(2000.0)
+        .money(new Money(2000.0, Currency.getInstance("THB")))
         .build();
 
     Order order = Order.builder()
