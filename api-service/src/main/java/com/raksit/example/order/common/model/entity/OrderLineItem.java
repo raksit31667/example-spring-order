@@ -24,4 +24,5 @@ public class OrderLineItem {
 
   private String name;
   private Double price;
+  private String currency;
 }
