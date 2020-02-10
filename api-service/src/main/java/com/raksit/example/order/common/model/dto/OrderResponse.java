@@ -15,4 +15,5 @@ public class OrderResponse {
   private String destination;
   private Integer numberOfItems;
   private Double totalPrice;
+  private String currency;
 }

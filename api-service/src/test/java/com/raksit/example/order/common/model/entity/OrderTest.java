@@ -3,6 +3,7 @@ package com.raksit.example.order.common.model.entity;
 import java.util.Collections;
 import java.util.Currency;
 import java.util.List;
+import java.util.Optional;
 import org.junit.jupiter.api.Test;
 
 import static com.google.common.collect.Lists.newArrayList;
@@ -61,5 +62,33 @@ class OrderTest {
 
     // Then
     assertEquals(0, actualTotalPrice);
+  }
+
+  @Test
+  void shouldReturnOptionalCurrencyTHBWhenGetCurrencyGivenAllOrderItemsCurrencyTHB() {
+    // Given
+    Order order = Order.builder()
+        .items(newArrayList(OrderLineItem.builder()
+            .money(new Money(1000.0, Currency.getInstance("THB")))
+            .money(new Money(2000.0, Currency.getInstance("THB")))
+            .money(new Money(3000.0, Currency.getInstance("THB")))
+            .build()))
+        .build();
+
+    // When
+    // Then
+    assertEquals(Optional.of(Currency.getInstance("THB")), order.getCurrency());
+  }
+
+  @Test
+  void shouldReturnOptionalEmptyWhenGetCurrencyGivenNoOrderItems() {
+    // Given
+    Order order = Order.builder()
+        .items(newArrayList())
+        .build();
+
+    // When
+    // Then
+    assertEquals(Optional.empty(), order.getCurrency());
   }
 }

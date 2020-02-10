@@ -7,6 +7,7 @@ import com.raksit.example.order.common.model.entity.Money;
 import com.raksit.example.order.common.model.entity.Order;
 import com.raksit.example.order.common.model.entity.OrderLineItem;
 import java.util.Currency;
+import java.util.Optional;
 import java.util.stream.Collectors;
 import org.springframework.stereotype.Component;
 
@@ -29,6 +30,8 @@ public class OrderMapper {
         .destination(order.getDestination())
         .numberOfItems(order.getItems().size())
         .totalPrice(order.getSubTotal())
+        .currency(order.getCurrency()
+            .flatMap(currency -> Optional.of(currency.getCurrencyCode())).orElse(""))
         .build();
   }
 

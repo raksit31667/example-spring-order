@@ -52,6 +52,7 @@ class DefaultFindOrderServiceIntegrationTest extends IntegrationTest {
     // Then
     assertEquals("Bangkok", actualOrderResponse.getSource());
     assertEquals(thaiOrder.getDestination(), actualOrderResponse.getDestination());
+    assertEquals("", actualOrderResponse.getCurrency());
   }
 
   @Test
@@ -96,6 +97,7 @@ class DefaultFindOrderServiceIntegrationTest extends IntegrationTest {
     OrderResponse expected = OrderResponse.builder()
         .source("Bangkok")
         .destination("Houston")
+        .currency("")
         .numberOfItems(0)
         .totalPrice(0.0)
         .build();

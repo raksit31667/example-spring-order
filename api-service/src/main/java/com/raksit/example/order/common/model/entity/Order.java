@@ -1,6 +1,8 @@
 package com.raksit.example.order.common.model.entity;
 
+import java.util.Currency;
 import java.util.List;
+import java.util.Optional;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -36,5 +38,12 @@ public class Order {
 
   public Double getSubTotal() {
     return items.stream().mapToDouble(item -> item.getMoney().getPrice()).sum();
+  }
+
+  public Optional<Currency> getCurrency() {
+    if (items.isEmpty()) {
+      return Optional.empty();
+    }
+    return Optional.of(items.get(0).getMoney().getCurrency());
   }
 }

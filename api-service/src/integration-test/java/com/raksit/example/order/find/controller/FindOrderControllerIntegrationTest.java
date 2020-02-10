@@ -14,7 +14,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import static com.google.common.collect.Lists.newArrayList;
-import static java.lang.String.valueOf;
 import static java.util.Arrays.asList;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.everyItem;
@@ -111,6 +110,7 @@ class FindOrderControllerIntegrationTest extends IntegrationTest {
         .destination("Houston")
         .numberOfItems(0)
         .totalPrice(0.0)
+        .currency("")
         .build();
     assertEquals(expected, responseEntity.getBody());
   }
