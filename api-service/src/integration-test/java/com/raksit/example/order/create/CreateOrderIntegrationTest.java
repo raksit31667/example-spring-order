@@ -40,6 +40,7 @@ class CreateOrderIntegrationTest extends IntegrationTest {
     OrderLineItemRequest orderLineItemRequest = OrderLineItemRequest.builder()
         .name("Diesel")
         .price(2000.0)
+        .currency("THB")
         .build();
 
     OrderRequest orderRequest = OrderRequest.builder()

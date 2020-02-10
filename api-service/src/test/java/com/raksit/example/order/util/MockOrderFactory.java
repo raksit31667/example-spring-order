@@ -26,6 +26,7 @@ public class MockOrderFactory {
     return OrderLineItemRequest.builder()
         .name(FAKER.beer().name())
         .price(1000.0)
+        .currency("THB")
         .build();
   }
 

@@ -35,7 +35,8 @@ public class OrderMapper {
   OrderLineItem orderLineItemRequestToOrderLineItem(OrderLineItemRequest lineItemRequest) {
     return OrderLineItem.builder()
         .name(lineItemRequest.getName())
-        .money(new Money(lineItemRequest.getPrice(), Currency.getInstance("THB")))
+        .money(new Money(lineItemRequest.getPrice(),
+            Currency.getInstance(lineItemRequest.getCurrency())))
         .build();
   }
 }

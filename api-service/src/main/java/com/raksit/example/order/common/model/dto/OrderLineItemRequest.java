@@ -13,4 +13,5 @@ public class OrderLineItemRequest {
 
   private String name;
   private Double price;
+  private String currency;
 }

@@ -32,6 +32,7 @@ class DefaultCreateOrderServiceIntegrationTest extends IntegrationTest {
         .shipTo("Houston")
         .items(Collections.nCopies(NUMBER_OF_ITEMS, OrderLineItemRequest.builder()
             .price(1000.0)
+            .currency("USD")
             .build()))
         .build();
 
