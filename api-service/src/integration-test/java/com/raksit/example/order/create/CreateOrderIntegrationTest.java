@@ -59,6 +59,7 @@ class CreateOrderIntegrationTest extends IntegrationTest {
         .body("source", is("Bangkok"))
         .body("destination", is("Houston"))
         .body("numberOfItems", is(3))
-        .body("totalPrice", equalTo(6000.0f));
+        .body("totalPrice", equalTo(6000.0f))
+        .body("currency", is("THB"));
   }
 }

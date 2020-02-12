@@ -60,6 +60,7 @@ class FindOrderIntegrationTest extends IntegrationTest {
         .body("[0].source", is("Bangkok"))
         .body("[0].destination", is("Houston"))
         .body("[0].numberOfItems", is(1))
-        .body("[0].totalPrice", is(2000.0f));
+        .body("[0].totalPrice", is(2000.0f))
+        .body("[0].currency", is("THB"));
   }
 }
