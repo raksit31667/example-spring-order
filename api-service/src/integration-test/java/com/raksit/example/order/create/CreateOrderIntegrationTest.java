@@ -1,6 +1,6 @@
 package com.raksit.example.order.create;
 
-import com.raksit.example.order.IntegrationTest;
+import com.raksit.example.order.KafkaIntegrationTest;
 import com.raksit.example.order.common.model.dto.OrderLineItemRequest;
 import com.raksit.example.order.common.model.dto.OrderRequest;
 import com.raksit.example.order.common.repository.OrderRepository;
@@ -17,7 +17,7 @@ import static io.restassured.RestAssured.given;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 
-class CreateOrderIntegrationTest extends IntegrationTest {
+class CreateOrderIntegrationTest extends KafkaIntegrationTest {
 
   @LocalServerPort
   private int port;
