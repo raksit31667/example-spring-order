@@ -3,6 +3,7 @@ package com.raksit.example.order.common.exception;
 import java.time.LocalDateTime;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.kafka.KafkaException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
@@ -11,13 +12,18 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 public class OrderExceptionHandler extends ResponseEntityExceptionHandler {
 
   @ExceptionHandler(OrderNotFoundException.class)
-  public ResponseEntity<OrderExceptionResponse> handleOrderNotFound(OrderNotFoundException ex) {
-    OrderExceptionResponse exceptionResponse =
-        OrderExceptionResponse.builder()
-            .timestamp(LocalDateTime.now())
-            .message("Order Not Found")
-            .build();
+  public ResponseEntity<OrderExceptionResponse> handleOrderNotFound() {
+    return new ResponseEntity<>(OrderExceptionResponse.builder()
+        .timestamp(LocalDateTime.now())
+        .message("Order Not Found")
+        .build(), HttpStatus.NOT_FOUND);
+  }
 
-    return new ResponseEntity<>(exceptionResponse, HttpStatus.NOT_FOUND);
+  @ExceptionHandler(KafkaException.class)
+  public ResponseEntity<OrderExceptionResponse> handleKafkaException() {
+    return new ResponseEntity<>(OrderExceptionResponse.builder()
+        .timestamp(LocalDateTime.now())
+        .message("Cannot send order notification")
+        .build(), HttpStatus.INTERNAL_SERVER_ERROR);
   }
 }
