@@ -1,5 +1,6 @@
 package com.raksit.example.order.common.model.dto;
 
+import java.util.List;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -15,5 +16,5 @@ public class OrderResponse {
   private String destination;
   private Integer numberOfItems;
   private Double totalPrice;
-  private String currency;
+  private List<String> currencies;
 }

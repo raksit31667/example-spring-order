@@ -2,7 +2,6 @@ package com.raksit.example.order.common.model.entity;
 
 import java.util.Currency;
 import java.util.List;
-import java.util.Optional;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -16,6 +15,8 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import static java.util.stream.Collectors.toList;
 
 @Entity
 @Table(name = "sales_order")
@@ -40,10 +41,7 @@ public class Order {
     return items.stream().mapToDouble(item -> item.getMoney().getPrice()).sum();
   }
 
-  public Optional<Currency> getCurrency() {
-    if (items.isEmpty()) {
-      return Optional.empty();
-    }
-    return Optional.of(items.get(0).getMoney().getCurrency());
+  public List<Currency> getCurrencies() {
+    return items.stream().map(item -> item.getMoney().getCurrency()).distinct().collect(toList());
   }
 }

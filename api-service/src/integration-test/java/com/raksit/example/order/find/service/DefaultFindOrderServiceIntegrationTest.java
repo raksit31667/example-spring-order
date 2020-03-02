@@ -46,13 +46,18 @@ class DefaultFindOrderServiceIntegrationTest extends IntegrationTest {
     orderRepository.save(chineseOrder);
 
     // When
-    OrderResponse actualOrderResponse =
+    OrderResponse actual =
         findOrderService.findOrdersBySource("Bangkok").iterator().next();
 
     // Then
-    assertEquals("Bangkok", actualOrderResponse.getSource());
-    assertEquals(thaiOrder.getDestination(), actualOrderResponse.getDestination());
-    assertEquals("", actualOrderResponse.getCurrency());
+    OrderResponse expected = OrderResponse.builder()
+        .source("Bangkok")
+        .destination("Houston")
+        .currencies(newArrayList())
+        .numberOfItems(0)
+        .totalPrice(0.0)
+        .build();
+    assertEquals(expected, actual);
   }
 
   @Test
@@ -97,7 +102,7 @@ class DefaultFindOrderServiceIntegrationTest extends IntegrationTest {
     OrderResponse expected = OrderResponse.builder()
         .source("Bangkok")
         .destination("Houston")
-        .currency("")
+        .currencies(newArrayList())
         .numberOfItems(0)
         .totalPrice(0.0)
         .build();

@@ -50,7 +50,7 @@ class DefaultCreateOrderServiceIntegrationTest extends KafkaIntegrationTest {
     // Then
     assertEquals("Bangkok", orderResponse.getSource());
     assertEquals("Houston", orderResponse.getDestination());
-    assertEquals("USD", orderResponse.getCurrency());
+    assertEquals(newArrayList("USD"), orderResponse.getCurrencies());
     assertEquals(NUMBER_OF_ITEMS, orderResponse.getNumberOfItems(), 0);
     assertEquals(3000.0, orderResponse.getTotalPrice(), 0);
 

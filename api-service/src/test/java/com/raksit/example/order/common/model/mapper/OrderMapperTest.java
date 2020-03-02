@@ -8,12 +8,12 @@ import com.raksit.example.order.common.model.entity.Order;
 import com.raksit.example.order.common.model.entity.OrderLineItem;
 import com.raksit.example.order.util.MockOrderFactory;
 import java.util.Currency;
-import java.util.Optional;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Spy;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import static com.google.common.collect.Lists.newArrayList;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.spy;
@@ -86,7 +86,7 @@ class OrderMapperTest {
   void shouldReturnOrderResponseWhenOrderToOrderResponseGivenOrder() {
     // Given
     Order order = spy(MockOrderFactory.createSampleOrder(NUMBER_OF_ITEMS));
-    when(order.getCurrency()).thenReturn(Optional.of(Currency.getInstance("USD")));
+    when(order.getCurrencies()).thenReturn(newArrayList(Currency.getInstance("USD")));
 
     // When
     OrderResponse orderResponse = orderMapper.orderToOrderResponse(order);
@@ -94,7 +94,7 @@ class OrderMapperTest {
     // Then
     assertEquals(order.getSource(), orderResponse.getSource());
     assertEquals(order.getDestination(), orderResponse.getDestination());
-    assertEquals("USD", orderResponse.getCurrency());
+    assertEquals(newArrayList("USD"), orderResponse.getCurrencies());
     assertEquals(NUMBER_OF_ITEMS, orderResponse.getNumberOfItems().intValue());
     assertEquals(3000.0, orderResponse.getTotalPrice().doubleValue());
   }
@@ -103,12 +103,12 @@ class OrderMapperTest {
   void shouldReturnOrderResponseWithEmptyCurrencyWhenOrderToOrderResponseGivenOrderItemEmpty() {
     // Given
     Order order = spy(MockOrderFactory.createSampleOrder(NUMBER_OF_ITEMS));
-    when(order.getCurrency()).thenReturn(Optional.empty());
+    when(order.getCurrencies()).thenReturn(newArrayList());
 
     // When
     OrderResponse orderResponse = orderMapper.orderToOrderResponse(order);
 
     // Then
-    assertEquals("", orderResponse.getCurrency());
+    assertEquals(newArrayList(), orderResponse.getCurrencies());
   }
 }

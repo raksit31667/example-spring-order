@@ -13,6 +13,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.web.server.LocalServerPort;
 
+import static com.google.common.collect.Lists.newArrayList;
 import static io.restassured.RestAssured.given;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
@@ -60,6 +61,6 @@ class CreateOrderIntegrationTest extends KafkaIntegrationTest {
         .body("destination", is("Houston"))
         .body("numberOfItems", is(3))
         .body("totalPrice", equalTo(6000.0f))
-        .body("currency", is("THB"));
+        .body("currencies", is(newArrayList("THB")));
   }
 }

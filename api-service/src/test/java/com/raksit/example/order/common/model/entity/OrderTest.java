@@ -3,7 +3,6 @@ package com.raksit.example.order.common.model.entity;
 import java.util.Collections;
 import java.util.Currency;
 import java.util.List;
-import java.util.Optional;
 import org.junit.jupiter.api.Test;
 
 import static com.google.common.collect.Lists.newArrayList;
@@ -65,23 +64,87 @@ class OrderTest {
   }
 
   @Test
-  void shouldReturnOptionalCurrencyTHBWhenGetCurrencyGivenAllOrderItemsCurrencyTHB() {
+  void shouldReturnCurrencyListTHBWhenGetCurrencyGivenAllOrderItemsCurrencyTHB() {
     // Given
     Order order = Order.builder()
         .items(newArrayList(OrderLineItem.builder()
             .money(new Money(1000.0, Currency.getInstance("THB")))
-            .money(new Money(2000.0, Currency.getInstance("THB")))
-            .money(new Money(3000.0, Currency.getInstance("THB")))
             .build()))
         .build();
 
     // When
     // Then
-    assertEquals(Optional.of(Currency.getInstance("THB")), order.getCurrency());
+    assertEquals(newArrayList(Currency.getInstance("THB")), order.getCurrencies());
   }
 
   @Test
-  void shouldReturnOptionalEmptyWhenGetCurrencyGivenNoOrderItems() {
+  void shouldReturnCurrencyListTHBAndUSDWhenGetCurrencyGivenOrderItemsCurrencyTHBAndUSD() {
+    // Given
+    Order order = Order.builder()
+        .items(newArrayList(
+            OrderLineItem.builder()
+            .money(new Money(1000.0, Currency.getInstance("USD")))
+            .build(),
+            OrderLineItem.builder()
+                .money(new Money(3000.0, Currency.getInstance("THB")))
+                .build()))
+        .build();
+
+    // When
+    // Then
+    assertEquals(newArrayList(Currency.getInstance("USD"), Currency.getInstance("THB")), order.getCurrencies());
+  }
+
+  @Test
+  void shouldReturnCurrencyListTHBWhenGetCurrencyGivenOrderAllItemsCurrencyTHB() {
+    // Given
+    Order order = Order.builder()
+        .items(newArrayList(
+            OrderLineItem.builder()
+                .money(new Money(1000.0, Currency.getInstance("THB")))
+                .build(),
+            OrderLineItem.builder()
+                .money(new Money(2000.0, Currency.getInstance("THB")))
+                .build(),
+            OrderLineItem.builder()
+                .money(new Money(3000.0, Currency.getInstance("THB")))
+                .build(),
+            OrderLineItem.builder()
+                .money(new Money(4000.0, Currency.getInstance("THB")))
+                .build()))
+        .build();
+
+    // When
+    // Then
+    assertEquals(newArrayList(Currency.getInstance("THB")), order.getCurrencies());
+  }
+
+  @Test
+  void shouldReturnCurrencyListTHBWhenGetCurrencyGivenOrderAllItemsCurrencyAUDAndJPY() {
+    // Given
+    Order order = Order.builder()
+        .items(newArrayList(
+            OrderLineItem.builder()
+                .money(new Money(1000.0, Currency.getInstance("AUD")))
+                .build(),
+            OrderLineItem.builder()
+                .money(new Money(2000.0, Currency.getInstance("JPY")))
+                .build(),
+            OrderLineItem.builder()
+                .money(new Money(3000.0, Currency.getInstance("JPY")))
+                .build(),
+            OrderLineItem.builder()
+                .money(new Money(4000.0, Currency.getInstance("AUD")))
+                .build()))
+        .build();
+
+    // When
+    // Then
+    assertEquals(newArrayList(Currency.getInstance("AUD"), Currency.getInstance("JPY")), order.getCurrencies());
+  }
+
+  @Test
+  void shouldReturnEmptyWhenGetCurrencyGivenNoOrderItems() {
     // Given
     Order order = Order.builder()
         .items(newArrayList())
@@ -89,6 +152,6 @@ class OrderTest {
 
     // When
     // Then
-    assertEquals(Optional.empty(), order.getCurrency());
+    assertEquals(newArrayList(), order.getCurrencies());
   }
 }

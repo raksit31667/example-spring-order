@@ -7,9 +7,9 @@ import com.raksit.example.order.common.model.entity.Money;
 import com.raksit.example.order.common.model.entity.Order;
 import com.raksit.example.order.common.model.entity.OrderLineItem;
 import java.util.Currency;
-import java.util.Optional;
-import java.util.stream.Collectors;
 import org.springframework.stereotype.Component;
+
+import static java.util.stream.Collectors.toList;
 
 @Component
 public class OrderMapper {
@@ -20,7 +20,7 @@ public class OrderMapper {
         .destination(orderRequest.getShipTo())
         .items(orderRequest.getItems().stream()
             .map(this::orderLineItemRequestToOrderLineItem)
-            .collect(Collectors.toList()))
+            .collect(toList()))
         .build();
   }
 
@@ -30,8 +30,7 @@ public class OrderMapper {
         .destination(order.getDestination())
         .numberOfItems(order.getItems().size())
         .totalPrice(order.getSubTotal())
-        .currency(order.getCurrency()
-            .flatMap(currency -> Optional.of(currency.getCurrencyCode())).orElse(""))
+        .currencies(order.getCurrencies().stream().map(Currency::getCurrencyCode).collect(toList()))
         .build();
   }
 
