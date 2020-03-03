@@ -5,6 +5,7 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 import javax.validation.Constraint;
+import javax.validation.Payload;
 
 @Constraint(validatedBy = ValidCurrencyValidator.class)
 @Target({ElementType.TYPE, ElementType.PARAMETER, ElementType.ANNOTATION_TYPE, ElementType.FIELD})
@@ -12,4 +13,8 @@ import javax.validation.Constraint;
 public @interface ValidCurrency {
 
   String message() default "validCurrency";
+
+  Class<?>[] groups() default {};
+
+  Class<? extends Payload>[] payload() default {};
 }
