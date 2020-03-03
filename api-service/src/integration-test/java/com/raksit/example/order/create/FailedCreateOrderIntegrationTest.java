@@ -66,4 +66,28 @@ class FailedCreateOrderIntegrationTest extends KafkaIntegrationTest {
         .statusCode(500)
         .body("message", is("Cannot send order notification"));
   }
+
+  @Test
+  void shouldReturnOrderExceptionResponseWhenCreateOrderGivenOrderLineItemHasInvalidCurrency() {
+    OrderLineItemRequest orderLineItemRequest = OrderLineItemRequest.builder()
+        .name("Diesel")
+        .price(2000.0)
+        .currency("555")
+        .build();
+
+    OrderRequest orderRequest = OrderRequest.builder()
+        .soldTo("Bangkok")
+        .shipTo("Houston")
+        .items(Collections.nCopies(3, orderLineItemRequest))
+        .build();
+
+    given()
+        .contentType(ContentType.JSON)
+        .body(orderRequest)
+        .when()
+        .post("/orders")
+        .then()
+        .statusCode(400)
+        .body("message", is("validCurrency"));
+  }
 }

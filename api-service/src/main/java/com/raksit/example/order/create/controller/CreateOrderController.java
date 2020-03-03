@@ -5,6 +5,7 @@ import com.raksit.example.order.common.model.dto.OrderResponse;
 import com.raksit.example.order.create.service.CreateOrderService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -21,7 +22,7 @@ public class CreateOrderController {
   @PostMapping("/orders")
   @ResponseStatus(HttpStatus.CREATED)
   @ApiOperation(value = "Create an order")
-  public OrderResponse createOrder(@RequestBody OrderRequest orderRequest) {
+  public OrderResponse createOrder(@RequestBody @Valid OrderRequest orderRequest) {
     return createOrderService.createOrder(orderRequest);
   }
 }
