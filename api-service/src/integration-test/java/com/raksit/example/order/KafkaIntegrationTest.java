@@ -16,11 +16,13 @@ import org.springframework.kafka.core.DefaultKafkaConsumerFactory;
 import org.springframework.kafka.test.EmbeddedKafkaBroker;
 import org.springframework.kafka.test.context.EmbeddedKafka;
 import org.springframework.kafka.test.utils.KafkaTestUtils;
+import org.springframework.test.annotation.DirtiesContext;
 
 import static org.apache.kafka.clients.consumer.ConsumerConfig.AUTO_OFFSET_RESET_CONFIG;
 
 @EmbeddedKafka(partitions = 1, topics = { "order.created" })
 @TestInstance(Lifecycle.PER_CLASS)
+@DirtiesContext
 public abstract class KafkaIntegrationTest extends IntegrationTest {
 
   @Autowired
