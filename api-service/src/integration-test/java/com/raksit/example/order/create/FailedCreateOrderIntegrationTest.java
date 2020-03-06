@@ -17,6 +17,7 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.boot.web.server.LocalServerPort;
 import org.springframework.kafka.KafkaException;
 
+import static com.google.common.collect.Lists.newArrayList;
 import static io.restassured.RestAssured.given;
 import static org.hamcrest.CoreMatchers.is;
 
@@ -68,7 +69,7 @@ class FailedCreateOrderIntegrationTest extends KafkaIntegrationTest {
   }
 
   @Test
-  void shouldReturnOrderExceptionResponseWhenCreateOrderGivenOrderLineItemHasInvalidCurrency() {
+  void shouldReturnBadRequestWhenCreateOrderGivenOrderLineItemHasInvalidCurrency() {
     OrderLineItemRequest orderLineItemRequest = OrderLineItemRequest.builder()
         .name("Diesel")
         .price(2000.0)
@@ -89,5 +90,23 @@ class FailedCreateOrderIntegrationTest extends KafkaIntegrationTest {
         .then()
         .statusCode(400)
         .body("message", is("validCurrency"));
+  }
+
+  @Test
+  void shouldReturnBadRequestWhenCreateOrderGivenOrderLineItemEmpty() {
+    OrderRequest orderRequest = OrderRequest.builder()
+        .soldTo("Bangkok")
+        .shipTo("Houston")
+        .items(newArrayList())
+        .build();
+
+    given()
+        .contentType(ContentType.JSON)
+        .body(orderRequest)
+        .when()
+        .post("/orders")
+        .then()
+        .statusCode(400)
+        .body("message", is("items must not be empty"));
   }
 }
