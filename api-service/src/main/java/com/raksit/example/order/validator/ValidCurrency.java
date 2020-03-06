@@ -12,7 +12,7 @@ import javax.validation.Payload;
 @Retention(RetentionPolicy.RUNTIME)
 public @interface ValidCurrency {
 
-  String message() default "validCurrency";
+  String message() default "invalid currency";
 
   Class<?>[] groups() default {};
 

@@ -89,7 +89,7 @@ class FailedCreateOrderIntegrationTest extends KafkaIntegrationTest {
         .post("/orders")
         .then()
         .statusCode(400)
-        .body("message", is("validCurrency"));
+        .body("message", is("invalid currency"));
   }
 
   @Test
