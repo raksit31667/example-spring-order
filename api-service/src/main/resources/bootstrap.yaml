@@ -29,3 +29,5 @@ spring:
     ddl-auto: update
   main:
     allow-bean-definition-overriding: true
+  kafka:
+    bootstrap-servers: localhost:9093
