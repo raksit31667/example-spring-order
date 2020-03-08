@@ -12,5 +12,19 @@ services:
       POSTGRES_PASSWORD: local
     ports:
       - "5433:5432"
+  kafka:
+    image: wurstmeister/kafka
+    ports:
+      - "9093:9092"
+    environment:
+      KAFKA_ADVERTISED_HOST_NAME: localhost
+      KAFKA_ZOOKEEPER_CONNECT: zookeper:2181
+    volumes:
+      - kafka-data:/var/run/docker.sock
+  zookeeper:
+    image: wurstmeister/zookeeper
+    ports:
+      - "2181:2181"
 volumes:
   postgres-data:
+  kafka-data:
