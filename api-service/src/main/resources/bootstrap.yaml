@@ -7,6 +7,7 @@ spring:
         enabled: true
   kafka:
     producer:
+      acks: all
       key-serializer: org.apache.kafka.common.serialization.IntegerSerializer
       value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
 ---
