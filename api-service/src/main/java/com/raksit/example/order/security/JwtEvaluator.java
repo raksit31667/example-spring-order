@@ -23,11 +23,11 @@ public class JwtEvaluator extends SecurityExpressionRoot implements
     Optional<String> accessToken = Optional.ofNullable(authentication)
         .map(Authentication::getDetails)
         .filter(details -> details instanceof OAuth2AuthenticationDetails)
-        .map(details -> ((OAuth2AuthenticationDetails) details).getTokenType());
+        .map(details -> ((OAuth2AuthenticationDetails) details).getTokenValue());
 
     List<String> applicationRoles = accessToken.map(JWT::decode)
         .filter(decodedJWT -> decodedJWT.getClaims().containsKey(APPLICATION_ROLE_CLAIM))
-        .map(decodedJWT -> decodedJWT.getClaim("role").asList(String.class))
+        .map(decodedJWT -> decodedJWT.getClaim(APPLICATION_ROLE_CLAIM).asList(String.class))
         .orElse(newArrayList());
 
     return applicationRoles.contains(role.getValue());
