@@ -40,7 +40,7 @@ class FindOrderIntegrationTest extends IntegrationTest {
 
     orderRepository.save(order);
 
-    given()
+    givenRequestWithValidReadToken()
         .contentType(ContentType.JSON)
         .when()
         .get("/orders?source=Bangkok")

@@ -1,5 +1,6 @@
 package com.raksit.example.order.create;
 
+import com.raksit.example.order.IntegrationTest;
 import com.raksit.example.order.KafkaIntegrationTest;
 import com.raksit.example.order.common.model.dto.OrderLineItemRequest;
 import com.raksit.example.order.common.model.dto.OrderRequest;
@@ -18,7 +19,7 @@ import static com.google.common.collect.Lists.newArrayList;
 import static io.restassured.RestAssured.given;
 import static org.hamcrest.CoreMatchers.is;
 
-class FailedCreateOrderIntegrationTest extends KafkaIntegrationTest {
+class FailedCreateOrderIntegrationTest extends IntegrationTest {
 
   @Autowired
   private OrderRepository orderRepository;
@@ -47,7 +48,7 @@ class FailedCreateOrderIntegrationTest extends KafkaIntegrationTest {
 
     Mockito.when(createOrderService.createOrder(orderRequest)).thenThrow(new KafkaException(""));
 
-    given()
+    givenRequestWithValidWriteToken()
         .contentType(ContentType.JSON)
         .body(orderRequest)
         .when()
@@ -71,7 +72,7 @@ class FailedCreateOrderIntegrationTest extends KafkaIntegrationTest {
         .items(Collections.nCopies(3, orderLineItemRequest))
         .build();
 
-    given()
+    givenRequestWithValidWriteToken()
         .contentType(ContentType.JSON)
         .body(orderRequest)
         .when()
@@ -89,7 +90,7 @@ class FailedCreateOrderIntegrationTest extends KafkaIntegrationTest {
         .items(newArrayList())
         .build();
 
-    given()
+    givenRequestWithValidWriteToken()
         .contentType(ContentType.JSON)
         .body(orderRequest)
         .when()

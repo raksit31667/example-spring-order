@@ -9,6 +9,7 @@ import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -24,12 +25,14 @@ public class FindOrderController {
 
   @GetMapping
   @ApiOperation("Get order by source (sold-to)")
+  @PreAuthorize("hasApplicationRole('READ')")
   public List<OrderResponse> findOrdersBySource(@RequestParam String source) {
     return findOrderService.findOrdersBySource(source);
   }
 
   @GetMapping("/{orderId}")
   @ApiOperation("Get order by id")
+  @PreAuthorize("hasApplicationRole('READ')")
   @ApiResponses(
       value = {
           @ApiResponse(

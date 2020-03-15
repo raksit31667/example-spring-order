@@ -11,7 +11,6 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import static com.google.common.collect.Lists.newArrayList;
-import static io.restassured.RestAssured.given;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 
@@ -39,7 +38,7 @@ class CreateOrderIntegrationTest extends KafkaIntegrationTest {
             .items(Collections.nCopies(3, orderLineItemRequest))
             .build();
 
-    given()
+    givenRequestWithValidWriteToken()
         .contentType(ContentType.JSON)
         .body(orderRequest)
         .when()

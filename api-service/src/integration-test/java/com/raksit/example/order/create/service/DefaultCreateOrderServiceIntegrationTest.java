@@ -9,13 +9,21 @@ import com.raksit.example.order.common.model.dto.OrderRequest;
 import com.raksit.example.order.common.model.dto.OrderResponse;
 import com.raksit.example.order.common.repository.OrderRepository;
 import java.util.Collections;
+import java.util.Map;
+import org.apache.kafka.clients.consumer.Consumer;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
+import org.apache.kafka.common.serialization.IntegerDeserializer;
+import org.apache.kafka.common.serialization.StringDeserializer;
 import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.kafka.core.ConsumerFactory;
+import org.springframework.kafka.core.DefaultKafkaConsumerFactory;
 import org.springframework.kafka.test.utils.KafkaTestUtils;
 
 import static com.google.common.collect.Lists.newArrayList;
+import static org.apache.kafka.clients.consumer.ConsumerConfig.AUTO_OFFSET_RESET_CONFIG;
 import static org.junit.Assert.assertEquals;
 
 class DefaultCreateOrderServiceIntegrationTest extends KafkaIntegrationTest {
@@ -26,8 +34,21 @@ class DefaultCreateOrderServiceIntegrationTest extends KafkaIntegrationTest {
 
   @Autowired private OrderRepository orderRepository;
 
+  public Consumer<Integer, String> consumer;
+
+  @BeforeEach
+  void setUp() {
+    Map<String, Object> consumerProps = KafkaTestUtils
+        .consumerProps("test-group", "true", embeddedKafkaBroker);
+    consumerProps.put(AUTO_OFFSET_RESET_CONFIG, "earliest");
+    ConsumerFactory<Integer, String> consumerFactory = new DefaultKafkaConsumerFactory<>(
+        consumerProps, new IntegerDeserializer(), new StringDeserializer());
+    consumer = consumerFactory.createConsumer();
+  }
+
   @AfterEach
   void tearDown() {
+    consumer.close();
     orderRepository.deleteAll();
   }
 
