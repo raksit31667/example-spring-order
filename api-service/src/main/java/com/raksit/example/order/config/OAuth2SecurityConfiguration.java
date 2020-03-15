@@ -36,27 +36,28 @@ public class OAuth2SecurityConfiguration {
   @Bean
   protected ResourceServerConfiguration resourceServerConfiguration() {
     ResourceServerConfiguration resourceServerConfiguration = new ResourceServerConfiguration();
-    resourceServerConfiguration.setConfigurers(Collections.singletonList(new ResourceServerConfigurerAdapter() {
+    resourceServerConfiguration
+        .setConfigurers(Collections.singletonList(new ResourceServerConfigurerAdapter() {
 
-      @Override
-      public void configure(ResourceServerSecurityConfigurer resources) throws Exception {
-        TokenStore tokenStore = jwkTokenStore();
-        DefaultTokenServices defaultTokenServices = new DefaultTokenServices();
-        defaultTokenServices.setTokenStore(tokenStore);
-        resources.resourceId(resourceId)
-            .tokenStore(tokenStore)
-            .tokenServices(defaultTokenServices);
-      }
+          @Override
+          public void configure(ResourceServerSecurityConfigurer resources) throws Exception {
+            TokenStore tokenStore = jwkTokenStore();
+            DefaultTokenServices defaultTokenServices = new DefaultTokenServices();
+            defaultTokenServices.setTokenStore(tokenStore);
+            resources.resourceId(resourceId)
+                .tokenStore(tokenStore)
+                .tokenServices(defaultTokenServices);
+          }
 
-      @Override
-      public void configure(HttpSecurity http) throws Exception {
-        http.requestMatchers()
-            .mvcMatchers(getRequestMappingPatterns())
-            .and()
-            .authorizeRequests()
-            .anyRequest().fullyAuthenticated();
-      }
-    }));
+          @Override
+          public void configure(HttpSecurity http) throws Exception {
+            http.requestMatchers()
+                .mvcMatchers(getRequestMappingPatterns())
+                .and()
+                .authorizeRequests()
+                .anyRequest().fullyAuthenticated();
+          }
+        }));
 
     return resourceServerConfiguration;
   }
