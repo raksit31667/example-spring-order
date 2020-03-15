@@ -5,14 +5,11 @@ import com.raksit.example.order.common.model.entity.Money;
 import com.raksit.example.order.common.model.entity.Order;
 import com.raksit.example.order.common.model.entity.OrderLineItem;
 import com.raksit.example.order.common.repository.OrderRepository;
-import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
 import java.util.Currency;
 import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.web.server.LocalServerPort;
 
 import static com.google.common.collect.Lists.newArrayList;
 import static io.restassured.RestAssured.given;
@@ -20,16 +17,8 @@ import static org.hamcrest.CoreMatchers.is;
 
 class FindOrderIntegrationTest extends IntegrationTest {
 
-  @LocalServerPort
-  private int port;
-
   @Autowired
   private OrderRepository orderRepository;
-
-  @BeforeEach
-  void setUp() {
-    RestAssured.port = port;
-  }
 
   @AfterEach
   void tearDown() {

@@ -5,16 +5,13 @@ import com.raksit.example.order.common.model.dto.OrderLineItemRequest;
 import com.raksit.example.order.common.model.dto.OrderRequest;
 import com.raksit.example.order.common.repository.OrderRepository;
 import com.raksit.example.order.create.service.CreateOrderService;
-import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
 import java.util.Collections;
 import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.boot.web.server.LocalServerPort;
 import org.springframework.kafka.KafkaException;
 
 import static com.google.common.collect.Lists.newArrayList;
@@ -23,19 +20,11 @@ import static org.hamcrest.CoreMatchers.is;
 
 class FailedCreateOrderIntegrationTest extends KafkaIntegrationTest {
 
-  @LocalServerPort
-  private int port;
-
   @Autowired
   private OrderRepository orderRepository;
 
   @MockBean
   private CreateOrderService createOrderService;
-
-  @BeforeEach
-  void setUp() {
-    RestAssured.port = port;
-  }
 
   @AfterEach
   void tearDown() {
