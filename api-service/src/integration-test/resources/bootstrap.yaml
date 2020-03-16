@@ -17,3 +17,10 @@ spring:
     consumer:
       group-id: test-group
     bootstrap-servers: ${spring.embedded.kafka.brokers}
+security:
+  oauth2:
+    resource:
+      issuer: https://sts.windows.net/xxx/
+      id: yyy
+      jwk:
+        keySetUri: https://login.microsoftonline.com/common/discovery/keys
