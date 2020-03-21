@@ -80,4 +80,50 @@ class FindOrderIntegrationTest extends IntegrationTest {
         .body("totalPrice", is(2000.0f))
         .body("currencies", is(newArrayList("THB")));
   }
+
+  @Test
+  void shouldReturnForbiddenWhenFindOrdersBySourceGivenTokenWithWriteRole() {
+    OrderLineItem orderLineItem = OrderLineItem.builder()
+        .name("Diesel")
+        .money(new Money(2000.0, Currency.getInstance("THB")))
+        .build();
+
+    Order order = Order.builder()
+        .source("Bangkok")
+        .destination("Houston")
+        .items(newArrayList(orderLineItem))
+        .build();
+
+    orderRepository.save(order);
+
+    givenRequestWithValidWriteToken()
+        .contentType(ContentType.JSON)
+        .when()
+        .get("/orders?source=Bangkok")
+        .then()
+        .statusCode(403);
+  }
+
+  @Test
+  void shouldReturnForbiddenWhenFindOrderByIdGivenTokenWithWriteRole() {
+    OrderLineItem orderLineItem = OrderLineItem.builder()
+        .name("Diesel")
+        .money(new Money(2000.0, Currency.getInstance("THB")))
+        .build();
+
+    Order order = Order.builder()
+        .source("Bangkok")
+        .destination("Houston")
+        .items(newArrayList(orderLineItem))
+        .build();
+
+    Order savedOrder = orderRepository.save(order);
+
+    givenRequestWithValidWriteToken()
+        .contentType(ContentType.JSON)
+        .when()
+        .get("/orders/" + savedOrder.getId())
+        .then()
+        .statusCode(403);
+  }
 }

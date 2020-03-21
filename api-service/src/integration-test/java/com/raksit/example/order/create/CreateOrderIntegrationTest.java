@@ -69,4 +69,27 @@ class CreateOrderIntegrationTest extends KafkaIntegrationTest {
         .statusCode(400)
         .body("message", is("items must not be empty"));
   }
+
+  @Test
+  void shouldReturnForbiddenWhenCreateOrderGivenTokenWithReadRole() {
+    OrderLineItemRequest orderLineItemRequest = OrderLineItemRequest.builder()
+        .name("Diesel")
+        .price(2000.0)
+        .currency("THB")
+        .build();
+
+    OrderRequest orderRequest = OrderRequest.builder()
+        .soldTo("Bangkok")
+        .shipTo("Houston")
+        .items(Collections.nCopies(3, orderLineItemRequest))
+        .build();
+
+    givenRequestWithValidReadToken()
+        .contentType(ContentType.JSON)
+        .body(orderRequest)
+        .when()
+        .post("/orders")
+        .then()
+        .statusCode(403);
+  }
 }
