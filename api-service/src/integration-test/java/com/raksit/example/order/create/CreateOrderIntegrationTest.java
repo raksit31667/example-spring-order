@@ -27,17 +27,7 @@ class CreateOrderIntegrationTest extends KafkaIntegrationTest {
 
   @Test
   void shouldReturnOrderResponseWithNumberOfItemsAndTotalPriceWhenCreateOrderGivenOrderRequest() {
-    OrderLineItemRequest orderLineItemRequest = OrderLineItemRequest.builder()
-        .name("Diesel")
-        .price(2000.0)
-        .currency("THB")
-        .build();
-
-    OrderRequest orderRequest = OrderRequest.builder()
-            .soldTo("Bangkok")
-            .shipTo("Houston")
-            .items(Collections.nCopies(3, orderLineItemRequest))
-            .build();
+    OrderRequest orderRequest = buildOrderRequest();
 
     givenRequestWithValidWriteToken()
         .contentType(ContentType.JSON)
@@ -73,17 +63,7 @@ class CreateOrderIntegrationTest extends KafkaIntegrationTest {
 
   @Test
   void shouldReturnForbiddenWhenCreateOrderGivenTokenWithReadRole() {
-    OrderLineItemRequest orderLineItemRequest = OrderLineItemRequest.builder()
-        .name("Diesel")
-        .price(2000.0)
-        .currency("THB")
-        .build();
-
-    OrderRequest orderRequest = OrderRequest.builder()
-        .soldTo("Bangkok")
-        .shipTo("Houston")
-        .items(Collections.nCopies(3, orderLineItemRequest))
-        .build();
+    OrderRequest orderRequest = buildOrderRequest();
 
     givenRequestWithValidReadToken()
         .contentType(ContentType.JSON)
@@ -96,17 +76,7 @@ class CreateOrderIntegrationTest extends KafkaIntegrationTest {
 
   @Test
   void shouldReturnUnauthorizedWhenCreateOrderGivenNoToken() {
-    OrderLineItemRequest orderLineItemRequest = OrderLineItemRequest.builder()
-        .name("Diesel")
-        .price(2000.0)
-        .currency("THB")
-        .build();
-
-    OrderRequest orderRequest = OrderRequest.builder()
-        .soldTo("Bangkok")
-        .shipTo("Houston")
-        .items(Collections.nCopies(3, orderLineItemRequest))
-        .build();
+    OrderRequest orderRequest = buildOrderRequest();
 
     given()
         .contentType(ContentType.JSON)
@@ -119,17 +89,7 @@ class CreateOrderIntegrationTest extends KafkaIntegrationTest {
 
   @Test
   void shouldReturnUnauthorizedWhenCreateOrderGivenInvalidToken() {
-    OrderLineItemRequest orderLineItemRequest = OrderLineItemRequest.builder()
-        .name("Diesel")
-        .price(2000.0)
-        .currency("THB")
-        .build();
-
-    OrderRequest orderRequest = OrderRequest.builder()
-        .soldTo("Bangkok")
-        .shipTo("Houston")
-        .items(Collections.nCopies(3, orderLineItemRequest))
-        .build();
+    OrderRequest orderRequest = buildOrderRequest();
 
     givenRequestWithInvalidToken()
         .contentType(ContentType.JSON)
@@ -142,17 +102,7 @@ class CreateOrderIntegrationTest extends KafkaIntegrationTest {
 
   @Test
   void shouldReturnUnauthorizedWhenCreateOrderGivenBasicAuthentication() {
-    OrderLineItemRequest orderLineItemRequest = OrderLineItemRequest.builder()
-        .name("Diesel")
-        .price(2000.0)
-        .currency("THB")
-        .build();
-
-    OrderRequest orderRequest = OrderRequest.builder()
-        .soldTo("Bangkok")
-        .shipTo("Houston")
-        .items(Collections.nCopies(3, orderLineItemRequest))
-        .build();
+    OrderRequest orderRequest = buildOrderRequest();
 
     givenRequestWithBasicAuthentication()
         .contentType(ContentType.JSON)
@@ -161,5 +111,19 @@ class CreateOrderIntegrationTest extends KafkaIntegrationTest {
         .post("/orders")
         .then()
         .statusCode(401);
+  }
+
+  private OrderRequest buildOrderRequest() {
+    OrderLineItemRequest orderLineItemRequest = OrderLineItemRequest.builder()
+        .name("Diesel")
+        .price(2000.0)
+        .currency("THB")
+        .build();
+
+    return OrderRequest.builder()
+        .soldTo("Bangkok")
+        .shipTo("Houston")
+        .items(Collections.nCopies(3, orderLineItemRequest))
+        .build();
   }
 }

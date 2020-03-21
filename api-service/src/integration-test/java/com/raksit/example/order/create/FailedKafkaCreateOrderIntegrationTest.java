@@ -60,17 +60,7 @@ class FailedKafkaCreateOrderIntegrationTest extends IntegrationTest {
 
   @Test
   void shouldReturnBadRequestWhenCreateOrderGivenOrderLineItemHasInvalidCurrency() {
-    OrderLineItemRequest orderLineItemRequest = OrderLineItemRequest.builder()
-        .name("Diesel")
-        .price(2000.0)
-        .currency("555")
-        .build();
-
-    OrderRequest orderRequest = OrderRequest.builder()
-        .soldTo("Bangkok")
-        .shipTo("Houston")
-        .items(Collections.nCopies(3, orderLineItemRequest))
-        .build();
+    OrderRequest orderRequest = buildOrderRequest();
 
     givenRequestWithValidWriteToken()
         .contentType(ContentType.JSON)
@@ -80,5 +70,19 @@ class FailedKafkaCreateOrderIntegrationTest extends IntegrationTest {
         .then()
         .statusCode(400)
         .body("message", is("invalid currency"));
+  }
+
+  private OrderRequest buildOrderRequest() {
+    OrderLineItemRequest orderLineItemRequest = OrderLineItemRequest.builder()
+        .name("Diesel")
+        .price(2000.0)
+        .currency("555")
+        .build();
+
+    return OrderRequest.builder()
+        .soldTo("Bangkok")
+        .shipTo("Houston")
+        .items(Collections.nCopies(3, orderLineItemRequest))
+        .build();
   }
 }

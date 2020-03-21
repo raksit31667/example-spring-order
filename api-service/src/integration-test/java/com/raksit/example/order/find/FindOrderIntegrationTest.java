@@ -27,16 +27,7 @@ class FindOrderIntegrationTest extends IntegrationTest {
 
   @Test
   void shouldReturnOrdersWithBangkokSourceWhenFindOrdersBySourceGivenSourceBangkok() {
-    OrderLineItem orderLineItem = OrderLineItem.builder()
-        .name("Diesel")
-        .money(new Money(2000.0, Currency.getInstance("THB")))
-        .build();
-
-    Order order = Order.builder()
-            .source("Bangkok")
-            .destination("Houston")
-            .items(newArrayList(orderLineItem))
-            .build();
+    Order order = buildOrder();
 
     orderRepository.save(order);
 
@@ -55,16 +46,7 @@ class FindOrderIntegrationTest extends IntegrationTest {
 
   @Test
   void shouldReturnOrderWhenFindOrderByIdGivenOrderId() {
-    OrderLineItem orderLineItem = OrderLineItem.builder()
-        .name("Diesel")
-        .money(new Money(2000.0, Currency.getInstance("THB")))
-        .build();
-
-    Order order = Order.builder()
-        .source("Bangkok")
-        .destination("Houston")
-        .items(newArrayList(orderLineItem))
-        .build();
+    Order order = buildOrder();
 
     Order savedOrder = orderRepository.save(order);
 
@@ -83,16 +65,7 @@ class FindOrderIntegrationTest extends IntegrationTest {
 
   @Test
   void shouldReturnForbiddenWhenFindOrdersBySourceGivenTokenWithWriteRole() {
-    OrderLineItem orderLineItem = OrderLineItem.builder()
-        .name("Diesel")
-        .money(new Money(2000.0, Currency.getInstance("THB")))
-        .build();
-
-    Order order = Order.builder()
-        .source("Bangkok")
-        .destination("Houston")
-        .items(newArrayList(orderLineItem))
-        .build();
+    Order order = buildOrder();
 
     orderRepository.save(order);
 
@@ -106,16 +79,7 @@ class FindOrderIntegrationTest extends IntegrationTest {
 
   @Test
   void shouldReturnForbiddenWhenFindOrderByIdGivenTokenWithWriteRole() {
-    OrderLineItem orderLineItem = OrderLineItem.builder()
-        .name("Diesel")
-        .money(new Money(2000.0, Currency.getInstance("THB")))
-        .build();
-
-    Order order = Order.builder()
-        .source("Bangkok")
-        .destination("Houston")
-        .items(newArrayList(orderLineItem))
-        .build();
+    Order order = buildOrder();
 
     Order savedOrder = orderRepository.save(order);
 
@@ -129,16 +93,7 @@ class FindOrderIntegrationTest extends IntegrationTest {
 
   @Test
   void shouldReturnUnauthorizedWhenFindOrdersBySourceGivenNoToken() {
-    OrderLineItem orderLineItem = OrderLineItem.builder()
-        .name("Diesel")
-        .money(new Money(2000.0, Currency.getInstance("THB")))
-        .build();
-
-    Order order = Order.builder()
-        .source("Bangkok")
-        .destination("Houston")
-        .items(newArrayList(orderLineItem))
-        .build();
+    Order order = buildOrder();
 
     orderRepository.save(order);
 
@@ -152,16 +107,7 @@ class FindOrderIntegrationTest extends IntegrationTest {
 
   @Test
   void shouldReturnUnauthorizedWhenFindOrderByIdGivenNoToken() {
-    OrderLineItem orderLineItem = OrderLineItem.builder()
-        .name("Diesel")
-        .money(new Money(2000.0, Currency.getInstance("THB")))
-        .build();
-
-    Order order = Order.builder()
-        .source("Bangkok")
-        .destination("Houston")
-        .items(newArrayList(orderLineItem))
-        .build();
+    Order order = buildOrder();
 
     Order savedOrder = orderRepository.save(order);
 
@@ -175,16 +121,7 @@ class FindOrderIntegrationTest extends IntegrationTest {
 
   @Test
   void shouldReturnUnauthorizedWhenFindOrdersBySourceGivenInvalidToken() {
-    OrderLineItem orderLineItem = OrderLineItem.builder()
-        .name("Diesel")
-        .money(new Money(2000.0, Currency.getInstance("THB")))
-        .build();
-
-    Order order = Order.builder()
-        .source("Bangkok")
-        .destination("Houston")
-        .items(newArrayList(orderLineItem))
-        .build();
+    Order order = buildOrder();
 
     orderRepository.save(order);
 
@@ -198,16 +135,7 @@ class FindOrderIntegrationTest extends IntegrationTest {
 
   @Test
   void shouldReturnUnauthorizedWhenFindOrderByIdGivenInvalidToken() {
-    OrderLineItem orderLineItem = OrderLineItem.builder()
-        .name("Diesel")
-        .money(new Money(2000.0, Currency.getInstance("THB")))
-        .build();
-
-    Order order = Order.builder()
-        .source("Bangkok")
-        .destination("Houston")
-        .items(newArrayList(orderLineItem))
-        .build();
+    Order order = buildOrder();
 
     Order savedOrder = orderRepository.save(order);
 
@@ -221,16 +149,7 @@ class FindOrderIntegrationTest extends IntegrationTest {
 
   @Test
   void shouldReturnUnauthorizedWhenFindOrdersBySourceGivenBasicAuthentication() {
-    OrderLineItem orderLineItem = OrderLineItem.builder()
-        .name("Diesel")
-        .money(new Money(2000.0, Currency.getInstance("THB")))
-        .build();
-
-    Order order = Order.builder()
-        .source("Bangkok")
-        .destination("Houston")
-        .items(newArrayList(orderLineItem))
-        .build();
+    Order order = buildOrder();
 
     orderRepository.save(order);
 
@@ -244,16 +163,7 @@ class FindOrderIntegrationTest extends IntegrationTest {
 
   @Test
   void shouldReturnUnauthorizedWhenFindOrderByIdGivenBasicAuthentication() {
-    OrderLineItem orderLineItem = OrderLineItem.builder()
-        .name("Diesel")
-        .money(new Money(2000.0, Currency.getInstance("THB")))
-        .build();
-
-    Order order = Order.builder()
-        .source("Bangkok")
-        .destination("Houston")
-        .items(newArrayList(orderLineItem))
-        .build();
+    Order order = buildOrder();
 
     Order savedOrder = orderRepository.save(order);
 
@@ -263,5 +173,18 @@ class FindOrderIntegrationTest extends IntegrationTest {
         .get("/orders/" + savedOrder.getId())
         .then()
         .statusCode(401);
+  }
+
+  private Order buildOrder() {
+    OrderLineItem orderLineItem = OrderLineItem.builder()
+        .name("Diesel")
+        .money(new Money(2000.0, Currency.getInstance("THB")))
+        .build();
+
+    return Order.builder()
+        .source("Bangkok")
+        .destination("Houston")
+        .items(newArrayList(orderLineItem))
+        .build();
   }
 }
