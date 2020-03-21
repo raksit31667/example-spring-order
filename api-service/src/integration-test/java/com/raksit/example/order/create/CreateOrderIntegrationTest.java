@@ -6,6 +6,7 @@ import com.raksit.example.order.common.model.dto.OrderRequest;
 import com.raksit.example.order.common.repository.OrderRepository;
 import io.restassured.http.ContentType;
 import java.util.Collections;
+import org.apache.http.HttpStatus;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,7 +36,7 @@ class CreateOrderIntegrationTest extends KafkaIntegrationTest {
         .when()
         .post("/orders")
         .then()
-        .statusCode(201)
+        .statusCode(HttpStatus.SC_CREATED)
         .body("source", is("Bangkok"))
         .body("destination", is("Houston"))
         .body("numberOfItems", is(3))
@@ -71,7 +72,7 @@ class CreateOrderIntegrationTest extends KafkaIntegrationTest {
         .when()
         .post("/orders")
         .then()
-        .statusCode(403);
+        .statusCode(HttpStatus.SC_FORBIDDEN);
   }
 
   @Test
@@ -84,7 +85,7 @@ class CreateOrderIntegrationTest extends KafkaIntegrationTest {
         .when()
         .post("/orders")
         .then()
-        .statusCode(401);
+        .statusCode(HttpStatus.SC_UNAUTHORIZED);
   }
 
   @Test
@@ -97,7 +98,7 @@ class CreateOrderIntegrationTest extends KafkaIntegrationTest {
         .when()
         .post("/orders")
         .then()
-        .statusCode(401);
+        .statusCode(HttpStatus.SC_UNAUTHORIZED);
   }
 
   @Test
@@ -110,7 +111,7 @@ class CreateOrderIntegrationTest extends KafkaIntegrationTest {
         .when()
         .post("/orders")
         .then()
-        .statusCode(401);
+        .statusCode(HttpStatus.SC_UNAUTHORIZED);
   }
 
   private OrderRequest buildOrderRequest() {

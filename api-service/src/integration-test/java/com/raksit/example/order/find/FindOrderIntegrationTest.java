@@ -7,6 +7,7 @@ import com.raksit.example.order.common.model.entity.OrderLineItem;
 import com.raksit.example.order.common.repository.OrderRepository;
 import io.restassured.http.ContentType;
 import java.util.Currency;
+import org.apache.http.HttpStatus;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,7 +37,7 @@ class FindOrderIntegrationTest extends IntegrationTest {
         .when()
         .get("/orders?source=Bangkok")
         .then()
-        .statusCode(200)
+        .statusCode(HttpStatus.SC_OK)
         .body("[0].source", is("Bangkok"))
         .body("[0].destination", is("Houston"))
         .body("[0].numberOfItems", is(1))
@@ -55,7 +56,7 @@ class FindOrderIntegrationTest extends IntegrationTest {
         .when()
         .get("/orders/" + savedOrder.getId())
         .then()
-        .statusCode(200)
+        .statusCode(HttpStatus.SC_OK)
         .body("source", is("Bangkok"))
         .body("destination", is("Houston"))
         .body("numberOfItems", is(1))
@@ -74,7 +75,7 @@ class FindOrderIntegrationTest extends IntegrationTest {
         .when()
         .get("/orders?source=Bangkok")
         .then()
-        .statusCode(403);
+        .statusCode(HttpStatus.SC_FORBIDDEN);
   }
 
   @Test
@@ -88,7 +89,7 @@ class FindOrderIntegrationTest extends IntegrationTest {
         .when()
         .get("/orders/" + savedOrder.getId())
         .then()
-        .statusCode(403);
+        .statusCode(HttpStatus.SC_FORBIDDEN);
   }
 
   @Test
@@ -102,7 +103,7 @@ class FindOrderIntegrationTest extends IntegrationTest {
         .when()
         .get("/orders?source=Bangkok")
         .then()
-        .statusCode(401);
+        .statusCode(HttpStatus.SC_UNAUTHORIZED);
   }
 
   @Test
@@ -116,7 +117,7 @@ class FindOrderIntegrationTest extends IntegrationTest {
         .when()
         .get("/orders/" + savedOrder.getId())
         .then()
-        .statusCode(401);
+        .statusCode(HttpStatus.SC_UNAUTHORIZED);
   }
 
   @Test
@@ -130,7 +131,7 @@ class FindOrderIntegrationTest extends IntegrationTest {
         .when()
         .get("/orders?source=Bangkok")
         .then()
-        .statusCode(401);
+        .statusCode(HttpStatus.SC_UNAUTHORIZED);
   }
 
   @Test
@@ -144,7 +145,7 @@ class FindOrderIntegrationTest extends IntegrationTest {
         .when()
         .get("/orders/" + savedOrder.getId())
         .then()
-        .statusCode(401);
+        .statusCode(HttpStatus.SC_UNAUTHORIZED);
   }
 
   @Test
@@ -158,7 +159,7 @@ class FindOrderIntegrationTest extends IntegrationTest {
         .when()
         .get("/orders?source=Bangkok")
         .then()
-        .statusCode(401);
+        .statusCode(HttpStatus.SC_UNAUTHORIZED);
   }
 
   @Test
@@ -172,7 +173,7 @@ class FindOrderIntegrationTest extends IntegrationTest {
         .when()
         .get("/orders/" + savedOrder.getId())
         .then()
-        .statusCode(401);
+        .statusCode(HttpStatus.SC_UNAUTHORIZED);
   }
 
   private Order buildOrder() {
