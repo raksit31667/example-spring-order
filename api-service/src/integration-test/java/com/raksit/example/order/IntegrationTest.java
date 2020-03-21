@@ -71,6 +71,12 @@ public abstract class IntegrationTest {
         .sign(Algorithm.none()));
   }
 
+  protected RequestSpecification givenRequestWithInvalidToken() {
+    return given()
+        .auth()
+        .oauth2("invalidToken");
+  }
+
   private RequestSpecification givenRequestWithToken(String accessToken) {
     setUpTokenStore(accessToken);
     return given()

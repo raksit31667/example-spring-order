@@ -172,4 +172,50 @@ class FindOrderIntegrationTest extends IntegrationTest {
         .then()
         .statusCode(401);
   }
+
+  @Test
+  void shouldReturnUnauthorizedWhenFindOrdersBySourceGivenInvalidToken() {
+    OrderLineItem orderLineItem = OrderLineItem.builder()
+        .name("Diesel")
+        .money(new Money(2000.0, Currency.getInstance("THB")))
+        .build();
+
+    Order order = Order.builder()
+        .source("Bangkok")
+        .destination("Houston")
+        .items(newArrayList(orderLineItem))
+        .build();
+
+    orderRepository.save(order);
+
+    givenRequestWithInvalidToken()
+        .contentType(ContentType.JSON)
+        .when()
+        .get("/orders?source=Bangkok")
+        .then()
+        .statusCode(401);
+  }
+
+  @Test
+  void shouldReturnUnauthorizedWhenFindOrderByIdGivenInvalidToken() {
+    OrderLineItem orderLineItem = OrderLineItem.builder()
+        .name("Diesel")
+        .money(new Money(2000.0, Currency.getInstance("THB")))
+        .build();
+
+    Order order = Order.builder()
+        .source("Bangkok")
+        .destination("Houston")
+        .items(newArrayList(orderLineItem))
+        .build();
+
+    Order savedOrder = orderRepository.save(order);
+
+    givenRequestWithInvalidToken()
+        .contentType(ContentType.JSON)
+        .when()
+        .get("/orders/" + savedOrder.getId())
+        .then()
+        .statusCode(401);
+  }
 }

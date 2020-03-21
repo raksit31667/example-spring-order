@@ -116,4 +116,27 @@ class CreateOrderIntegrationTest extends KafkaIntegrationTest {
         .then()
         .statusCode(401);
   }
+
+  @Test
+  void shouldReturnUnauthorizedWhenCreateOrderGivenInvalidToken() {
+    OrderLineItemRequest orderLineItemRequest = OrderLineItemRequest.builder()
+        .name("Diesel")
+        .price(2000.0)
+        .currency("THB")
+        .build();
+
+    OrderRequest orderRequest = OrderRequest.builder()
+        .soldTo("Bangkok")
+        .shipTo("Houston")
+        .items(Collections.nCopies(3, orderLineItemRequest))
+        .build();
+
+    givenRequestWithInvalidToken()
+        .contentType(ContentType.JSON)
+        .body(orderRequest)
+        .when()
+        .post("/orders")
+        .then()
+        .statusCode(401);
+  }
 }
