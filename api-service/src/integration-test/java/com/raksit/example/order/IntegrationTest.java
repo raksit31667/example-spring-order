@@ -77,6 +77,12 @@ public abstract class IntegrationTest {
         .oauth2("invalidToken");
   }
 
+  protected RequestSpecification givenRequestWithBasicAuthentication() {
+    return given()
+        .auth()
+        .basic("username", "password");
+  }
+
   private RequestSpecification givenRequestWithToken(String accessToken) {
     setUpTokenStore(accessToken);
     return given()
