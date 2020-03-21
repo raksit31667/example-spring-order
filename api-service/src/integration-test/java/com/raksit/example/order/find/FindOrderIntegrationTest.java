@@ -52,4 +52,32 @@ class FindOrderIntegrationTest extends IntegrationTest {
         .body("[0].totalPrice", is(2000.0f))
         .body("[0].currencies", is(newArrayList("THB")));
   }
+
+  @Test
+  void shouldReturnOrderWhenFindOrderByIdGivenOrderId() {
+    OrderLineItem orderLineItem = OrderLineItem.builder()
+        .name("Diesel")
+        .money(new Money(2000.0, Currency.getInstance("THB")))
+        .build();
+
+    Order order = Order.builder()
+        .source("Bangkok")
+        .destination("Houston")
+        .items(newArrayList(orderLineItem))
+        .build();
+
+    Order savedOrder = orderRepository.save(order);
+
+    givenRequestWithValidReadToken()
+        .contentType(ContentType.JSON)
+        .when()
+        .get("/orders/" + savedOrder.getId())
+        .then()
+        .statusCode(200)
+        .body("source", is("Bangkok"))
+        .body("destination", is("Houston"))
+        .body("numberOfItems", is(1))
+        .body("totalPrice", is(2000.0f))
+        .body("currencies", is(newArrayList("THB")));
+  }
 }
