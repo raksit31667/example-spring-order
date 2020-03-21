@@ -11,6 +11,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import static com.google.common.collect.Lists.newArrayList;
+import static io.restassured.RestAssured.given;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 
@@ -91,5 +92,28 @@ class CreateOrderIntegrationTest extends KafkaIntegrationTest {
         .post("/orders")
         .then()
         .statusCode(403);
+  }
+
+  @Test
+  void shouldReturnUnauthorizedWhenCreateOrderGivenNoToken() {
+    OrderLineItemRequest orderLineItemRequest = OrderLineItemRequest.builder()
+        .name("Diesel")
+        .price(2000.0)
+        .currency("THB")
+        .build();
+
+    OrderRequest orderRequest = OrderRequest.builder()
+        .soldTo("Bangkok")
+        .shipTo("Houston")
+        .items(Collections.nCopies(3, orderLineItemRequest))
+        .build();
+
+    given()
+        .contentType(ContentType.JSON)
+        .body(orderRequest)
+        .when()
+        .post("/orders")
+        .then()
+        .statusCode(401);
   }
 }
