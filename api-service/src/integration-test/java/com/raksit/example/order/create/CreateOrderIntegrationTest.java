@@ -51,4 +51,22 @@ class CreateOrderIntegrationTest extends KafkaIntegrationTest {
         .body("totalPrice", equalTo(6000.0f))
         .body("currencies", is(newArrayList("THB")));
   }
+
+  @Test
+  void shouldReturnBadRequestWhenCreateOrderGivenOrderLineItemEmpty() {
+    OrderRequest orderRequest = OrderRequest.builder()
+        .soldTo("Bangkok")
+        .shipTo("Houston")
+        .items(newArrayList())
+        .build();
+
+    givenRequestWithValidWriteToken()
+        .contentType(ContentType.JSON)
+        .body(orderRequest)
+        .when()
+        .post("/orders")
+        .then()
+        .statusCode(400)
+        .body("message", is("items must not be empty"));
+  }
 }

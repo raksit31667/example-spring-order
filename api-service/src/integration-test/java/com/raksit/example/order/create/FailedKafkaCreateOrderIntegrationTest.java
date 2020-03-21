@@ -19,7 +19,7 @@ import static com.google.common.collect.Lists.newArrayList;
 import static io.restassured.RestAssured.given;
 import static org.hamcrest.CoreMatchers.is;
 
-class FailedCreateOrderIntegrationTest extends IntegrationTest {
+class FailedKafkaCreateOrderIntegrationTest extends IntegrationTest {
 
   @Autowired
   private OrderRepository orderRepository;
@@ -80,23 +80,5 @@ class FailedCreateOrderIntegrationTest extends IntegrationTest {
         .then()
         .statusCode(400)
         .body("message", is("invalid currency"));
-  }
-
-  @Test
-  void shouldReturnBadRequestWhenCreateOrderGivenOrderLineItemEmpty() {
-    OrderRequest orderRequest = OrderRequest.builder()
-        .soldTo("Bangkok")
-        .shipTo("Houston")
-        .items(newArrayList())
-        .build();
-
-    givenRequestWithValidWriteToken()
-        .contentType(ContentType.JSON)
-        .body(orderRequest)
-        .when()
-        .post("/orders")
-        .then()
-        .statusCode(400)
-        .body("message", is("items must not be empty"));
   }
 }
