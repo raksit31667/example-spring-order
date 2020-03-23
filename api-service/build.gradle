@@ -53,7 +53,7 @@ dependencies {
     runtime 'org.postgresql:postgresql'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testImplementation 'org.springframework.security:spring-security-test'
-    testImplementation 'org.junit.jupiter:junit-jupiter:5.6.0'
+    testImplementation 'org.junit.jupiter:junit-jupiter:5.6.1'
     testImplementation 'com.github.javafaker:javafaker:0.16'
     testImplementation 'io.rest-assured:rest-assured:3.1.0'
     testImplementation 'io.zonky.test:embedded-database-spring-test:1.5.3'
