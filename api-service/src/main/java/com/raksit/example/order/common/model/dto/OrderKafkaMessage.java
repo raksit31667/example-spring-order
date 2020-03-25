@@ -1,5 +1,6 @@
 package com.raksit.example.order.common.model.dto;
 
+import java.util.UUID;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -11,5 +12,5 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class OrderKafkaMessage {
 
-  private long orderId;
+  private UUID orderId;
 }

@@ -6,6 +6,7 @@ import com.raksit.example.order.common.model.dto.OrderResponse;
 import com.raksit.example.order.common.model.entity.Order;
 import com.raksit.example.order.common.repository.OrderRepository;
 import java.util.List;
+import java.util.UUID;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -113,6 +114,6 @@ class DefaultFindOrderServiceIntegrationTest extends IntegrationTest {
   void shouldThrowOrderNotFoundExceptionWhenFindOrderByIdGivenOrderWithIdNotExist() {
     // When
     // Then
-    assertThrows(OrderNotFoundException.class, () -> findOrderService.findOrderById(1L));
+    assertThrows(OrderNotFoundException.class, () -> findOrderService.findOrderById(UUID.randomUUID()));
   }
 }

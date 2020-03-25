@@ -7,6 +7,7 @@ import com.raksit.example.order.common.model.mapper.OrderMapper;
 import com.raksit.example.order.common.repository.OrderRepository;
 import com.raksit.example.order.find.service.FindOrderService;
 import java.util.List;
+import java.util.UUID;
 import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -28,7 +29,7 @@ public class DefaultFindOrderService implements FindOrderService {
   }
 
   @Override
-  public OrderResponse findOrderById(Long id) {
+  public OrderResponse findOrderById(UUID id) {
     return orderRepository.findById(id)
         .map(order -> orderMapper.orderToOrderResponse(order))
         .orElseThrow(OrderNotFoundException::new);

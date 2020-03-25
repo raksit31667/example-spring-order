@@ -7,6 +7,7 @@ import com.raksit.example.order.find.service.FindOrderService;
 import com.raksit.example.order.util.MockOrderFactory;
 import java.util.Collections;
 import java.util.List;
+import java.util.UUID;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -70,10 +71,10 @@ class FindOrderControllerTest {
         .destination(order.getDestination())
         .totalPrice(3000.0)
         .build();
-    when(findOrderService.findOrderById(eq(1L))).thenReturn(orderResponse);
+    when(findOrderService.findOrderById(UUID.fromString("00000000-0000-0000-0000-000000000000"))).thenReturn(orderResponse);
 
     // When
-    OrderResponse actual = findOrderController.findOrderById(1L);
+    OrderResponse actual = findOrderController.findOrderById("00000000-0000-0000-0000-000000000000");
 
     // Then
     assertEquals(orderResponse, actual);
@@ -82,10 +83,10 @@ class FindOrderControllerTest {
   @Test
   void shouldThrowOrderNotFoundWhenFindOrderByIdGivenOrderWithIdNotExist() {
     // Given
-    when(findOrderService.findOrderById(eq(1L))).thenThrow(new OrderNotFoundException());
+    when(findOrderService.findOrderById(UUID.fromString("00000000-0000-0000-0000-000000000000"))).thenThrow(new OrderNotFoundException());
 
     // When
     // Then
-    assertThrows(OrderNotFoundException.class, () -> findOrderController.findOrderById(1L));
+    assertThrows(OrderNotFoundException.class, () -> findOrderController.findOrderById("00000000-0000-0000-0000-000000000000"));
   }
 }

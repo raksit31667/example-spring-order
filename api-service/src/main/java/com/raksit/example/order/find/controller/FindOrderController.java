@@ -8,6 +8,7 @@ import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import java.util.List;
+import java.util.UUID;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -40,7 +41,7 @@ public class FindOrderController {
               message = "Order Not Found",
               response = OrderExceptionResponse.class)
       })
-  public OrderResponse findOrderById(@PathVariable Long orderId) {
-    return findOrderService.findOrderById(orderId);
+  public OrderResponse findOrderById(@PathVariable String orderId) {
+    return findOrderService.findOrderById(UUID.fromString(orderId));
   }
 }

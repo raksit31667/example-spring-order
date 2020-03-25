@@ -1,5 +1,6 @@
 package com.raksit.example.order.common.model.entity;
 
+import java.util.UUID;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -20,8 +21,8 @@ import lombok.NoArgsConstructor;
 public class OrderLineItem {
 
   @Id
-  @GeneratedValue(strategy = GenerationType.IDENTITY)
-  private long id;
+  @GeneratedValue(strategy = GenerationType.AUTO)
+  private UUID id;
 
   private String name;
 

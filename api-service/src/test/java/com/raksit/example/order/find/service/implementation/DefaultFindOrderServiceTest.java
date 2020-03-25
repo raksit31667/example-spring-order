@@ -9,6 +9,7 @@ import com.raksit.example.order.util.MockOrderFactory;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -84,11 +85,12 @@ class DefaultFindOrderServiceTest {
         .numberOfItems(NUMBER_OF_ITEMS)
         .totalPrice(6000.0)
         .build();
-    when(orderRepository.findById(1L)).thenReturn(Optional.of(order));
+    UUID uuid = UUID.randomUUID();
+    when(orderRepository.findById(uuid)).thenReturn(Optional.of(order));
     when(orderMapper.orderToOrderResponse(order)).thenReturn(orderResponse);
 
     // When
-    OrderResponse actual = findOrderService.findOrderById(1L);
+    OrderResponse actual = findOrderService.findOrderById(uuid);
 
     // Then
     assertEquals(orderResponse, actual);
@@ -97,10 +99,11 @@ class DefaultFindOrderServiceTest {
   @Test
   void shouldThrowOrderNotFoundExceptionWhenFindOrderByIdGivenOrderNotExist() {
     // Given
-    when(orderRepository.findById(1L)).thenReturn(Optional.empty());
+    UUID uuid = UUID.randomUUID();
+    when(orderRepository.findById(uuid)).thenReturn(Optional.empty());
 
     // When
     // Then
-    assertThrows(OrderNotFoundException.class, () -> findOrderService.findOrderById(1L));
+    assertThrows(OrderNotFoundException.class, () -> findOrderService.findOrderById(uuid));
   }
 }

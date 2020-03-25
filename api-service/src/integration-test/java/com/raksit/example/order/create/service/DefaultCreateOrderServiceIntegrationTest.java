@@ -25,6 +25,7 @@ import org.springframework.kafka.test.utils.KafkaTestUtils;
 import static com.google.common.collect.Lists.newArrayList;
 import static org.apache.kafka.clients.consumer.ConsumerConfig.AUTO_OFFSET_RESET_CONFIG;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 
 class DefaultCreateOrderServiceIntegrationTest extends KafkaIntegrationTest {
 
@@ -82,6 +83,6 @@ class DefaultCreateOrderServiceIntegrationTest extends KafkaIntegrationTest {
     ObjectMapper objectMapper = new ObjectMapper();
     OrderKafkaMessage orderKafkaMessage = objectMapper
         .readValue(consumerRecord.value(), OrderKafkaMessage.class);
-    assertEquals(1, orderKafkaMessage.getOrderId());
+    assertNotNull(orderKafkaMessage.getOrderId());
   }
 }

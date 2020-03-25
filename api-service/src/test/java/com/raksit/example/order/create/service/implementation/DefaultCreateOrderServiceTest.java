@@ -11,6 +11,7 @@ import com.raksit.example.order.common.repository.OrderRepository;
 import com.raksit.example.order.util.MockOrderFactory;
 import java.util.Collections;
 import java.util.Currency;
+import java.util.UUID;
 import java.util.concurrent.ExecutionException;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -59,15 +60,16 @@ class DefaultCreateOrderServiceTest {
             .money(new Money(1000.0, Currency.getInstance("THB")))
             .build()))
         .build();
+    UUID uuid = UUID.randomUUID();
     Order savedOrder = Order.builder()
-        .id(1)
+        .id(uuid)
         .source(order.getSource())
         .destination(order.getDestination())
         .items(order.getItems())
         .build();
     when(orderMapper.orderRequestToOrder(orderRequest)).thenReturn(order);
     when(orderRepository.save(order)).thenReturn(savedOrder);
-    when(kafkaTemplate.send("order.created", 1, OrderKafkaMessage.builder().orderId(1).build()))
+    when(kafkaTemplate.send("order.created", 1, OrderKafkaMessage.builder().orderId(uuid).build()))
         .thenReturn(listenableFuture);
     when(orderMapper.orderToOrderResponse(savedOrder)).thenReturn(OrderResponse.builder()
         .source(order.getSource())
@@ -91,7 +93,8 @@ class DefaultCreateOrderServiceTest {
     // Given
     OrderRequest orderRequest = MockOrderFactory.createSampleOrderRequest(NUMBER_OF_ITEMS);
     Order order = Order.builder().build();
-    Order savedOrder = Order.builder().id(1).build();
+    UUID uuid = UUID.randomUUID();
+    Order savedOrder = Order.builder().id(uuid).build();
     when(orderMapper.orderRequestToOrder(orderRequest)).thenReturn(order);
     when(orderRepository.save(order)).thenReturn(savedOrder);
 
@@ -99,7 +102,7 @@ class DefaultCreateOrderServiceTest {
         = new SettableListenableFuture<>();
     producerResult.setException(new ExecutionException("cannot publish order creation message",
         new RuntimeException()));
-    when(kafkaTemplate.send("order.created", 1, OrderKafkaMessage.builder().orderId(1).build()))
+    when(kafkaTemplate.send("order.created", 1, OrderKafkaMessage.builder().orderId(uuid).build()))
         .thenReturn(producerResult);
 
     // When
