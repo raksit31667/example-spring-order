@@ -15,6 +15,7 @@ import static com.google.common.collect.Lists.newArrayList;
 import static io.restassured.RestAssured.given;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.notNullValue;
 
 class CreateOrderIntegrationTest extends KafkaIntegrationTest {
 
@@ -37,6 +38,7 @@ class CreateOrderIntegrationTest extends KafkaIntegrationTest {
         .post("/orders")
         .then()
         .statusCode(HttpStatus.SC_CREATED)
+        .body("id", notNullValue())
         .body("source", is("Bangkok"))
         .body("destination", is("Houston"))
         .body("numberOfItems", is(3))

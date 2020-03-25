@@ -26,6 +26,7 @@ public class OrderMapper {
 
   public OrderResponse orderToOrderResponse(Order order) {
     return OrderResponse.builder()
+        .id(order.getId().toString())
         .source(order.getSource())
         .destination(order.getDestination())
         .numberOfItems(order.getItems().size())

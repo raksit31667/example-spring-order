@@ -12,6 +12,7 @@ import lombok.NoArgsConstructor;
 @Builder
 public class OrderResponse {
 
+  private String id;
   private String source;
   private String destination;
   private Integer numberOfItems;

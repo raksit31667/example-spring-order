@@ -4,6 +4,7 @@ import com.raksit.example.order.common.model.dto.OrderRequest;
 import com.raksit.example.order.common.model.dto.OrderResponse;
 import com.raksit.example.order.create.service.CreateOrderService;
 import com.raksit.example.order.util.MockOrderFactory;
+import java.util.UUID;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -29,6 +30,7 @@ class CreateOrderControllerTest {
     // Given
     OrderRequest orderRequest = MockOrderFactory.createSampleOrderRequest(NUMBER_OF_ITEMS);
     OrderResponse orderResponse = OrderResponse.builder()
+            .id(UUID.randomUUID().toString())
             .source(orderRequest.getSoldTo())
             .destination(orderRequest.getShipTo())
             .numberOfItems(NUMBER_OF_ITEMS)

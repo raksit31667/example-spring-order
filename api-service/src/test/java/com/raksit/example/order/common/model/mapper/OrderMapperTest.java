@@ -8,6 +8,7 @@ import com.raksit.example.order.common.model.entity.Order;
 import com.raksit.example.order.common.model.entity.OrderLineItem;
 import com.raksit.example.order.util.MockOrderFactory;
 import java.util.Currency;
+import java.util.UUID;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Spy;
@@ -85,24 +86,31 @@ class OrderMapperTest {
   @Test
   void shouldReturnOrderResponseWhenOrderToOrderResponseGivenOrder() {
     // Given
+    UUID uuid = UUID.randomUUID();
     Order order = spy(MockOrderFactory.createSampleOrder(NUMBER_OF_ITEMS));
+    when(order.getId()).thenReturn(uuid);
     when(order.getCurrencies()).thenReturn(newArrayList(Currency.getInstance("USD")));
 
     // When
-    OrderResponse orderResponse = orderMapper.orderToOrderResponse(order);
+    OrderResponse actual = orderMapper.orderToOrderResponse(order);
 
     // Then
-    assertEquals(order.getSource(), orderResponse.getSource());
-    assertEquals(order.getDestination(), orderResponse.getDestination());
-    assertEquals(newArrayList("USD"), orderResponse.getCurrencies());
-    assertEquals(NUMBER_OF_ITEMS, orderResponse.getNumberOfItems().intValue());
-    assertEquals(3000.0, orderResponse.getTotalPrice().doubleValue());
+    OrderResponse expected = OrderResponse.builder()
+        .id(uuid.toString())
+        .source(order.getSource())
+        .destination(order.getDestination())
+        .currencies(newArrayList("USD"))
+        .numberOfItems(NUMBER_OF_ITEMS)
+        .totalPrice(3000.0)
+        .build();
+    assertEquals(expected, actual);
   }
 
   @Test
   void shouldReturnOrderResponseWithEmptyCurrencyWhenOrderToOrderResponseGivenOrderItemEmpty() {
     // Given
     Order order = spy(MockOrderFactory.createSampleOrder(NUMBER_OF_ITEMS));
+    when(order.getId()).thenReturn(UUID.randomUUID());
     when(order.getCurrencies()).thenReturn(newArrayList());
 
     // When

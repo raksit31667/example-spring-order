@@ -43,7 +43,7 @@ class DefaultFindOrderServiceIntegrationTest extends IntegrationTest {
     thaiOrder.setSource("Bangkok");
     chineseOrder.setSource("Wuhan");
 
-    orderRepository.save(thaiOrder);
+    Order savedThaiOrder = orderRepository.save(thaiOrder);
     orderRepository.save(chineseOrder);
 
     // When
@@ -52,6 +52,7 @@ class DefaultFindOrderServiceIntegrationTest extends IntegrationTest {
 
     // Then
     OrderResponse expected = OrderResponse.builder()
+        .id(savedThaiOrder.getId().toString())
         .source("Bangkok")
         .destination("Houston")
         .currencies(newArrayList())
@@ -101,6 +102,7 @@ class DefaultFindOrderServiceIntegrationTest extends IntegrationTest {
 
     // Then
     OrderResponse expected = OrderResponse.builder()
+        .id(savedOrder.getId().toString())
         .source("Bangkok")
         .destination("Houston")
         .currencies(newArrayList())
