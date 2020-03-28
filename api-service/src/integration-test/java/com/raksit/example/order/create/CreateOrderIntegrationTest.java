@@ -60,7 +60,7 @@ class CreateOrderIntegrationTest extends KafkaIntegrationTest {
         .when()
         .post("/orders")
         .then()
-        .statusCode(400)
+        .statusCode(HttpStatus.SC_BAD_REQUEST)
         .body("message", is("items must not be empty"));
   }
 
