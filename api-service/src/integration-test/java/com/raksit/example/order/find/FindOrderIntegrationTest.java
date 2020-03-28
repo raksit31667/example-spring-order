@@ -176,6 +176,17 @@ class FindOrderIntegrationTest extends IntegrationTest {
         .statusCode(HttpStatus.SC_UNAUTHORIZED);
   }
 
+  @Test
+  void shouldReturnBadRequestWhenFindOrderByIdGivenInvalidOrderId() {
+    givenRequestWithValidReadToken()
+        .contentType(ContentType.JSON)
+        .when()
+        .get("/orders/abcd")
+        .then()
+        .statusCode(HttpStatus.SC_BAD_REQUEST)
+        .body("message", is("invalid order id"));
+  }
+
   private Order buildOrder() {
     OrderLineItem orderLineItem = OrderLineItem.builder()
         .name("Diesel")

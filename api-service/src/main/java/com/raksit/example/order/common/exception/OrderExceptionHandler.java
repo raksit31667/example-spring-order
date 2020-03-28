@@ -1,6 +1,7 @@
 package com.raksit.example.order.common.exception;
 
 import java.time.LocalDateTime;
+import javax.validation.ConstraintViolationException;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -28,6 +29,15 @@ public class OrderExceptionHandler extends ResponseEntityExceptionHandler {
         .timestamp(LocalDateTime.now())
         .message("Cannot send order notification")
         .build(), HttpStatus.INTERNAL_SERVER_ERROR);
+  }
+
+  @ExceptionHandler(ConstraintViolationException.class)
+  public ResponseEntity<OrderExceptionResponse> handleConstraintViolationException(
+      ConstraintViolationException ex) {
+    return new ResponseEntity<>(OrderExceptionResponse.builder()
+        .timestamp(LocalDateTime.now())
+        .message(ex.getConstraintViolations().iterator().next().getMessage())
+        .build(), HttpStatus.BAD_REQUEST);
   }
 
   @Override
