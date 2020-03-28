@@ -1,4 +1,4 @@
-package com.raksit.example.order.validator;
+package com.raksit.example.order.common.validator;
 
 import javax.validation.ConstraintValidatorContext;
 import javax.validation.ConstraintValidatorContext.ConstraintViolationBuilder;
@@ -59,7 +59,7 @@ class BaseValidatorTest {
   private static class FakeBaseValidator extends BaseValidator<FakeAnnotation, String> {
 
     @Override
-    boolean validate(String value) {
+    public boolean validate(String value) {
       return false;
     }
 

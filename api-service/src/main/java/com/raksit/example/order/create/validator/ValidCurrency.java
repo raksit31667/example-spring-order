@@ -1,4 +1,4 @@
-package com.raksit.example.order.validator;
+package com.raksit.example.order.create.validator;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;

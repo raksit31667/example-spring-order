@@ -1,4 +1,4 @@
-package com.raksit.example.order.validator;
+package com.raksit.example.order.create.validator;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

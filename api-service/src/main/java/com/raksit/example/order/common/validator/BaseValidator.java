@@ -1,4 +1,4 @@
-package com.raksit.example.order.validator;
+package com.raksit.example.order.common.validator;
 
 import java.lang.annotation.Annotation;
 import javax.validation.ConstraintValidator;
@@ -22,5 +22,5 @@ public abstract class BaseValidator<A extends Annotation, T> implements Constrai
     }
   }
 
-  abstract boolean validate(T value);
+  public abstract boolean validate(T value);
 }

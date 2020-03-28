@@ -1,6 +1,6 @@
 package com.raksit.example.order.common.model.dto;
 
-import com.raksit.example.order.validator.ValidCurrency;
+import com.raksit.example.order.create.validator.ValidCurrency;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
