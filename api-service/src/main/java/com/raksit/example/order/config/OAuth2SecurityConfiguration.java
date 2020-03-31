@@ -3,6 +3,7 @@ package com.raksit.example.order.config;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.Collections;
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -10,6 +11,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.oauth2.config.annotation.web.configuration.ResourceServerConfiguration;
+import org.springframework.security.oauth2.config.annotation.web.configuration.ResourceServerConfigurer;
 import org.springframework.security.oauth2.config.annotation.web.configuration.ResourceServerConfigurerAdapter;
 import org.springframework.security.oauth2.config.annotation.web.configurers.ResourceServerSecurityConfigurer;
 import org.springframework.security.oauth2.provider.token.DefaultTokenServices;
@@ -59,6 +61,7 @@ public class OAuth2SecurityConfiguration {
           }
         }));
 
+    resourceServerConfiguration.setOrder(98);
     return resourceServerConfiguration;
   }
 
