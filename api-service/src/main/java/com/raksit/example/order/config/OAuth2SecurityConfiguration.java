@@ -37,7 +37,12 @@ public class OAuth2SecurityConfiguration {
 
   @Bean
   protected ResourceServerConfiguration resourceServerConfiguration() {
-    ResourceServerConfiguration resourceServerConfiguration = new ResourceServerConfiguration();
+    ResourceServerConfiguration resourceServerConfiguration = new ResourceServerConfiguration() {
+      @Override
+      public void setConfigurers(List<ResourceServerConfigurer> configurers) {
+        super.setConfigurers(configurers);
+      }
+    };
     resourceServerConfiguration
         .setConfigurers(Collections.singletonList(new ResourceServerConfigurerAdapter() {
 
