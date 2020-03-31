@@ -21,6 +21,8 @@ security:
   oauth2:
     resource:
       issuer: https://sts.windows.net/xxx/
-      id: yyy
+      id: 00000000-0000-0000-0000-000000000000
       jwk:
         keySetUri: https://login.microsoftonline.com/common/discovery/keys
+    tenant:
+      id: 00000000-0000-0000-0000-000000000000
