@@ -5,7 +5,7 @@ buildscript {
         maven { url 'https://repo.spring.io/milestone' }
     }
     dependencies {
-        classpath 'org.owasp:dependency-check-gradle:5.3.2'
+        classpath 'org.owasp:dependency-check-gradle:5.3.2.1'
         classpath 'org.sonarsource.scanner.gradle:sonarqube-gradle-plugin:2.8.0.1969'
     }
 }
