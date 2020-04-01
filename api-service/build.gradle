@@ -77,7 +77,6 @@ test {
         html.enabled = true
     }
     jacoco {
-        append = false
         destinationFile = file("$buildDir/jacoco/jacocoTest.exec")
         classDumpDir = file("$buildDir/jacoco/classpathdumps")
     }
@@ -129,7 +128,7 @@ jacocoTestReport {
     reports {
         xml.enabled = false
         csv.enabled = false
-        html.destination = file("$buildDir/reports/jacoco")
+        html.destination file("$buildDir/reports/jacoco")
     }
 }
 
