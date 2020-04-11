@@ -1,11 +1,13 @@
 package com.raksit.example.order;
 
 import java.util.Collections;
+import java.util.List;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.oauth2.config.annotation.web.configuration.ResourceServerConfiguration;
+import org.springframework.security.oauth2.config.annotation.web.configuration.ResourceServerConfigurer;
 import org.springframework.security.oauth2.config.annotation.web.configuration.ResourceServerConfigurerAdapter;
 import org.springframework.security.oauth2.config.annotation.web.configurers.ResourceServerSecurityConfigurer;
 import org.springframework.security.oauth2.provider.token.DefaultTokenServices;
@@ -25,7 +27,12 @@ public class TestOAuth2SecurityConfiguration {
 
   @Bean
   public ResourceServerConfiguration testResourceServerConfiguration(TokenStore tokenStore) {
-    ResourceServerConfiguration resourceServerConfiguration = new ResourceServerConfiguration();
+    ResourceServerConfiguration resourceServerConfiguration = new ResourceServerConfiguration() {
+      @Override
+      public void setConfigurers(List<ResourceServerConfigurer> configurers) {
+        super.setConfigurers(configurers);
+      }
+    };
     resourceServerConfiguration.setConfigurers(Collections.singletonList(new ResourceServerConfigurerAdapter() {
 
       @Override
