@@ -75,7 +75,9 @@ class FindOrderIntegrationTest extends IntegrationTest {
         .when()
         .get("/orders?source=Bangkok")
         .then()
-        .statusCode(HttpStatus.SC_FORBIDDEN);
+        .statusCode(HttpStatus.SC_FORBIDDEN)
+        .body("message", is("The server understood the request " +
+            "but refuses to authorize it"));
   }
 
   @Test
@@ -89,7 +91,9 @@ class FindOrderIntegrationTest extends IntegrationTest {
         .when()
         .get("/orders/" + savedOrder.getId())
         .then()
-        .statusCode(HttpStatus.SC_FORBIDDEN);
+        .statusCode(HttpStatus.SC_FORBIDDEN)
+        .body("message", is("The server understood the request " +
+            "but refuses to authorize it"));
   }
 
   @Test
@@ -103,7 +107,9 @@ class FindOrderIntegrationTest extends IntegrationTest {
         .when()
         .get("/orders?source=Bangkok")
         .then()
-        .statusCode(HttpStatus.SC_UNAUTHORIZED);
+        .statusCode(HttpStatus.SC_UNAUTHORIZED)
+        .body("message", is("The request has not been applied because " +
+            "it lacks valid authentication credentials for the target resource"));
   }
 
   @Test
@@ -117,7 +123,9 @@ class FindOrderIntegrationTest extends IntegrationTest {
         .when()
         .get("/orders/" + savedOrder.getId())
         .then()
-        .statusCode(HttpStatus.SC_UNAUTHORIZED);
+        .statusCode(HttpStatus.SC_UNAUTHORIZED)
+        .body("message", is("The request has not been applied because " +
+            "it lacks valid authentication credentials for the target resource"));
   }
 
   @Test
@@ -131,7 +139,9 @@ class FindOrderIntegrationTest extends IntegrationTest {
         .when()
         .get("/orders?source=Bangkok")
         .then()
-        .statusCode(HttpStatus.SC_UNAUTHORIZED);
+        .statusCode(HttpStatus.SC_UNAUTHORIZED)
+        .body("message", is("The request has not been applied because " +
+            "it lacks valid authentication credentials for the target resource"));
   }
 
   @Test
@@ -145,7 +155,9 @@ class FindOrderIntegrationTest extends IntegrationTest {
         .when()
         .get("/orders/" + savedOrder.getId())
         .then()
-        .statusCode(HttpStatus.SC_UNAUTHORIZED);
+        .statusCode(HttpStatus.SC_UNAUTHORIZED)
+        .body("message", is("The request has not been applied because " +
+            "it lacks valid authentication credentials for the target resource"));
   }
 
   @Test
@@ -159,7 +171,9 @@ class FindOrderIntegrationTest extends IntegrationTest {
         .when()
         .get("/orders?source=Bangkok")
         .then()
-        .statusCode(HttpStatus.SC_UNAUTHORIZED);
+        .statusCode(HttpStatus.SC_UNAUTHORIZED)
+        .body("message", is("The request has not been applied because " +
+            "it lacks valid authentication credentials for the target resource"));
   }
 
   @Test
@@ -173,7 +187,9 @@ class FindOrderIntegrationTest extends IntegrationTest {
         .when()
         .get("/orders/" + savedOrder.getId())
         .then()
-        .statusCode(HttpStatus.SC_UNAUTHORIZED);
+        .statusCode(HttpStatus.SC_UNAUTHORIZED)
+        .body("message", is("The request has not been applied because " +
+            "it lacks valid authentication credentials for the target resource"));
   }
 
   @Test

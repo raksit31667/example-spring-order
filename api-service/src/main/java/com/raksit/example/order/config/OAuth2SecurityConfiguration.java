@@ -1,5 +1,6 @@
 package com.raksit.example.order.config;
 
+import com.raksit.example.order.security.SecurityExceptionHandler;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.Collections;
@@ -25,6 +26,9 @@ public class OAuth2SecurityConfiguration {
 
   @Autowired
   private RequestMappingHandlerMapping requestMappingHandlerMapping;
+
+  @Autowired
+  private SecurityExceptionHandler securityExceptionHandler;
 
   @Value("${security.oauth2.resource.issuer}")
   private String issuer;
@@ -53,7 +57,9 @@ public class OAuth2SecurityConfiguration {
             defaultTokenServices.setTokenStore(tokenStore);
             resources.resourceId(resourceId)
                 .tokenStore(tokenStore)
-                .tokenServices(defaultTokenServices);
+                .tokenServices(defaultTokenServices)
+                .authenticationEntryPoint(securityExceptionHandler)
+                .accessDeniedHandler(securityExceptionHandler);
           }
 
           @Override

@@ -1,7 +1,9 @@
 package com.raksit.example.order;
 
+import com.raksit.example.order.security.SecurityExceptionHandler;
 import java.util.Collections;
 import java.util.List;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -19,6 +21,9 @@ public class TestOAuth2SecurityConfiguration {
 
   @Value("${security.oauth2.resource.id}")
   private String resourceId;
+
+  @Autowired
+  private SecurityExceptionHandler securityExceptionHandler;
 
   @Bean
   public TokenStore tokenStore() {
@@ -41,7 +46,9 @@ public class TestOAuth2SecurityConfiguration {
         tokenServices.setTokenStore(tokenStore);
         resources.resourceId(resourceId)
             .tokenStore(tokenStore)
-            .tokenServices(tokenServices);
+            .tokenServices(tokenServices)
+            .authenticationEntryPoint(securityExceptionHandler)
+            .accessDeniedHandler(securityExceptionHandler);
       }
 
       @Override

@@ -74,7 +74,9 @@ class CreateOrderIntegrationTest extends KafkaIntegrationTest {
         .when()
         .post("/orders")
         .then()
-        .statusCode(HttpStatus.SC_FORBIDDEN);
+        .statusCode(HttpStatus.SC_FORBIDDEN)
+        .body("message", is("The server understood the request " +
+            "but refuses to authorize it"));
   }
 
   @Test
@@ -87,7 +89,9 @@ class CreateOrderIntegrationTest extends KafkaIntegrationTest {
         .when()
         .post("/orders")
         .then()
-        .statusCode(HttpStatus.SC_UNAUTHORIZED);
+        .statusCode(HttpStatus.SC_UNAUTHORIZED)
+        .body("message", is("The request has not been applied because " +
+            "it lacks valid authentication credentials for the target resource"));
   }
 
   @Test
@@ -100,7 +104,9 @@ class CreateOrderIntegrationTest extends KafkaIntegrationTest {
         .when()
         .post("/orders")
         .then()
-        .statusCode(HttpStatus.SC_UNAUTHORIZED);
+        .statusCode(HttpStatus.SC_UNAUTHORIZED)
+        .body("message", is("The request has not been applied because " +
+            "it lacks valid authentication credentials for the target resource"));
   }
 
   @Test
@@ -113,7 +119,9 @@ class CreateOrderIntegrationTest extends KafkaIntegrationTest {
         .when()
         .post("/orders")
         .then()
-        .statusCode(HttpStatus.SC_UNAUTHORIZED);
+        .statusCode(HttpStatus.SC_UNAUTHORIZED)
+        .body("message", is("The request has not been applied because " +
+            "it lacks valid authentication credentials for the target resource"));
   }
 
   private OrderRequest buildOrderRequest() {
