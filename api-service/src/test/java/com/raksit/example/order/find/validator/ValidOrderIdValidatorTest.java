@@ -6,8 +6,8 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.is;
 
 @ExtendWith(MockitoExtension.class)
 class ValidOrderIdValidatorTest {
@@ -27,13 +27,13 @@ class ValidOrderIdValidatorTest {
   void shouldReturnTrueWhenValidateGivenUUIDFromValidString() {
     // When
     // Then
-    assertTrue(validator.validate("bbad724a-5645-4af3-b17d-0f5ee006ee50"));
+    assertThat(validator.validate("bbad724a-5645-4af3-b17d-0f5ee006ee50"), is(true));
   }
 
   @Test
   void shouldReturnFalseWhenValidateGivenUUIDFromInvalidString() {
     // When
     // Then
-    assertFalse(validator.validate("abcd"));
+    assertThat(validator.validate("abcd"), is(false));
   }
 }

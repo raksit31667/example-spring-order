@@ -8,8 +8,8 @@ import org.mockito.Mock;
 import org.mockito.Spy;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.is;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -33,7 +33,7 @@ class BaseValidatorTest {
 
     // When
     // Then
-    assertTrue(validator.isValid("fakeValue", validatorContext));
+    assertThat(validator.isValid("fakeValue", validatorContext), is(true));
   }
 
   @Test
@@ -47,7 +47,7 @@ class BaseValidatorTest {
 
     // When
     // Then
-    assertFalse(validator.isValid("fakeValue", validatorContext));
+    assertThat(validator.isValid("fakeValue", validatorContext), is(false));
     verify(validatorContext).disableDefaultConstraintViolation();
   }
 
