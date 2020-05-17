@@ -12,7 +12,6 @@ import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import java.util.List;
 import java.util.UUID;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -27,8 +26,11 @@ import org.springframework.web.bind.annotation.RestController;
 @Api(tags = {"Order"})
 public class FindOrderController {
 
-  @Autowired
-  private FindOrderService findOrderService;
+  private final FindOrderService findOrderService;
+
+  public FindOrderController(FindOrderService findOrderService) {
+    this.findOrderService = findOrderService;
+  }
 
   @GetMapping
   @ApiOperation("Get order by source (sold-to)")

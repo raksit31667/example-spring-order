@@ -8,8 +8,6 @@ import com.raksit.example.order.common.model.mapper.OrderMapper;
 import com.raksit.example.order.common.repository.OrderRepository;
 import com.raksit.example.order.create.service.CreateOrderService;
 import java.util.concurrent.ExecutionException;
-import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.kafka.KafkaException;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.kafka.support.SendResult;
@@ -19,17 +17,20 @@ import org.springframework.util.concurrent.ListenableFuture;
 import static com.google.common.util.concurrent.Uninterruptibles.getUninterruptibly;
 
 @Service
-@RequiredArgsConstructor(onConstructor = @__({@Autowired}))
 public class DefaultCreateOrderService implements CreateOrderService {
 
-  @Autowired
-  private OrderRepository orderRepository;
+  private final OrderRepository orderRepository;
 
-  @Autowired
-  private OrderMapper orderMapper;
+  private final OrderMapper orderMapper;
 
-  @Autowired
-  private KafkaTemplate<Integer, OrderKafkaMessage> kafkaTemplate;
+  private final KafkaTemplate<Integer, OrderKafkaMessage> kafkaTemplate;
+
+  public DefaultCreateOrderService(OrderRepository orderRepository, OrderMapper orderMapper,
+      KafkaTemplate<Integer, OrderKafkaMessage> kafkaTemplate) {
+    this.orderRepository = orderRepository;
+    this.orderMapper = orderMapper;
+    this.kafkaTemplate = kafkaTemplate;
+  }
 
   @Override
   public OrderResponse createOrder(OrderRequest orderRequest) {

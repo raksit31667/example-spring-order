@@ -5,7 +5,6 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.Collections;
 import java.util.List;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -24,11 +23,9 @@ import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandl
 @Configuration
 public class OAuth2SecurityConfiguration {
 
-  @Autowired
-  private RequestMappingHandlerMapping requestMappingHandlerMapping;
+  private final RequestMappingHandlerMapping requestMappingHandlerMapping;
 
-  @Autowired
-  private SecurityExceptionHandler securityExceptionHandler;
+  private final SecurityExceptionHandler securityExceptionHandler;
 
   @Value("${security.oauth2.resource.issuer}")
   private String issuer;
@@ -38,6 +35,12 @@ public class OAuth2SecurityConfiguration {
 
   @Value("${security.oauth2.resource.jwk.keySetUri}")
   private String keySetUri;
+
+  public OAuth2SecurityConfiguration(RequestMappingHandlerMapping requestMappingHandlerMapping,
+      SecurityExceptionHandler securityExceptionHandler) {
+    this.requestMappingHandlerMapping = requestMappingHandlerMapping;
+    this.securityExceptionHandler = securityExceptionHandler;
+  }
 
   @Bean
   protected ResourceServerConfiguration resourceServerConfiguration() {

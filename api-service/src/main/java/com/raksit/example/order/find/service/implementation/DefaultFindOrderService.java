@@ -9,29 +9,31 @@ import com.raksit.example.order.find.service.FindOrderService;
 import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
 public class DefaultFindOrderService implements FindOrderService {
 
-  @Autowired
-  private OrderRepository orderRepository;
+  private final OrderRepository orderRepository;
 
-  @Autowired
-  private OrderMapper orderMapper;
+  private final OrderMapper orderMapper;
+
+  public DefaultFindOrderService(OrderRepository orderRepository, OrderMapper orderMapper) {
+    this.orderRepository = orderRepository;
+    this.orderMapper = orderMapper;
+  }
 
   @Override
   public List<OrderResponse> findOrdersBySource(String source) {
     List<Order> orders = orderRepository.findAllBySource(source);
-    return orders.stream().map(order -> orderMapper.orderToOrderResponse(order))
+    return orders.stream().map(orderMapper::orderToOrderResponse)
         .collect(Collectors.toList());
   }
 
   @Override
   public OrderResponse findOrderById(UUID id) {
     return orderRepository.findById(id)
-        .map(order -> orderMapper.orderToOrderResponse(order))
+        .map(orderMapper::orderToOrderResponse)
         .orElseThrow(OrderNotFoundException::new);
   }
 }

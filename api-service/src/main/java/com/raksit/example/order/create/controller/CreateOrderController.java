@@ -11,7 +11,6 @@ import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import javax.validation.Valid;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -24,6 +23,12 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/orders")
 @Api(tags = {"Order"})
 public class CreateOrderController {
+
+  private final CreateOrderService createOrderService;
+
+  public CreateOrderController(CreateOrderService createOrderService) {
+    this.createOrderService = createOrderService;
+  }
 
   @PostMapping
   @ResponseStatus(HttpStatus.CREATED)
@@ -42,6 +47,4 @@ public class CreateOrderController {
   public OrderResponse createOrder(@RequestBody @Valid OrderRequest orderRequest) {
     return createOrderService.createOrder(orderRequest);
   }
-
-  @Autowired private CreateOrderService createOrderService;
 }
