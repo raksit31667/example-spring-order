@@ -12,7 +12,8 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import static com.google.common.collect.Lists.newArrayList;
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.core.IsEqual.equalTo;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 class DefaultFindOrderServiceIntegrationTest extends IntegrationTest {
@@ -59,7 +60,7 @@ class DefaultFindOrderServiceIntegrationTest extends IntegrationTest {
         .numberOfItems(0)
         .totalPrice(0.0)
         .build();
-    assertEquals(expected, actual);
+    assertThat(actual, equalTo(expected));
   }
 
   @Test
@@ -84,7 +85,7 @@ class DefaultFindOrderServiceIntegrationTest extends IntegrationTest {
 
     // Then
     List<OrderResponse> expected = newArrayList();
-    assertEquals(expected, actual);
+    assertThat(actual, equalTo(expected));
   }
 
   @Test
@@ -109,7 +110,7 @@ class DefaultFindOrderServiceIntegrationTest extends IntegrationTest {
         .numberOfItems(0)
         .totalPrice(0.0)
         .build();
-    assertEquals(expected, actual);
+    assertThat(actual, equalTo(expected));
   }
 
   @Test

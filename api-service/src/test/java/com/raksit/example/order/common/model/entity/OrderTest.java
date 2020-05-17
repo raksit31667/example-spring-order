@@ -3,10 +3,13 @@ package com.raksit.example.order.common.model.entity;
 import java.util.Collections;
 import java.util.Currency;
 import java.util.List;
+import org.hamcrest.collection.IsEmptyCollection;
 import org.junit.jupiter.api.Test;
 
 import static com.google.common.collect.Lists.newArrayList;
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.hamcrest.CoreMatchers.equalTo;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.collection.IsIterableContainingInAnyOrder.containsInAnyOrder;
 
 class OrderTest {
 
@@ -27,7 +30,7 @@ class OrderTest {
     double actualTotalPrice = order.getSubTotal();
 
     // Then
-    assertEquals(6000.0, actualTotalPrice);
+    assertThat(actualTotalPrice, equalTo(6000.0));
   }
 
   @Test
@@ -46,7 +49,7 @@ class OrderTest {
     double actualTotalPrice = order.getSubTotal();
 
     // Then
-    assertEquals(4500.0, actualTotalPrice);
+    assertThat(actualTotalPrice, equalTo(4500.0));
   }
 
   @Test
@@ -60,7 +63,7 @@ class OrderTest {
     double actualTotalPrice = order.getSubTotal();
 
     // Then
-    assertEquals(0, actualTotalPrice);
+    assertThat(actualTotalPrice, equalTo(0.0));
   }
 
   @Test
@@ -74,7 +77,7 @@ class OrderTest {
 
     // When
     // Then
-    assertEquals(newArrayList(Currency.getInstance("THB")), order.getCurrencies());
+    assertThat(order.getCurrencies(), containsInAnyOrder(Currency.getInstance("THB")));
   }
 
   @Test
@@ -92,7 +95,7 @@ class OrderTest {
 
     // When
     // Then
-    assertEquals(newArrayList(Currency.getInstance("USD"), Currency.getInstance("THB")), order.getCurrencies());
+    assertThat(order.getCurrencies(), containsInAnyOrder(Currency.getInstance("USD"), Currency.getInstance("THB")));
   }
 
   @Test
@@ -116,7 +119,7 @@ class OrderTest {
 
     // When
     // Then
-    assertEquals(newArrayList(Currency.getInstance("THB")), order.getCurrencies());
+    assertThat(order.getCurrencies(), containsInAnyOrder(Currency.getInstance("THB")));
   }
 
   @Test
@@ -140,7 +143,7 @@ class OrderTest {
 
     // When
     // Then
-    assertEquals(newArrayList(Currency.getInstance("AUD"), Currency.getInstance("JPY")), order.getCurrencies());
+    assertThat(order.getCurrencies(), containsInAnyOrder(Currency.getInstance("AUD"), Currency.getInstance("JPY")));
   }
 
   @Test
@@ -152,6 +155,6 @@ class OrderTest {
 
     // When
     // Then
-    assertEquals(newArrayList(), order.getCurrencies());
+    assertThat(order.getCurrencies(), IsEmptyCollection.empty());
   }
 }

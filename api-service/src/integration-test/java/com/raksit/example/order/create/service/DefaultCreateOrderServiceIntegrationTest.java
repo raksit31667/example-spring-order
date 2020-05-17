@@ -24,8 +24,10 @@ import org.springframework.kafka.test.utils.KafkaTestUtils;
 
 import static com.google.common.collect.Lists.newArrayList;
 import static org.apache.kafka.clients.consumer.ConsumerConfig.AUTO_OFFSET_RESET_CONFIG;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
+import static org.hamcrest.core.IsEqual.equalTo;
+import static org.hamcrest.core.IsNull.notNullValue;
+import static org.junit.Assert.assertThat;
+import static org.junit.jupiter.api.Assertions.assertAll;
 
 class DefaultCreateOrderServiceIntegrationTest extends KafkaIntegrationTest {
 
@@ -70,12 +72,13 @@ class DefaultCreateOrderServiceIntegrationTest extends KafkaIntegrationTest {
     OrderResponse orderResponse = createOrderService.createOrder(orderRequest);
 
     // Then
-    assertNotNull(orderResponse.getId());
-    assertEquals("Bangkok", orderResponse.getSource());
-    assertEquals("Houston", orderResponse.getDestination());
-    assertEquals(newArrayList("USD"), orderResponse.getCurrencies());
-    assertEquals(NUMBER_OF_ITEMS, orderResponse.getNumberOfItems(), 0);
-    assertEquals(3000.0, orderResponse.getTotalPrice(), 0);
+    assertAll("orderResponse", () -> {
+      assertThat(orderResponse.getId(), notNullValue());
+      assertThat(orderResponse.getSource(), equalTo("Bangkok"));
+      assertThat(orderResponse.getDestination(), equalTo("Houston"));
+      assertThat(orderResponse.getNumberOfItems(), equalTo(NUMBER_OF_ITEMS));
+      assertThat(orderResponse.getTotalPrice(), equalTo(3000.0));
+    });
 
     // Kafka
     consumer.subscribe(newArrayList("order.created"));
@@ -84,6 +87,6 @@ class DefaultCreateOrderServiceIntegrationTest extends KafkaIntegrationTest {
     ObjectMapper objectMapper = new ObjectMapper();
     OrderKafkaMessage orderKafkaMessage = objectMapper
         .readValue(consumerRecord.value(), OrderKafkaMessage.class);
-    assertNotNull(orderKafkaMessage.getOrderId());
+    assertThat(orderKafkaMessage.getOrderId(), notNullValue());
   }
 }

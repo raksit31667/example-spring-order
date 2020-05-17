@@ -10,6 +10,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
+import org.hamcrest.collection.IsEmptyCollection;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -17,7 +18,8 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import static com.google.common.collect.Lists.newArrayList;
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.core.IsEqual.equalTo;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.when;
@@ -54,8 +56,7 @@ class DefaultFindOrderServiceTest {
         findOrderService.findOrdersBySource("Bangkok").iterator().next();
 
     // Then
-    assertEquals("Bangkok", actualOrderResponse.getSource());
-    assertEquals(thaiOrder.getDestination(), actualOrderResponse.getDestination());
+    assertThat(actualOrderResponse.getSource(), equalTo("Bangkok"));
   }
 
   @Test
@@ -71,8 +72,7 @@ class DefaultFindOrderServiceTest {
     List<OrderResponse> actual = findOrderService.findOrdersBySource("Houston");
 
     // Then
-    List<Object> expected = newArrayList();
-    assertEquals(expected, actual);
+    assertThat(actual, IsEmptyCollection.empty());
   }
 
   @Test
@@ -93,7 +93,7 @@ class DefaultFindOrderServiceTest {
     OrderResponse actual = findOrderService.findOrderById(uuid);
 
     // Then
-    assertEquals(orderResponse, actual);
+    assertThat(actual, equalTo(orderResponse));
   }
 
   @Test

@@ -24,7 +24,8 @@ import org.springframework.kafka.support.SendResult;
 import org.springframework.util.concurrent.ListenableFuture;
 import org.springframework.util.concurrent.SettableListenableFuture;
 
-import static org.junit.Assert.assertEquals;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.core.IsEqual.equalTo;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -41,7 +42,7 @@ class DefaultCreateOrderServiceTest {
   private OrderMapper orderMapper;
 
   @Mock
-  private ListenableFuture listenableFuture;
+  private ListenableFuture<SendResult<Integer, OrderKafkaMessage>> listenableFuture;
 
   @Mock
   private KafkaTemplate<Integer, OrderKafkaMessage> kafkaTemplate;
@@ -82,10 +83,10 @@ class DefaultCreateOrderServiceTest {
     OrderResponse orderResponse = createOrderService.createOrder(orderRequest);
 
     // Then
-    assertEquals(orderRequest.getSoldTo(), orderResponse.getSource());
-    assertEquals(orderRequest.getShipTo(), orderResponse.getDestination());
-    assertEquals(NUMBER_OF_ITEMS, orderResponse.getNumberOfItems(), 0);
-    assertEquals(3000.0, orderResponse.getTotalPrice(), 0);
+    assertThat(orderResponse.getSource(), equalTo(orderRequest.getSoldTo()));
+    assertThat(orderResponse.getDestination(), equalTo(orderRequest.getShipTo()));
+    assertThat(orderResponse.getNumberOfItems(), equalTo(NUMBER_OF_ITEMS));
+    assertThat(orderResponse.getTotalPrice(), equalTo(3000.0));
   }
 
   @Test

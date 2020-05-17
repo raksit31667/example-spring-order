@@ -12,7 +12,9 @@ import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabas
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.collection.IsCollectionWithSize.hasSize;
+import static org.hamcrest.collection.IsIterableContainingInAnyOrder.containsInAnyOrder;
 
 @ExtendWith(SpringExtension.class)
 @DataJpaTest
@@ -40,7 +42,7 @@ class OrderRepositoryTest {
 
     List<Order> actualOrders = orderRepository.findAllBySource("Bangkok");
 
-    assertEquals(1, actualOrders.size());
-    assertEquals(order, actualOrders.iterator().next());
+    assertThat(actualOrders, hasSize(1));
+    assertThat(actualOrders, containsInAnyOrder(order));
   }
 }

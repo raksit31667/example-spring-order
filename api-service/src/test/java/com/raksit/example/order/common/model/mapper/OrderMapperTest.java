@@ -9,13 +9,15 @@ import com.raksit.example.order.common.model.entity.OrderLineItem;
 import com.raksit.example.order.util.MockOrderFactory;
 import java.util.Currency;
 import java.util.UUID;
+import org.hamcrest.collection.IsEmptyCollection;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Spy;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import static com.google.common.collect.Lists.newArrayList;
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.core.IsEqual.equalTo;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.when;
@@ -43,10 +45,12 @@ class OrderMapperTest {
     Order order = orderMapper.orderRequestToOrder(orderRequest);
 
     // Then
-    assertEquals(orderRequest.getSoldTo(), order.getSource());
-    assertEquals(orderRequest.getShipTo(), order.getDestination());
-    assertEquals(orderRequest.getItems().get(0).getName(), order.getItems().get(0).getName());
-    assertEquals(orderRequest.getItems().get(0).getPrice(), order.getItems().get(0).getMoney().getPrice());
+    assertThat(order.getSource(), equalTo(orderRequest.getSoldTo()));
+    assertThat(order.getDestination(), equalTo(orderRequest.getShipTo()));
+    assertThat(order.getItems().get(0).getName(),
+        equalTo(orderRequest.getItems().get(0).getName()));
+    assertThat(order.getItems().get(0).getMoney().getPrice(),
+        equalTo(orderRequest.getItems().get(0).getPrice()));
   }
 
   @Test
@@ -64,10 +68,12 @@ class OrderMapperTest {
     Order order = orderMapper.orderRequestToOrder(orderRequest);
 
     // Then
-    assertEquals(orderRequest.getSoldTo(), order.getSource());
-    assertEquals(orderRequest.getShipTo(), order.getDestination());
-    assertEquals(orderRequest.getItems().get(0).getName(), order.getItems().get(0).getName());
-    assertEquals(orderRequest.getItems().get(0).getPrice(), order.getItems().get(0).getMoney().getPrice());
+    assertThat(order.getSource(), equalTo(orderRequest.getSoldTo()));
+    assertThat(order.getDestination(), equalTo(orderRequest.getShipTo()));
+    assertThat(order.getItems().get(0).getName(),
+        equalTo(orderRequest.getItems().get(0).getName()));
+    assertThat(order.getItems().get(0).getMoney().getPrice(),
+        equalTo(orderRequest.getItems().get(0).getPrice()));
   }
 
   @Test
@@ -79,8 +85,8 @@ class OrderMapperTest {
     OrderLineItem orderLineItem = orderMapper.orderLineItemRequestToOrderLineItem(orderLineItemRequest);
 
     // Then
-    assertEquals(orderLineItem.getName(), orderLineItemRequest.getName());
-    assertEquals(orderLineItem.getMoney().getPrice(), orderLineItemRequest.getPrice());
+    assertThat(orderLineItem.getName(), equalTo(orderLineItemRequest.getName()));
+    assertThat(orderLineItem.getMoney().getPrice(), equalTo(orderLineItemRequest.getPrice()));
   }
 
   @Test
@@ -103,7 +109,7 @@ class OrderMapperTest {
         .numberOfItems(NUMBER_OF_ITEMS)
         .totalPrice(3000.0)
         .build();
-    assertEquals(expected, actual);
+    assertThat(actual, equalTo(expected));
   }
 
   @Test
@@ -117,6 +123,6 @@ class OrderMapperTest {
     OrderResponse orderResponse = orderMapper.orderToOrderResponse(order);
 
     // Then
-    assertEquals(newArrayList(), orderResponse.getCurrencies());
+    assertThat(orderResponse.getCurrencies(), IsEmptyCollection.empty());
   }
 }

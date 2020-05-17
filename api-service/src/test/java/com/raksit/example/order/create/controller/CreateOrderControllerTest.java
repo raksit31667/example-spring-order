@@ -11,7 +11,8 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.core.IsEqual.equalTo;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
@@ -42,6 +43,6 @@ class CreateOrderControllerTest {
     OrderResponse actual = createOrderController.createOrder(orderRequest);
 
     // Then
-    assertEquals(orderResponse, actual);
+    assertThat(actual, equalTo(orderResponse));
   }
 }

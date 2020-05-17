@@ -15,7 +15,8 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import static com.google.common.collect.Lists.newArrayList;
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.core.IsEqual.equalTo;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.when;
@@ -49,7 +50,7 @@ class FindOrderControllerTest {
 
     // Then
     List<OrderResponse> expected = newArrayList(orderResponse);
-    assertEquals(expected, actual);
+    assertThat(actual, equalTo(expected));
   }
 
   @Test
@@ -77,7 +78,7 @@ class FindOrderControllerTest {
     OrderResponse actual = findOrderController.findOrderById("00000000-0000-0000-0000-000000000000");
 
     // Then
-    assertEquals(orderResponse, actual);
+    assertThat(actual, equalTo(orderResponse));
   }
 
   @Test
