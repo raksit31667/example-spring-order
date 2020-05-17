@@ -1,7 +1,6 @@
 package com.raksit.example.order.create;
 
 import com.raksit.example.order.IntegrationTest;
-import com.raksit.example.order.KafkaIntegrationTest;
 import com.raksit.example.order.common.model.dto.OrderLineItemRequest;
 import com.raksit.example.order.common.model.dto.OrderRequest;
 import com.raksit.example.order.common.repository.OrderRepository;
@@ -15,8 +14,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.kafka.KafkaException;
 
-import static com.google.common.collect.Lists.newArrayList;
-import static io.restassured.RestAssured.given;
 import static org.hamcrest.CoreMatchers.is;
 
 class FailedKafkaCreateOrderIntegrationTest extends IntegrationTest {
