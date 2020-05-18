@@ -80,6 +80,7 @@ test {
         destinationFile = file("$buildDir/jacoco/jacocoTest.exec")
         classDumpDir = file("$buildDir/jacoco/classpathdumps")
     }
+    finalizedBy jacocoTestReport
 }
 
 integrationTest {
@@ -126,7 +127,7 @@ jacoco {
 
 jacocoTestReport {
     reports {
-        xml.enabled = false
+        xml.enabled = true
         csv.enabled = false
         html.destination file("$buildDir/reports/jacoco")
     }
@@ -135,5 +136,6 @@ jacocoTestReport {
 check.dependsOn(integrationTest)
 test.shouldRunAfter(pmdMain)
 integrationTest.shouldRunAfter(test)
+jacocoTestReport.dependsOn(test)
 
 
