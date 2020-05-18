@@ -24,6 +24,8 @@ jobs:
         run: ./gradlew test
       - name: Integration test
         run: ./gradlew integrationTest
+      - name: SonarQube
+        run: ./gradlew sonarqube
       - name: OWASP Dependency check
         run: ./gradlew dependencyCheckAggregate
       - name: Build
