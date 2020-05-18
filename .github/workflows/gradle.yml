@@ -26,6 +26,8 @@ jobs:
         run: ./gradlew integrationTest
       - name: SonarQube
         run: ./gradlew sonarqube
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: OWASP Dependency check
         run: ./gradlew dependencyCheckAggregate
       - name: Build
