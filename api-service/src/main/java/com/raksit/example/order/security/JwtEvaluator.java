@@ -35,7 +35,7 @@ public class JwtEvaluator extends SecurityExpressionRoot implements
 
   @Override
   public void setFilterObject(Object filterObject) {
-
+    throw new UnsupportedOperationException();
   }
 
   @Override
@@ -45,7 +45,7 @@ public class JwtEvaluator extends SecurityExpressionRoot implements
 
   @Override
   public void setReturnObject(Object returnObject) {
-
+    throw new UnsupportedOperationException();
   }
 
   @Override
