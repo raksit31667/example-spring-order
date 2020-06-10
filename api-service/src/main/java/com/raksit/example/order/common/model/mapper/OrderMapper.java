@@ -6,8 +6,9 @@ import com.raksit.example.order.common.model.dto.OrderResponse;
 import com.raksit.example.order.common.model.entity.Money;
 import com.raksit.example.order.common.model.entity.Order;
 import com.raksit.example.order.common.model.entity.OrderLineItem;
-import java.util.Currency;
 import org.springframework.stereotype.Component;
+
+import java.util.Currency;
 
 import static java.util.stream.Collectors.toList;
 

@@ -104,7 +104,7 @@ bootRun {
 }
 
 checkstyle {
-    toolVersion = "8.10.1"
+    toolVersion = "8.33"
     ignoreFailures = false
     sourceSets = [sourceSets.main]
     maxErrors = 0

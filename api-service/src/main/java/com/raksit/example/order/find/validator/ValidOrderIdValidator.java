@@ -1,6 +1,7 @@
 package com.raksit.example.order.find.validator;
 
 import com.raksit.example.order.common.validator.BaseValidator;
+
 import java.util.UUID;
 
 public class ValidOrderIdValidator extends BaseValidator<ValidOrderId, String> {

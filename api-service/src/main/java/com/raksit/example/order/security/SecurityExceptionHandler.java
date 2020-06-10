@@ -2,10 +2,6 @@ package com.raksit.example.order.security;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.raksit.example.order.common.exception.OrderExceptionResponse;
-import java.io.IOException;
-import java.time.LocalDateTime;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.AccessDeniedException;
@@ -13,6 +9,11 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.security.web.access.AccessDeniedHandler;
 import org.springframework.stereotype.Component;
+
+import java.io.IOException;
+import java.time.LocalDateTime;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 @Component
 public class SecurityExceptionHandler implements AuthenticationEntryPoint, AccessDeniedHandler {
@@ -25,8 +26,8 @@ public class SecurityExceptionHandler implements AuthenticationEntryPoint, Acces
         .status(HttpStatus.UNAUTHORIZED)
         .body(OrderExceptionResponse.builder()
             .timestamp(LocalDateTime.now())
-            .message("The request has not been applied because it lacks valid authentication " +
-                "credentials for the target resource")
+            .message("The request has not been applied because it lacks valid authentication "
+                + "credentials for the target resource")
             .build());
 
     setHttpServletResponse(response, responseEntity);

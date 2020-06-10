@@ -1,9 +1,10 @@
 package com.raksit.example.order.common.validator;
 
+import lombok.Setter;
+
 import java.lang.annotation.Annotation;
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
-import lombok.Setter;
 
 @Setter
 public abstract class BaseValidator<A extends Annotation, T> implements ConstraintValidator<A, T> {
