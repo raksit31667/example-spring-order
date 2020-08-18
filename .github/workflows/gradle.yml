@@ -32,3 +32,5 @@ jobs:
         run: ./gradlew dependencyCheckAggregate
       - name: Build
         run: ./gradlew build
+      - name: Build and Push Docker image
+        run: ./gradlew docker -PdockerUsername=${{ secrets.DOCKER_USERNAME }} -PdockerPassword=${{ secrets.DOCKER_PASSWORD }}
