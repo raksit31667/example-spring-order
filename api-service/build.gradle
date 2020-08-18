@@ -140,10 +140,10 @@ task docker(type: com.google.cloud.tools.jib.gradle.BuildImageTask) {
     doFirst {
         jib {
             to {
-                image = "registry-1.docker.io/raksit31667/example-spring-order:$tag"
+                image = "registry-1.docker.io/raksit31667/example-spring-order"
                 auth {
-                    username = $dockerUsername
-                    password = $dockerPassword
+                    username = dockerUsername
+                    password = dockerPassword
                 }
             }
         }
