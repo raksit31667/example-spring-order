@@ -53,7 +53,7 @@ dependencies {
     implementation 'org.flywaydb:flyway-core'
     implementation 'org.projectlombok:lombok:1.18.12'
     implementation 'io.micrometer:micrometer-registry-prometheus:1.0.4'
-    runtime 'org.postgresql:postgresql:42.2.15'
+    runtime 'org.postgresql:postgresql:42.2.18'
     runtime 'net.logstash.logback:logstash-logback-encoder:5.2'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testImplementation 'org.springframework.security:spring-security-test'
