@@ -28,8 +28,6 @@ jobs:
         run: ./gradlew sonarqube
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      - name: OWASP Dependency check
-        run: ./gradlew dependencyCheckAggregate
       - name: Build
         run: ./gradlew build
       - name: Build and Push Docker image
