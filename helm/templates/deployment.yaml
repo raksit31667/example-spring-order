@@ -13,6 +13,18 @@ spec:
     metadata:
       labels:
         {{- include "order.selectorLabels" . | nindent 8 }}
+      annotations:
+        ad.datadoghq.com/tags: '{"env":"{{ .Values.environment }}"}'
+        ad.datadoghq.com/{{ .Chart.Name }}.check_names: '["openmetrics"]'
+        ad.datadoghq.com/{{ .Chart.Name }}.init_configs: '[{}]'
+        ad.datadoghq.com/{{ .Chart.Name }}.instances: |
+          [
+            {
+              "prometheus_url": "http://%%host%%:8080/actuator/prometheus",
+              "namespace": "",
+              "metrics": ["*"]
+            }
+          ]
     spec:
     {{- with .Values.imagePullSecrets }}
       imagePullSecrets:
@@ -27,6 +39,21 @@ spec:
             {{- toYaml .Values.securityContext | nindent 12 }}
           image: "{{ .Values.image.repository }}:{{ .Chart.AppVersion }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
+          env:
+            - name: SPRING_PROFILES_ACTIVE
+              value: { { .Values.environment } }
+            - name: DD_AGENT_HOST
+              valueFrom:
+                fieldRef:
+                  fieldPath: status.hostIP
+            - name: DD_SERVICE_NAME
+              value: { { include "order.fullname" . } }
+            - name: DD_TAGS
+              value: "env:{{ .Values.environment }}"
+            - name: DD_LOGS_INJECTION
+              value: "true"
+            - name: DD_TRACE_ANALYTICS_ENABLED
+              value: "true"
           ports:
             - name: http
               containerPort: 8080
