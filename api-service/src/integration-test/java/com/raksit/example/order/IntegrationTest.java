@@ -77,6 +77,14 @@ public abstract class IntegrationTest {
         .oauth2("invalidToken");
   }
 
+  protected RequestSpecification givenRequestWithInvalidIssuer() {
+    return givenRequestWithToken(JWT.create()
+        .withAudience(resourceId)
+        .withIssuer("invalid issuer")
+        .withArrayClaim("roles", new String[]{"Write", "Read"})
+        .sign(Algorithm.none()));
+  }
+
   protected RequestSpecification givenRequestWithBasicAuthentication() {
     return given()
         .auth()

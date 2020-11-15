@@ -193,6 +193,38 @@ class FindOrderIntegrationTest extends IntegrationTest {
   }
 
   @Test
+  void shouldReturnForbiddenWhenFindOrdersBySourceGivenInvalidIssuer() {
+    Order order = buildOrder();
+
+    orderRepository.save(order);
+
+    givenRequestWithInvalidIssuer()
+        .contentType(ContentType.JSON)
+        .when()
+        .get("/orders?source=Bangkok")
+        .then()
+        .statusCode(HttpStatus.SC_FORBIDDEN)
+        .body("message", is("The server understood the request " +
+            "but refuses to authorize it"));
+  }
+
+  @Test
+  void shouldReturnForbiddenWhenFindOrderByIdGivenInvalidIssuer() {
+    Order order = buildOrder();
+
+    Order savedOrder = orderRepository.save(order);
+
+    givenRequestWithInvalidIssuer()
+        .contentType(ContentType.JSON)
+        .when()
+        .get("/orders/" + savedOrder.getId())
+        .then()
+        .statusCode(HttpStatus.SC_FORBIDDEN)
+        .body("message", is("The server understood the request " +
+            "but refuses to authorize it"));
+  }
+
+  @Test
   void shouldReturnBadRequestWhenFindOrderByIdGivenInvalidOrderId() {
     givenRequestWithValidReadToken()
         .contentType(ContentType.JSON)

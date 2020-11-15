@@ -34,7 +34,7 @@ public class CreateOrderController {
   @PostMapping
   @ResponseStatus(HttpStatus.CREATED)
   @ApiOperation(value = "Create an order")
-  @PreAuthorize("hasApplicationRole('WRITE')")
+  @PreAuthorize("hasApplicationRole('WRITE') and isFromExpectedIssuer()")
   @ApiResponses({
       @ApiResponse(code = 400, message = "Bad Request", response = OrderExceptionResponse.class),
       @ApiResponse(code = 401, message = "Unauthorized"),

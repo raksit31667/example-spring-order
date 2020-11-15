@@ -35,7 +35,7 @@ public class FindOrderController {
 
   @GetMapping
   @ApiOperation("Get order by source (sold-to)")
-  @PreAuthorize("hasApplicationRole('READ')")
+  @PreAuthorize("hasApplicationRole('READ') and isFromExpectedIssuer()")
   @ApiResponses({
       @ApiResponse(code = 401, message = "Unauthorized"),
       @ApiResponse(code = 403, message = "Forbidden"),
@@ -51,7 +51,7 @@ public class FindOrderController {
 
   @GetMapping("/{orderId}")
   @ApiOperation("Get order by id")
-  @PreAuthorize("hasApplicationRole('READ')")
+  @PreAuthorize("hasApplicationRole('READ') and isFromExpectedIssuer()")
   @ApiResponses({
       @ApiResponse(code = 400, message = "Bad Request", response = OrderExceptionResponse.class),
       @ApiResponse(code = 401, message = "Unauthorized"),

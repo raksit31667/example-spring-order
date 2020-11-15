@@ -124,6 +124,21 @@ class CreateOrderIntegrationTest extends KafkaIntegrationTest {
             "it lacks valid authentication credentials for the target resource"));
   }
 
+  @Test
+  void shouldReturnForbiddenWhenCreateOrderGivenInvalidIssuer() {
+    OrderRequest orderRequest = buildOrderRequest();
+
+    givenRequestWithInvalidIssuer()
+        .contentType(ContentType.JSON)
+        .body(orderRequest)
+        .when()
+        .post("/orders")
+        .then()
+        .statusCode(HttpStatus.SC_FORBIDDEN)
+        .body("message", is("The server understood the request " +
+            "but refuses to authorize it"));
+  }
+
   private OrderRequest buildOrderRequest() {
     OrderLineItemRequest orderLineItemRequest = OrderLineItemRequest.builder()
         .name("Diesel")
