@@ -61,6 +61,16 @@ resources: {}
      cpu: 1
      memory: 2Gi
 
+configmap: |-
+  spring:
+    profiles: dev
+    datasource:
+      url: jdbc:postgresql://raksit31667.postgres.database.azure.com:5432/order
+    kafka:
+      bootstrap-servers: abc-defgh.eastus2.azure.confluent.cloud:9092
+      consumer:
+        group-id: order-dev
+
 nodeSelector: {}
 
 tolerations: []

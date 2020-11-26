@@ -5,6 +5,14 @@ spring:
     kubernetes:
       reload:
         enabled: true
+  flyway:
+    enabled: true
+  jpa:
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQL9Dialect
+    hibernate:
+      ddl-auto: update
 management:
   endpoint:
     health:
@@ -24,8 +32,6 @@ management:
 ---
 spring:
   profiles: local
-  flyway:
-    enabled: true
   cloud:
     kubernetes:
       enabled: false
@@ -33,12 +39,6 @@ spring:
     url: jdbc:postgresql://localhost:5433/order?useUnicode=true&characterEncoding=utf8
     username: local
     password: local
-  jpa:
-    properties:
-      hibernate:
-        dialect: org.hibernate.dialect.PostgreSQL9Dialect
-  hibernate:
-    ddl-auto: update
   main:
     allow-bean-definition-overriding: true
   kafka:
