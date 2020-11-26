@@ -5,8 +5,8 @@
 replicaCount: 1
 
 image:
-  repository: nginx
-  pullPolicy: IfNotPresent
+  repository: registry-1.docker.io/raksit31667/example-spring-order
+  pullPolicy: Always
 
 imagePullSecrets: []
 nameOverride: ""
