@@ -5,6 +5,11 @@ spring:
     kubernetes:
       reload:
         enabled: true
+        monitoring-secrets: true
+        secrets:
+          enable-api: true
+          sources:
+            - name: postgresql
   flyway:
     enabled: true
   jpa:
