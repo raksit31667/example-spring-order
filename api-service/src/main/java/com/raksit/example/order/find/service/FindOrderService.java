@@ -8,5 +8,8 @@ import java.util.UUID;
 public interface FindOrderService {
   List<OrderResponse> findOrdersBySource(String source);
 
+  List<OrderResponse> findOrdersByKeyword(String keyword);
+
   OrderResponse findOrderById(UUID id);
+
 }

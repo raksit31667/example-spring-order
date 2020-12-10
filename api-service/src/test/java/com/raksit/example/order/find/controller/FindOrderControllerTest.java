@@ -64,6 +64,27 @@ class FindOrderControllerTest {
   }
 
   @Test
+  void shouldReturnOrdersWithBangkokSourceWhenFindOrdersByKeywordGivenKeywordOK() {
+    // Given
+    Order order = MockOrderFactory.createSampleOrder(NUMBER_OF_ITEMS);
+    order.setSource("Bangkok");
+    OrderResponse orderResponse = OrderResponse.builder()
+        .source(order.getSource())
+        .destination(order.getDestination())
+        .totalPrice(3000.0)
+        .build();
+    when(findOrderService.findOrdersByKeyword(eq("OK")))
+        .thenReturn(Collections.singletonList(orderResponse));
+
+    // When
+    List<OrderResponse> actual = findOrderController.findOrdersByKeyword("OK");
+
+    // Then
+    List<OrderResponse> expected = newArrayList(orderResponse);
+    assertThat(actual, equalTo(expected));
+  }
+
+  @Test
   void shouldReturnOrderWhenFindByIdGivenOrderWithIdExists() {
     // Given
     Order order = MockOrderFactory.createSampleOrder(NUMBER_OF_ITEMS);

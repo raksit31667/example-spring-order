@@ -14,6 +14,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -47,6 +48,22 @@ public class FindOrderController {
   })
   public List<OrderResponse> findOrdersBySource(@RequestParam String source) {
     return findOrderService.findOrdersBySource(source);
+  }
+
+  @PostMapping("/search")
+  @ApiOperation("Get order by keyword")
+  @PreAuthorize("hasApplicationRole('READ') and isFromExpectedIssuer()")
+  @ApiResponses({
+      @ApiResponse(code = 401, message = "Unauthorized"),
+      @ApiResponse(code = 403, message = "Forbidden"),
+      @ApiResponse(code = 500, message = "Internal Server Error")
+  })
+  @ApiImplicitParams({
+      @ApiImplicitParam(paramType = "query", name = "keyword",
+          dataType = "String", value = "Search keyword")
+  })
+  public List<OrderResponse> findOrdersByKeyword(@RequestParam String keyword) {
+    return findOrderService.findOrdersByKeyword(keyword);
   }
 
   @GetMapping("/{orderId}")

@@ -46,6 +46,25 @@ class FindOrderIntegrationTest extends IntegrationTest {
   }
 
   @Test
+  void shouldReturnOrdersWithBangkokSourceWhenFindOrdersByKeywordGivenKeywordAN() {
+    Order order = buildOrder();
+
+    orderRepository.save(order);
+
+    givenRequestWithValidReadToken()
+        .contentType(ContentType.JSON)
+        .when()
+        .post("/orders/search?keyword= AN ")
+        .then()
+        .statusCode(HttpStatus.SC_OK)
+        .body("[0].source", is("Bangkok"))
+        .body("[0].destination", is("Houston"))
+        .body("[0].numberOfItems", is(1))
+        .body("[0].totalPrice", is(2000.0f))
+        .body("[0].currencies", is(newArrayList("THB")));
+  }
+
+  @Test
   void shouldReturnOrderWhenFindOrderByIdGivenOrderId() {
     Order order = buildOrder();
 
@@ -113,6 +132,22 @@ class FindOrderIntegrationTest extends IntegrationTest {
   }
 
   @Test
+  void shouldReturnUnauthorizedWhenFindOrdersByKeywordGivenNoToken() {
+    Order order = buildOrder();
+
+    orderRepository.save(order);
+
+    given()
+        .contentType(ContentType.JSON)
+        .when()
+        .post("/orders/search?keyword=Bangkok")
+        .then()
+        .statusCode(HttpStatus.SC_UNAUTHORIZED)
+        .body("message", is("The request has not been applied because " +
+            "it lacks valid authentication credentials for the target resource"));
+  }
+
+  @Test
   void shouldReturnUnauthorizedWhenFindOrderByIdGivenNoToken() {
     Order order = buildOrder();
 
@@ -138,6 +173,22 @@ class FindOrderIntegrationTest extends IntegrationTest {
         .contentType(ContentType.JSON)
         .when()
         .get("/orders?source=Bangkok")
+        .then()
+        .statusCode(HttpStatus.SC_UNAUTHORIZED)
+        .body("message", is("The request has not been applied because " +
+            "it lacks valid authentication credentials for the target resource"));
+  }
+
+  @Test
+  void shouldReturnUnauthorizedWhenFindOrdersByKeywordGivenInvalidToken() {
+    Order order = buildOrder();
+
+    orderRepository.save(order);
+
+    givenRequestWithInvalidToken()
+        .contentType(ContentType.JSON)
+        .when()
+        .post("/orders/search?keyword=Bangkok")
         .then()
         .statusCode(HttpStatus.SC_UNAUTHORIZED)
         .body("message", is("The request has not been applied because " +
@@ -177,6 +228,22 @@ class FindOrderIntegrationTest extends IntegrationTest {
   }
 
   @Test
+  void shouldReturnUnauthorizedWhenFindOrdersByKeywordGivenBasicAuthentication() {
+    Order order = buildOrder();
+
+    orderRepository.save(order);
+
+    givenRequestWithBasicAuthentication()
+        .contentType(ContentType.JSON)
+        .when()
+        .post("/orders/search?source=Bangkok")
+        .then()
+        .statusCode(HttpStatus.SC_UNAUTHORIZED)
+        .body("message", is("The request has not been applied because " +
+            "it lacks valid authentication credentials for the target resource"));
+  }
+
+  @Test
   void shouldReturnUnauthorizedWhenFindOrderByIdGivenBasicAuthentication() {
     Order order = buildOrder();
 
@@ -202,6 +269,22 @@ class FindOrderIntegrationTest extends IntegrationTest {
         .contentType(ContentType.JSON)
         .when()
         .get("/orders?source=Bangkok")
+        .then()
+        .statusCode(HttpStatus.SC_FORBIDDEN)
+        .body("message", is("The server understood the request " +
+            "but refuses to authorize it"));
+  }
+
+  @Test
+  void shouldReturnForbiddenWhenFindOrdersByKeywordGivenInvalidIssuer() {
+    Order order = buildOrder();
+
+    orderRepository.save(order);
+
+    givenRequestWithInvalidIssuer()
+        .contentType(ContentType.JSON)
+        .when()
+        .get("/orders/search?source=Bangkok")
         .then()
         .statusCode(HttpStatus.SC_FORBIDDEN)
         .body("message", is("The server understood the request " +
