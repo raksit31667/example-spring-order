@@ -18,6 +18,10 @@ spring:
         dialect: org.hibernate.dialect.PostgreSQL9Dialect
     hibernate:
       ddl-auto: update
+  cache:
+    type: redis
+  redis:
+    password: Redis.123
 management:
   endpoint:
     health:

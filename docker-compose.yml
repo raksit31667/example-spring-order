@@ -12,6 +12,14 @@ services:
       POSTGRES_PASSWORD: local
     ports:
       - "5433:5432"
+  redis:
+    image: redis
+    command: [ "redis-server", "--appendonly", "yes", "--requirepass", "Redis.123" ]
+    volumes:
+      - redis-data:/data
+    container_name: redis-order
+    ports:
+      - "6379:6379"
   kafka:
     image: wurstmeister/kafka
     ports:
@@ -28,3 +36,4 @@ services:
 volumes:
   postgres-data:
   kafka-data:
+  redis-data:
